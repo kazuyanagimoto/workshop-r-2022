@@ -1,0 +1,47 @@
+{
+    "reuse_sessions_for_project_links": true,
+    "panes": {
+        "quadrants": [
+            "Source",
+            "Console",
+            "TabSet1",
+            "TabSet2"
+        ],
+        "tabSet1": [
+            "Environment",
+            "History",
+            "Connections",
+            "Build",
+            "VCS",
+            "Tutorial",
+            "Presentation"
+        ],
+        "tabSet2": [
+            "Files",
+            "Plots",
+            "Packages",
+            "Help",
+            "Viewer",
+            "Presentations"
+        ],
+        "console_left_on_top": false,
+        "console_right_on_top": true
+    },
+    "posix_terminal_shell": "bash",
+    "show_hidden_files": true,
+    "restore_source_documents": false,
+    "save_workspace": "never",
+    "load_workspace": false,
+    "restore_last_project": false,
+    "initial_working_directory": "~",
+    "insert_native_pipe_operator": true,
+    "rainbow_parentheses": true,
+    "auto_append_newline": true,
+    "auto_save_on_blur": true,
+    "code_completion_characters": 1,
+    "check_unexpected_assignment_in_function_call": true,
+    "show_diagnostics_other": true,
+    "editor_theme": "Tomorrow Night 80s",
+    "jobs_tab_visibility": "shown",
+    "save_files_before_build": true
+}
