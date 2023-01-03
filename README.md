@@ -16,3 +16,13 @@
         dvc init
         dvc remote add --default myremote gdrive://GDRIVE_FOLDER_CODE
         ```
+
+
+
+## Data
+
+| Data              | Organization | Links                                                                  |
+|-------------------|--------------|------------------------------------------------------------------------|
+| oecd/wage_gap.csv | OECD         | [Gender wage gap](https://data.oecd.org/earnwage/gender-wage-gap.htm ) |
+| accident_bike/*   | Comunidad de Madrid | [Accidentes de tráfico de la Ciudad de Madrid](https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=7c2843010d9c3610VgnVCM2000001f4a900aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default)                                                                        |
+|                   |              |                                                                        |

@@ -1,0 +1,27 @@
+spanish," english"
+FECHA,date
+RANGO HORARIO,hour_c
+DIA SEMANA,day
+DISTRITO,district
+LUGAR ACCIDENTE,street
+Nº,code_street
+Nº PARTE,id_1018
+CPFA Granizo,is_weather_hail
+CPFA Hielo,is_weather_ice
+CPFA Lluvia,is_weather_rain
+CPFA Niebla,is_weather_cloud
+CPFA Seco,is_weather_dry
+CPFA Nieve,is_weather_snow
+CPSV Mojada,is_cause_wet
+CPSV Aceite,is_cause_oil
+CPSV Barro,is_cause_mud
+CPSV Grava Suelta,is_cause_gravel
+CPSV Hielo,is_cause_ice
+CPSV Seca Y Limpia,is_cause_dryclean
+Nº VICTIMAS *,num_victim
+TIPO ACCIDENTE,type_accident
+Tipo Vehiculo,type_vehicle
+TIPO PERSONA,type_person
+SEXO,gender
+LESIVIDAD,injury
+Tramo Edad,age_c

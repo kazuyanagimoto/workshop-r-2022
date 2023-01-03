@@ -1,0 +1,7 @@
+project:
+  output-dir: docs
+  preview: 
+    port: 5556
+    browser: true
+    watch-inputs: true
+    navigate: true
