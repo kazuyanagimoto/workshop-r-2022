@@ -7,8 +7,8 @@
 		"REditorSupport.r",
         "quarto.quarto",
         "janisdd.vscode-edit-csv",
-        "znck.grammarly"
-
+        "znck.grammarly",
+        "James-Yu.latex-workshop"
 	],
 	"forwardPorts": [8787],
     "workspaceFolder": "/home/rstudio/workshop-r-2022",

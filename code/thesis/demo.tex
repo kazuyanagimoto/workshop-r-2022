@@ -1,0 +1,45 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{setspace}
+\onehalfspacing{}
+
+\usepackage{subfiles}
+\usepackage{ifthen}
+
+% Equations
+\usepackage{mathtools,amssymb,amsfonts}
+\usepackage{bm, bbm}
+
+% Images
+\usepackage{graphicx}
+
+% Table
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{longtable}
+
+% BibTeX
+\usepackage[longnamesfirst]{natbib}
+\usepackage{hyperref}
+
+%% define rootfolder
+\newcommand{\rootFolder}{./../..}
+
+
+\begin{document}
+\title{Demo}
+\author{Kazuharu Yanagimoto}
+
+\date{\today}
+\maketitle
+
+\begin{table}
+    \centering
+    \caption{Number of Persons Involved in Traffic Accidents}
+    \input{\rootFolder/output/tex/kableextra/tb_accident_bike.tex}
+\end{table}
+
+
+\end{document}

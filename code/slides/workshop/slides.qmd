@@ -34,8 +34,10 @@ January 13, 2023
 ```{r}
 #| include: false
 library(here)
+library(arrow)
 library(tidyverse)
 library(gt)
+library(kableExtra)
 
 color_base <- "#1C5253"
 color_base_light <- xaringanthemer::lighten_color(color_base, strength = 0.33)
@@ -1625,13 +1627,65 @@ gtb |>
 
 ## Rename at Once
 
+:::: {.columns}
+
+::: {.column width="70%"}
+
+```{r}
+raw <- read_delim(here("data/raw/accident_bike/year=2022/file.txt"),
+        delim = ";", show_col_types = FALSE)
+```
+
+```{r}
+#| echo: false
+raw |>
+  select(1:5) |>
+  glimpse()
+```
+
+
+<br>
+
+```{r}
+code <- read_csv(here("data/translate/accident_bike.csv"),
+                     show_col_types = FALSE)
+renamed <- raw |>
+  rename_at(vars(code$spanish), ~code$english)
+```
+
+```{r}
+#| echo: false
+renamed |>
+  select(1:5) |>
+  glimpse()
+```
+
+
+:::
+
+::: {.column width="30%"}
+
+```{r}
+#| echo: false
+code |>
+  kbl() |>
+  kable_styling(font_size = 20)
+```
+
+:::
+
+::::
+
 ## Type
+
 
 ## Facotrizing
 
 ## Format: Parquet
 
 ## (Advanced) Parquet with Large Dataset
+
+## Cleaning Workflow
 
 ## Handson 2
 
@@ -1654,6 +1708,78 @@ Some example of cleaning
 # Automated Table Creation {background-color="#1C5253" visibility="uncounted"}
 
 ## `kableExtra`
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{r}
+#| echo: false
+data <- arrow::read_parquet(here("data/cleaned/accident_bike.parquet"))
+
+tab <- data |>
+  filter(!is.na(weather), !is.na(gender)) |>
+  group_by(year, gender, weather) |>
+  count() |>
+  pivot_wider(names_from = gender, values_from = n, names_prefix = "n_") |>
+  pivot_wider(names_from = year, values_from = starts_with("n_"))
+```
+
+```{r}
+tab
+```
+
+```{r}
+library(kableExtra)
+options(knitr.kable.NA = '')
+
+ktb <- tab |>
+  kbl(format = "latex", booktabs = TRUE,
+      col.names = c(" ", 2019:2022, 2019:2022)) |>
+  add_header_above(c(" ", "Men" = 4, "Women" = 4)) |>
+  pack_rows(index = c("Good" = 2, "Bad" = 4))
+
+ktb |>
+  save_kable(here("output/tex/kableextra/tb_accident_bike.tex"))
+```
+:::
+
+::: {.column width="40%"}
+![](img/accident_bike.png)
+
+
+::: {.small}
+
+- `booktabs = TRUE` for `booktabs` package in LaTeX
+- You can specify the column names by `col.names`
+- You can pack columns and rows by `add_header_above()` and `pack_rows()`
+- `save_kable()` saves in a tex file if the file name ends with ".tex"
+
+:::
+
+:::
+
+::::
+
+## `kableExtra`
+
+**Dataframe (`tibble`) to Table**
+
+- Create a tibble table by `dplyr::group_by` & `dpyr::summarize` and `janitor::tabyl()`
+- For regression tables, you can use `modelsummary` (next slide)
+
+**Pack Columns and Rows**
+
+- As far as I know, Python, Julia, and Stata do not allow us to pack them easily
+
+**More Complicated Tables**
+
+- You can refer to Hao Zhu's [document](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf)
+- If a table contains a mathematical expression, use `escape=FALSE`. See a discussion in [stacoverflow](https://stackoverflow.com/questions/59776466/kableextra-math-symbols)
+
+
+
+
+
 
 ## `modelsummary`
 
