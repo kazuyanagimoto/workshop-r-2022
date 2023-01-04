@@ -20,6 +20,16 @@
 \usepackage{caption}
 \usepackage{longtable}
 
+% ekableExtra & modelsummary
+\usepackage{siunitx}
+\newcolumntype{d}{S[
+    input-open-uncertainty=,
+    input-close-uncertainty=,
+    parse-numbers = false,
+    table-align-text-pre=false,
+    table-align-text-post=false
+ ]}
+
 % BibTeX
 \usepackage[longnamesfirst]{natbib}
 \usepackage{hyperref}
@@ -41,5 +51,12 @@
     \input{\rootFolder/output/tex/kableextra/tb_accident_bike.tex}
 \end{table}
 
+\begin{table}
+    \centering
+    \caption{Logit Regression of Hospitalization and Death within 24 Hours}
+    \input{\rootFolder/output/tex/modelsummary/reg_accident_bike.tex}
+    \caption*{Notes: Passenger and pedestrian's coefficients are normalized by driver.
+    **p<.01; *p<.05; +p<.1. Standard errors are clustered by age group.}
+\end{table}
 
 \end{document}

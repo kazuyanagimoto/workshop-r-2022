@@ -1707,7 +1707,7 @@ Some example of cleaning
 
 # Automated Table Creation {background-color="#1C5253" visibility="uncounted"}
 
-## `kableExtra`
+## `kableExtra`: Example
 
 :::: {.columns}
 
@@ -1744,7 +1744,7 @@ ktb |>
 :::
 
 ::: {.column width="40%"}
-![](img/accident_bike.png)
+![](img/kableextra.png)
 
 
 ::: {.small}
@@ -1777,11 +1777,229 @@ ktb |>
 - If a table contains a mathematical expression, use `escape=FALSE`. See a discussion in [stacoverflow](https://stackoverflow.com/questions/59776466/kableextra-math-symbols)
 
 
-
-
-
-
 ## `modelsummary`
+
+```{r}
+#| echo: false
+
+data <- arrow::read_parquet(here("data/cleaned/accident_bike.parquet")) |>
+  mutate(is_died = injury8 == "Died within 24 hours",
+         is_hospitalized = injury8 %in% c("Hospitalization after 24 hours",
+                                          "Hospitalization within 24 hours",
+                                          "Died within 24 hours"))
+                                          
+```
+
+Given the following regression results,
+
+<br>
+
+```{r}
+library(fixest) # for faster regression with fixed effect
+
+models <- list(
+    "(1)" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender,
+                family = binomial(logit), data = data),
+    "(2)" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle,
+                family = binomial(logit), data = data),
+    "(3)" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle + weather,
+                family = binomial(logit), data = data),
+    "(4)" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender,
+                family = binomial(logit), data = data),
+    "(5)" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle,
+                family = binomial(logit), data = data),
+    "(6)" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle + weather,
+                family = binomial(logit), data = data)
+)
+
+```
+
+
+## `modelsummary`: Init {auto-animate="true"}
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{.r}
+modelsummary(models)
+```
+
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.3em"}
+```{r}
+#| echo: false
+
+gm <- tibble(
+    raw = c("nobs", "FE: age_c", "FE: gender", "FE: type_vehicle", "FE: weather"),
+    clean = c("Observations", "FE: Age Group", "FE: Gender", "FE: Type of Vehicle", "FE: Weather"),
+    fmt = c(0, 0, 0, 0, 0)
+)
+
+cm  <-  c(
+    "type_personpassenger" = "Passenger",
+    "type_personpedestrian" = "Pedestrian",
+    "positive_alcoholTRUE" = "Positive Alcohol"
+)
+
+library(modelsummary)
+modelsummary(models)
+```
+:::
+:::
+::::
+
+## `modelsummary`: Modify Coefficients {auto-animate="true"}
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{.r}
+cm  <-  c(
+    "type_personpassenger" = "Passenger",
+    "type_personpedestrian" = "Pedestrian",
+    "positive_alcoholTRUE" = "Positive Alcohol"
+)
+
+modelsummary(models,
+  coef_map = cm
+)
+```
+
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.3em"}
+```{r}
+#| echo: false
+
+modelsummary(models,
+  coef_map = cm  
+)
+```
+:::
+:::
+::::
+
+## `modelsummary`: Modify Statitics {auto-animate="true"}
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{.r}
+cm  <-  c(
+    "type_personpassenger" = "Passenger",
+    "type_personpedestrian" = "Pedestrian",
+    "positive_alcoholTRUE" = "Positive Alcohol"
+)
+
+gm <- tibble(
+    raw = c("nobs", "FE: age_c", "FE: gender", "FE: type_vehicle", "FE: weather"),
+    clean = c("Observations", "FE: Age Group", "FE: Gender", "FE: Type of Vehicle", "FE: Weather"),
+    fmt = c(0, 0, 0, 0, 0)
+)
+
+modelsummary(models,
+  coef_map = cm,
+  gof_map = gm
+)
+```
+
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.3em"}
+```{r}
+#| echo: false
+
+modelsummary(models,
+  coef_map = cm,
+  gof_map = gm
+)
+```
+:::
+:::
+::::
+
+## `modelsummary`: Decorattion {auto-animate="true"}
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{.r}
+cm  <-  c(
+    "type_personpassenger" = "Passenger",
+    "type_personpedestrian" = "Pedestrian",
+    "positive_alcoholTRUE" = "Positive Alcohol"
+)
+
+gm <- tibble(
+    raw = c("nobs", "FE: age_c", "FE: gender", "FE: type_vehicle", "FE: weather"),
+    clean = c("Observations", "FE: Age Group", "FE: Gender", "FE: Type of Vehicle", "FE: Weather"),
+    fmt = c(0, 0, 0, 0, 0)
+)
+
+modelsummary(models,
+  stars = c("+" = .1, "*" = .05, "**" = .01),
+  coef_map = cm,
+  gof_map = gm) |>
+  add_header_above(c(" ", "Hospitalization" = 3, "Died within 24 hours" = 3)) 
+```
+
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.3em"}
+```{r}
+#| echo: false
+
+modelsummary(models,
+  stars = c("+" = .1, "*" = .05, "**" = .01),
+  coef_map = cm,
+  gof_map = gm) |>
+  add_header_above(c(" ", "Hospitalization" = 3, "Died within 24 hours" = 3))
+```
+:::
+:::
+::::
+
+## `modelsummary`: Export to $\LaTeX$ {auto-animate="true"}
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{.r}
+cm  <-  c(
+    "type_personpassenger" = "Passenger",
+    "type_personpedestrian" = "Pedestrian",
+    "positive_alcoholTRUE" = "Positive Alcohol"
+)
+
+gm <- tibble(
+    raw = c("nobs", "FE: age_c", "FE: gender", "FE: type_vehicle", "FE: weather"),
+    clean = c("Observations", "FE: Age Group", "FE: Gender", "FE: Type of Vehicle", "FE: Weather"),
+    fmt = c(0, 0, 0, 0, 0)
+)
+
+modelsummary(models,
+  output = "latex_tabular",
+  stars = c("+" = .1, "*" = .05, "**" = .01),
+  coef_map = cm,
+  gof_map = gm) |>
+  add_header_above(c(" ", "Hospitalization" = 3, "Died within 24 hours" = 3)) |>
+  row_spec(7, hline_after = T) |>
+  save_kable(here("output/tex/modelsummary/reg_accident_bike.tex"))
+```
+
+:::
+
+::: {.column width="40%"}
+
+![](img/modelsummary.png)
+
+:::
+::::
 
 ## Handson
 

@@ -1,0 +1,22 @@
+
+\begin{tabular}[t]{lcccccc}
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{3}{c}{Hospitalization} & \multicolumn{3}{c}{Died within 24 hours} \\
+\cmidrule(l{3pt}r{3pt}){2-4} \cmidrule(l{3pt}r{3pt}){5-7}
+  & (1) & (2) & (3) & (4) & (5) & (6)\\
+\midrule
+Passenger & \num{0.049} & \num{0.530}** & \num{0.507}** & \num{-1.781}* & \num{-1.575}+ & \num{-1.565}+\\
+ & (\num{0.104}) & (\num{0.071}) & (\num{0.070}) & (\num{0.759}) & (\num{0.783}) & (\num{0.784})\\
+Pedestrian & \num{2.124}** & \num{2.402}** & \num{2.323}** & \num{2.280}** & \num{2.418}** & \num{2.422}**\\
+ & (\num{0.115}) & (\num{0.066}) & (\num{0.064}) & (\num{0.301}) & (\num{0.287}) & (\num{0.285})\\
+Positive Alcohol & \num{-0.077} & \num{0.310}** & \num{0.353}** & \num{-13.710}** & \num{-13.455}** & \num{-13.492}**\\
+ & (\num{0.088}) & (\num{0.095}) & (\num{0.093}) & (\num{0.053}) & (\num{0.064}) & (\num{0.063})\\
+\midrule
+Observations & \num{149918} & \num{149831} & \num{134006} & \num{90852} & \num{89300} & \num{86330}\\
+\midrule
+FE: Age Group & X & X & X & X & X & X\\
+FE: Gender & X & X & X & X & X & X\\
+FE: Type of Vehicle &  & X & X &  & X & X\\
+FE: Weather &  &  & X &  &  & X\\
+\bottomrule
+\end{tabular}
