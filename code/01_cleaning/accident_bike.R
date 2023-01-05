@@ -15,7 +15,7 @@ code <- read_csv(here("data/translate/accident_bike.csv"),
 cleaned <- raw |>
   rename_at(vars(code$spanish), ~code$english) |>
   mutate(
-    time = lubridate::dmy_hms(str_c(date, hms)),
+    time = lubridate::dmy_hms(str_c(date, hms), tz = "Europe/Madrid"),
     district = na_if(district, "NULL"),
     district = str_to_title(district),
     weather = recode_factor(weather,

@@ -1682,10 +1682,148 @@ code |>
 
 ::::
 
-## Type
+## Type: Date & Time
+
+<br>
+
+`lubridate` provides strong date-parsering functions.
 
 
-## Facotrizing
+<br>
+
+```{r}
+lubridate::ymd("2021/08/31")
+lubridate::mdy("Sep. 10, 19")
+lubridate::dmy_hm("02/04/1999 16:00", tz="America/New_York")
+```
+
+
+## {}
+
+```{r}
+renamed |> select(date, hms) |> head()
+```
+
+<br>
+
+```{r}
+renamed |>
+  mutate(time = lubridate::dmy_hms(str_c(date, hms), tz = "Europe/Madrid")) |>
+  select(date, hms, time) |>
+  head()
+```
+
+
+## Type: Categorical Variables
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+renamed |>
+  mutate(
+    type_person = recode_factor(type_person,
+        "Conductor" = "Driver",
+        "Pasajero" = "Passenger",
+        "Peatón" = "Pedestrian",
+        "NULL"= NULL)) |>
+  janitor::tabyl(type_person)
+```
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+
+`recode_factor()` finishes:
+
+1. Define as _factor_ variables
+1. Order _factor_ variable
+1. Rename & Translate (labels in plots & tables)
+1. Handle `NA` values (next slide)
+
+:::
+
+:::
+
+::::
+
+## Handle `NA` Values
+
+Some datasets include NA values as string format
+
+```{r}
+unique(renamed$weather) # "Se desconoce" is also essentially NA
+```
+
+<br>
+
+. . .
+
+#### Solution 1: Define NA values when you load
+
+```{r}
+sol1 <- read_delim(here("data/raw/accident_bike/year=2019/file.txt"),
+                 delim = ";", show_col_types = FALSE,
+                 na = c("", "NA", "NULL", "Se desconoce", "Desconocido")) |>
+        rename(weather = "estado_meteorológico")
+
+unique(sol1$weather)
+```
+
+<br>
+
+. . .
+
+Cannot use when specific numbers as NA values (9, 99,...)
+
+## {}
+#### Solution2: `na_if()`
+
+```{r}
+renamed |>
+  mutate(
+    weather_old = weather,# Presentation Purpose
+    weather = na_if(weather, "Se desconoce"),
+    weather = na_if(weather, "NULL"),
+    ) |>
+  select(weather_old, weather) |>
+  head()
+```
+
+<br>
+
+Works for any case. But need to write for each `NA` value.
+
+## {}
+
+#### Soltion 3: Recode as `NULL`
+
+```{r}
+renamed |>
+  mutate(
+    weather_spanish = weather,# Presentation Purpose
+    weather = recode_factor(weather,
+        "Despejado" = "sunny",
+        "Nublado" = "cloud",
+        "Lluvia débil" = "soft rain",
+        "Lluvia intensa" = "hard rain",
+        "LLuvia intensa" = "hard rain",
+        "Nevando" = "snow",
+        "Granizando" = "hail",
+        "Se desconoce" = NULL,
+        "NULL" = NULL)) |>
+  select(weather_spanish, weather) |>
+  head()
+```
+
+<br>
+
+. . .
+
+Only works for categorical variables. But practically useful.
 
 ## Format: Parquet
 
@@ -1693,9 +1831,24 @@ code |>
 
 ## Cleaning Workflow
 
-## Handson 2
+#### 1. Naming
 
-Some examples of cleaning
+- Put **informative** and **non-misleading** names
+- If necessary, translate the variable names
+- You can use a correspondence table and rename variables at once
+
+
+#### 2. Determine Types
+
+- _Date_: `lubridate` parsing functions
+- _Categorical_: `recode_factor()`
+- _NA-values_: `na_if()` and `recode_factor()`
+
+#### 3. Export
+
+- Parquet format
+
+
 
 # Tips in Plots {background-color="#1C5253" visibility="uncounted"}
 
