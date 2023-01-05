@@ -16,6 +16,8 @@ cleaned <- raw |>
   rename_at(vars(code$spanish), ~code$english) |>
   mutate(
     time = lubridate::dmy_hms(str_c(date, hms)),
+    district = na_if(district, "NULL"),
+    district = str_to_title(district),
     weather = recode_factor(weather,
         "Despejado" = "sunny",
         "Nublado" = "cloud",
@@ -27,9 +29,9 @@ cleaned <- raw |>
         "Se desconoce" = NULL,
         "NULL" = NULL),
     type_person = recode_factor(type_person,
-        "Conductor" = "driver",
-        "Pasajero" = "passenger",
-        "Peatón" = "pedestrian",
+        "Conductor" = "Driver",
+        "Pasajero" = "Passenger",
+        "Peatón" = "Pedestrian",
         "NULL"= NULL),
     age_c = recode_factor(age_c,
         "Menor de 5 años" = "<5",
@@ -52,8 +54,8 @@ cleaned <- raw |>
         "Desconocido" = NULL
     ),
     gender = recode_factor(gender,
-        "Hombre" = "men",
-        "Mujer" = "women",
+        "Hombre" = "Men",
+        "Mujer" = "Women",
         "Desconocido" = NULL
     ),
     injury8 = recode_factor(injury8,
@@ -70,6 +72,10 @@ cleaned <- raw |>
     ),
     positive_alcohol = positive_alcohol == "S",
     positive_drug = positive_drug == "S",
+    is_died = injury8 == "Died within 24 hours",
+    is_hospitalized = injury8 %in% c("Hospitalization after 24 hours",
+                                     "Hospitalization within 24 hours",
+                                     "Died within 24 hours")
     )
 
 cleaned |>

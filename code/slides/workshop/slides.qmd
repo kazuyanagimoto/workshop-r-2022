@@ -3,7 +3,7 @@ execute:
     echo: true
     warning: false
     message: false
-    cache: false
+    cache: true
 format:
   revealjs:
     standalone: true
@@ -1497,16 +1497,22 @@ Please make sure if you are using the latest `r version$version.string`.
 # Cleaning Strategy {background-color="#1C5253" visibility="uncounted"}
 
 
-## The Fundamental Theorem of Readability
+## Fundamental Theorem of Readability
 
->Code should be written to minimize the time it would take for someone else to understand it.
+<br>
 
+::: {.callout-note}
+
+## Fundamental Theorem of Readability
+
+Code should be written to minimize the time it would take for someone else to understand it.
+
+:::
 
 <br>
 
 . . .
 
-For economists,
 
 $$
 \text{Code} := \arg\min_{c \in \mathcal{C}}\mathbb{E}_i[R_{i}(c)]
@@ -1689,21 +1695,537 @@ code |>
 
 ## Handson 2
 
-Some example of cleaning
+Some examples of cleaning
 
 # Tips in Plots {background-color="#1C5253" visibility="uncounted"}
 
-## Layers in `ggplots`
+## Data-ink Ratio
 
-## Scales
+<br>
 
-## Color Palette
+::: {.callout-note}
 
-## Themes
+## Data-ink Ratio Principle 
 
-## Third-party Themes
+Maximize the data-ink ratio in a plot:
 
-## My Favorite `ggplot2` Family
+$$
+\text{Data-ink ratio} := \frac{\text{Data-ink}}{\text{Total ink used to print in the graphic}}
+$$
+
+:::
+
+. . .
+
+<br>
+
+::: {.callout-tip}
+## Collolary
+
+Omit all the proportions of a graphic that can be erased without losing information
+
+:::
+
+## Maximize Data-ink Ratio {auto-animate="true"}
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{.r}
+accident_bike |>
+  ggplot(aes(x = type_person, fill = gender)) +
+  geom_bar(position = "dodge")
+```
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+
+accident_bike <- arrow::read_parquet(here("data/cleaned/accident_bike.parquet")) |>
+  filter(!is.na(type_person), !is.na(gender), is_hospitalized)
+
+p <- accident_bike |>
+  ggplot(aes(x = type_person, fill = gender)) +
+  geom_bar(position = "dodge")
+
+p
+```
+
+:::
+
+::::
+
+
+## Maximize Data-ink Ratio {auto-animate="true"}
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{.r code-line-numbers="4-7"}
+accident_bike |>
+  ggplot(aes(x = type_person, fill = gender)) +
+  geom_bar(position = "dodge") +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank())
+```
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+#| fig-cap: Number of Persons Hospitalized
+
+p +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank())
+```
+
+:::
+
+::::
+
+- Omit axis label. The title of the plot can tell them
+- Omit legend label. The label "gender" does not add any information
+- Omit background grids
+
+## More Readability: Order Bar Plot {auto-animate="true"}
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{.r code-line-numbers="2,3,5,10,12"}
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+#| fig-cap: Number of Persons Hospitalized
+
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+:::
+
+::::
+
+- Coord flipped. Reorder the factor variables
+- Put legends inside the plot to make the plot bigger
+
+## More Readability: Increase Font Size {auto-animate="true"}
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{.r code-line-numbers="11-13"}
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 25),
+        legend.text = element_text(size = 20)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+#| fig-cap: Number of Persons Hospitalized
+
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 25),
+        legend.text = element_text(size = 20)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+:::
+
+::::
+
+## R Color Brewer’s Palettes
+
+![](https://r-graph-gallery.com/38-rcolorbrewers-palettes_files/figure-html/thecode-1.png){height=700 fig-align="center"}
+
+## R Color Brewer’s Palettes
+
+<br>
+
+```{r}
+#| fig-cap: Number of Persons Hospitalized
+#| output-location: column
+#| code-line-numbers: "7"
+
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  scale_fill_brewer(palette = "Accent") +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 25),
+        legend.text = element_text(size = 20)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+## Color-Safe Pallette: Okabe-Ito Palette
+
+<br>
+
+```{r}
+#| fig-cap: Number of Persons Hospitalized
+#| output-location: column
+#| code-line-numbers: "7"
+
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  see::scale_fill_okabeito() +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 25),
+        legend.text = element_text(size = 20)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+## Custom Palette
+
+<br>
+
+```{r}
+#| fig-cap: Number of Persons Hospitalized
+#| output-location: column
+#| code-line-numbers: "7"
+
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  scale_fill_manual(values = c("#E7B800", "#00AFBB")) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 25),
+        legend.text = element_text(size = 20)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+## Fonts
+
+:::: {.columns}
+
+::: {.column width="60%"}
+#### [Goolge Fonts](https://fonts.google.com/)
+
+- You can download well-designed free fonts
+- My recommendation: **Condensed** fonts
+
+::: {.small}
+  Roboto Condensed, Fira Sans Condensed, IBM Plex Sans Condensed,...
+
+:::
+
+<br>
+
+::: {.fragment}
+
+#### [showtext](https://cran.rstudio.com/web/packages/showtext/vignettes/introduction.html)
+
+- Your collaborators need to download the fonts
+- `font_add_google()` and `showtext_auto()` automatically solve the problem
+
+:::
+
+:::
+
+::: {.column width="40%"}
+<br>
+
+![](img/google_fonts.png)
+:::
+
+::::
+
+## Roboto Condensed
+
+<br>
+
+```{r}
+#| fig-cap: Number of Persons Hospitalized
+#| output-location: column
+#| code-line-numbers: "1-5,17-19"
+
+library(showtext)
+font_base  <- "Roboto Condensed"
+font_light <- "Roboto Condensed Light 300"
+font_add_google(font_base, font_light)
+showtext_auto()
+
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person), fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  see::scale_fill_okabeito() +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1),
+        axis.text.x = element_text(size = 20, family = font_light),
+        axis.text.y = element_text(size = 25, family = font_base),
+        legend.text = element_text(size = 20, family = font_light)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+
+## Global Options
+
+<br>
+
+Don't worry. You can set the default theme before plotting.
+
+<br>
+
+```{.r}
+theme_set(theme_minimal(base_size = 12, base_family = "Roboto Condensed"))
+theme_update(
+  axis.ticks = element_line(color = "grey92"),
+  axis.ticks.length = unit(.5, "lines"),
+  panel.grid.minor = element_blank(),
+  legend.title = element_text(size = 12),
+  legend.text = element_text(color = "grey30"),
+  plot.title = element_text(size = 18, face = "bold"),
+  plot.subtitle = element_text(size = 12, color = "grey30"),
+  plot.caption = element_text(size = 9, margin = margin(t = 15))
+)
+```
+
+<br>
+
+Alternatively, create a custom theme and color palette (Andrew Heiss's [code](https://github.com/andrewheiss/who-cares-about-crackdown/blob/ad6312957de927674a5da2437a2f993e52f53d88/R/graphics.R))
+
+## Third-party Themes: `hrbrthemes`
+
+<br>
+
+```{r}
+#| fig-cap: Number of Persons Hospitalized
+#| output-location: column
+#| code-line-numbers: "7,8"
+
+accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  hrbrthemes::scale_fill_ipsum() +
+  hrbrthemes::theme_ipsum_rc() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 25),
+        legend.text = element_text(size = 20)) +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+## Third-party Themes:: `ggpubr` & ggsci Plaette
+
+<br>
+
+```{r}
+#| fig-cap: Number of Persons Hospitalized
+#| output-location: column
+#| code-line-numbers: "7,16"
+
+p <- accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL) +
+  ggpubr::theme_pubr() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.1),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 25),
+        legend.text = element_text(size = 20)) +
+  guides(fill = guide_legend(reverse = TRUE))
+
+ggpubr::set_palette(p, "jco") # choose one of ggsci palette
+```
+
+
+## Patchwork
+
+```{r}
+#| echo: false
+p_default <- accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL, title = "Default") +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.2),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        plot.title.position = "plot") +
+  guides(fill = guide_legend(reverse = TRUE))
+
+p_custom <- accident_bike |>
+  ggplot(aes(x = fct_rev(type_person), fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL, title = "Custom Theme") +
+  see::scale_fill_okabeito() +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.2),
+        plot.title = element_text(size = 15, family = font_base, face = "bold"),
+        axis.text.x = element_text(size = 10, family = font_light),
+        axis.text.y = element_text(size = 12, family = font_base),
+        legend.text = element_text(size = 10, family = font_light),
+        plot.title.position = "plot") +
+  guides(fill = guide_legend(reverse = TRUE))
+
+p_hrbrthemes <- accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL, title = "hrbrthemes") +
+  hrbrthemes::scale_fill_ipsum() +
+  hrbrthemes::theme_ipsum_rc() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.2),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        plot.title.position = "plot") +
+  guides(fill = guide_legend(reverse = TRUE))
+
+p_ggpubr <- accident_bike |>
+  ggplot(aes(x = fct_rev(type_person),
+         fill = fct_rev(gender))) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = NULL, y = NULL, fill = NULL, title = "ggpubr & ggsci") +
+  ggpubr::theme_pubr() +
+  scale_fill_manual(values = ggpubr::get_palette("jco", 2)) +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position = c(0.9, 0.3),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        plot.title.position = "plot") +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+```{r}
+#| fig-align: center
+library(patchwork)
+
+(p_default + p_custom) / (p_hrbrthemes + p_ggpubr)
+```
+
+## Takeaway
+
+#### Maximize Data-ink Ratio
+
+- Omit all the unnecessary elements in a plot
+
+#### Colors & Fonts
+
+- **Color Palette**: `RColorBrewer`, Okabe-Ito, `ggsci`
+- **Fonts**: Google Fonts. Especially, _condensed_ fonts.
+- **Ready-made Themes**: `hrbrthemes`, `ggpubr`
+
+#### Further Readings
+
+
 
 # Automated Table Creation {background-color="#1C5253" visibility="uncounted"}
 
@@ -1728,6 +2250,8 @@ tab <- data |>
 tab
 ```
 
+::: {.fragment fragment-index=1}
+
 ```{r}
 library(kableExtra)
 options(knitr.kable.NA = '')
@@ -1741,12 +2265,15 @@ ktb <- tab |>
 ktb |>
   save_kable(here("output/tex/kableextra/tb_accident_bike.tex"))
 ```
+
+:::
+
 :::
 
 ::: {.column width="40%"}
 ![](img/kableextra.png)
 
-
+::: {.fragment fragment-index=2}
 ::: {.small}
 
 - `booktabs = TRUE` for `booktabs` package in LaTeX
@@ -1755,7 +2282,7 @@ ktb |>
 - `save_kable()` saves in a tex file if the file name ends with ".tex"
 
 :::
-
+:::
 :::
 
 ::::
@@ -1817,6 +2344,8 @@ models <- list(
 
 ## `modelsummary`: Init {auto-animate="true"}
 
+<br>
+
 :::: {.columns}
 
 ::: {.column width="60%"}
@@ -1852,10 +2381,12 @@ modelsummary(models)
 
 ## `modelsummary`: Modify Coefficients {auto-animate="true"}
 
+<br>
+
 :::: {.columns}
 
 ::: {.column width="60%"}
-```{.r}
+```{.r code-line-numbers="1-5,8"}
 cm  <-  c(
     "type_personpassenger" = "Passenger",
     "type_personpedestrian" = "Pedestrian",
@@ -1884,10 +2415,12 @@ modelsummary(models,
 
 ## `modelsummary`: Modify Statitics {auto-animate="true"}
 
+<br>
+
 :::: {.columns}
 
 ::: {.column width="60%"}
-```{.r}
+```{.r code-line-numbers="7-11,15"}
 cm  <-  c(
     "type_personpassenger" = "Passenger",
     "type_personpedestrian" = "Pedestrian",
@@ -1922,12 +2455,15 @@ modelsummary(models,
 :::
 ::::
 
-## `modelsummary`: Decorattion {auto-animate="true"}
+## `modelsummary`: Stars & Headers {auto-animate="true"}
+
+<br>
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-```{.r}
+```{.r code-line-numbers="14,17"}
+code-line-numbers="7,16"
 cm  <-  c(
     "type_personpassenger" = "Passenger",
     "type_personpedestrian" = "Pedestrian",
@@ -1966,10 +2502,12 @@ modelsummary(models,
 
 ## `modelsummary`: Export to $\LaTeX$ {auto-animate="true"}
 
+<br>
+
 :::: {.columns}
 
 ::: {.column width="60%"}
-```{.r}
+```{.r code-line-numbers="14,19,20"}
 cm  <-  c(
     "type_personpassenger" = "Passenger",
     "type_personpedestrian" = "Pedestrian",
@@ -2001,7 +2539,9 @@ modelsummary(models,
 :::
 ::::
 
-## Handson
+<br>
+
+`output = "latex_tabular"` produces a tex file not containing `table` tag
 
 
 # Quarto {background-color="#1C5253" visibility="uncounted"}
