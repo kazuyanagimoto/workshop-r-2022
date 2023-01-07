@@ -343,3 +343,4 @@ TSWLatexianTemp*
 # VSCode
 .vscode/settings.json
 /.quarto/
+*_files/

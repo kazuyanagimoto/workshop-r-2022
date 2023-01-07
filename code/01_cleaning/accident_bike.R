@@ -3,9 +3,7 @@ library(tidyverse)
 library(arrow)
 
 # Load Data
-raw <- open_dataset(here("data/raw/accident_bike"),
-        hive_style = TRUE,
-        format = "text", delimiter = ";") |>
+raw <- open_dataset(here("data/raw/accident_bike/parquet")) |>
       collect()
 
 # Rename & Cleaning

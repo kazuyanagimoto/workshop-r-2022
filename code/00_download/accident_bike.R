@@ -1,3 +1,6 @@
+library(here)
+library(arrow)
+
 url_base <- "https://datos.madrid.es/egob/catalogo/300228-%s-accidentes-trafico-detalle.csv"
 
 years <- c(2019:2022)
@@ -8,9 +11,19 @@ for (i in seq_along(years)) {
     key <- keys[i]
 
     url <- sprintf(url_base, key)
-    dir_file <- here::here(sprintf("data/raw/accident_bike/year=%s/", year))
+    dir_file <- here(sprintf("data/raw/accident_bike/txt/year=%s/", year))
     if (!dir.exists(dir_file)) {
         dir.create(dir_file)
         download.file(url, destfile = paste0(dir_file, "file.txt"))
     }
 }
+
+
+# Export as Parquet
+raw <- open_dataset(here("data/raw/accident_bike/txt"),
+        hive_style = TRUE,
+        format = "text", delimiter = ";")
+
+write_dataset(raw,
+    path = here("data/raw/accident_bike/parquet"),
+    partitioning = "year")

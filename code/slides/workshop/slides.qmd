@@ -3,7 +3,7 @@ execute:
     echo: true
     warning: false
     message: false
-    cache: true
+    cache: false
 format:
   revealjs:
     standalone: true
@@ -1638,7 +1638,7 @@ gtb |>
 ::: {.column width="70%"}
 
 ```{r}
-raw <- read_delim(here("data/raw/accident_bike/year=2022/file.txt"),
+raw <- read_delim(here("data/raw/accident_bike/txt/year=2022/file.txt"),
         delim = ";", show_col_types = FALSE)
 ```
 
@@ -1765,7 +1765,7 @@ unique(renamed$weather) # "Se desconoce" is also essentially NA
 #### Solution 1: Define NA values when you load
 
 ```{r}
-sol1 <- read_delim(here("data/raw/accident_bike/year=2019/file.txt"),
+sol1 <- read_delim(here("data/raw/accident_bike/txt/year=2019/file.txt"),
                  delim = ";", show_col_types = FALSE,
                  na = c("", "NA", "NULL", "Se desconoce", "Desconocido")) |>
         rename(weather = "estado_meteorológico")
@@ -1825,9 +1825,131 @@ renamed |>
 
 Only works for categorical variables. But practically useful.
 
-## Format: Parquet
+## Parquet Format
 
-## (Advanced) Parquet with Large Dataset
+<br>
+
+```{r}
+#| echo: false
+
+gtb <- tribble(
+  ~name,      ~speed, ~size, ~keep_type, ~multi,
+  "csv, tsv",    "❌", "❌",      "❌",     "All",
+  "rds, RData", "❌", "✔️",      "✔️",     "❌",
+  "parquet",     "✔️", "✔️",       "✔️",     "Python, Julia, MATLAB, Stata,...") |>
+  gt(rowname_col = "name") |>
+  cols_label(speed = "Speed", size = "Size", keep_type = "Keep Type", multi = "Multi-Language") |>
+  cols_align("center")
+
+gtb
+```
+
+<br>
+
+You can find a benchmark in tomaztsql's [blog](https://www.r-bloggers.com/2022/05/comparing-performances-of-csv-to-rds-parquet-and-feather-file-formats-in-r/)
+
+## `arrow::read_parquet()`
+
+<br>
+
+You can load parquet data as **column-information only**
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| code-line-numbers: "3"
+df <- arrow::read_parquet(
+  here("data/cleaned/accident_bike.parquet"),
+  as_data_frame = TRUE)
+
+df
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| code-line-numbers: "3"
+info <- arrow::read_parquet(
+  here("data/cleaned/accident_bike.parquet"),
+  as_data_frame = FALSE)
+
+info
+```
+:::
+
+::::
+
+## Release Parquet on Memory
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| code-line-numbers: "2"
+
+info |>
+  collect()
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+info |>
+  filter(is_hospitalized) |>
+  select(time, gender, age_c, positive_alcohol) |>
+  collect()
+```
+:::
+
+::::
+
+- `dplyr::collect()` releases the loaded parquet data on memory
+- You can load them after `select()` or `filter()`
+- Also, `group_by()` and `summarize()` are available
+- Quite useful for **large datasets**
+
+
+## Parquet with Partitioned Dataset
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{.shell}
+data/raw/accident_bike/parquet/
+├── year=2019
+│   └── part-0.parquet
+├── year=2020
+│   └── part-0.parquet
+├── year=2021
+│   └── part-0.parquet
+└── year=2022
+    └── part-0.parquet
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+info <- open_dataset(
+          here("data/raw/accident_bike/parquet"))
+info
+```
+:::
+
+::::
+
+- Given this structure, `arrow::open_dataset()` loads them as one parquet file
+- A Partitioning variable (`year`) becomes a new variable
+- For more instructions, you can refer to Tom Mock's [slides](https://jthomasmock.github.io/arrow-dplyr/)
+
+
 
 ## Cleaning Workflow
 
@@ -1846,7 +1968,8 @@ Only works for categorical variables. But practically useful.
 
 #### 3. Export
 
-- Parquet format
+- Parquet format is better than any other data format
+- Parquet makes it easy to handle large datasets
 
 
 
