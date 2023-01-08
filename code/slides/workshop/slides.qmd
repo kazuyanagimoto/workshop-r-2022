@@ -3,7 +3,7 @@ execute:
     echo: true
     warning: false
     message: false
-    cache: true
+    cache: false
 format:
   revealjs:
     standalone: false
@@ -1986,7 +1986,7 @@ info
 
 ::: {.callout-note}
 
-## Data-ink Ratio Principle 
+## Data-ink Ratio Principle [@tufte_visual_2001]
 
 Maximize the data-ink ratio in a plot:
 
@@ -2826,6 +2826,23 @@ modelsummary(models,
 <br>
 
 `output = "latex_tabular"` produces a tex file not containing `table` tag
+
+## Takeaway
+
+<br>
+
+#### `kableExtra` & `modelsummary`
+
+- You can quickly export tibble (dataframe) as latex table by `kableExtra`
+- `modelsummary` produces kableExtra object from regression results
+- You can see the latex table in `output/tex/` and the compiled results in `code/thesis/`
+
+<br>
+
+#### Further Readings
+
+- Official Document [modelsummary](https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html) and @zhu_create_2021
+- [gt](https://gt.rstudio.com/articles/intro-creating-gt-tables.html) is a great alternative to `kableExtra`. I use `gt` tables in my slides
 
 
 # Quarto {background-color="#1C5253" visibility="uncounted"}
