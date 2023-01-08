@@ -1,0 +1,618 @@
+[
+  {
+    "objectID": "code/10_notebooks/intro_dplyr.html#dplyr-tidyr-basics",
+    "href": "code/10_notebooks/intro_dplyr.html#dplyr-tidyr-basics",
+    "title": "Introduction to tidyverse",
+    "section": "dplyr & tidyr Basics",
+    "text": "dplyr & tidyr Basics\n\nhead, glimpse\nselect, filter\nmutate\nrename, recode\nif_else, case_when\nsummarize, group_by\nacross()\njanitor::tabyl\njoins\npivot_wider, pivot_longer"
+  },
+  {
+    "objectID": "code/10_notebooks/intro_dplyr.html#ggplot2-basics",
+    "href": "code/10_notebooks/intro_dplyr.html#ggplot2-basics",
+    "title": "Introduction to tidyverse",
+    "section": "ggplot2 Basics",
+    "text": "ggplot2 Basics"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#section",
+    "href": "code/slides/advancedr/index.html#section",
+    "title": "",
+    "section": "",
+    "text": "An AdvancedIntroduction to \n\n\nKazuharu Yanagimoto\n\n\nJanuary 13, 2023"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#section-1",
+    "href": "code/slides/advancedr/index.html#section-1",
+    "title": "",
+    "section": "",
+    "text": "Q. Why Don’t Your Codes Work on My Computer?\n\nA. Conflicts in Path or Package Version\n\n\nA. You don’t use here and renv under R projct"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#r-project",
+    "href": "code/slides/advancedr/index.html#r-project",
+    "title": "",
+    "section": "R Project",
+    "text": "R Project\nHave you ever click this button?\n\n\n\n\n\n\n\n\n\n\nYou should ALWAYS use R Project!"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#why-do-we-need-to-use-r-project",
+    "href": "code/slides/advancedr/index.html#why-do-we-need-to-use-r-project",
+    "title": "",
+    "section": "Why Do We Need to Use R Project?",
+    "text": "Why Do We Need to Use R Project?\n\n\n\nPath Manager\n\n\n\n\n\n\nPackage Manager"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#always-use-here-for-paths",
+    "href": "code/slides/advancedr/index.html#always-use-here-for-paths",
+    "title": "",
+    "section": "Always Use here for Paths",
+    "text": "Always Use here for Paths\n\nThe function here::here() treats the proejct directory as the root directory.\n\nhere::here()\n\n[1] \"/home/rstudio/workshop-r-2022\"\n\n\n\nYou should always specify the path by here::here()\n\ndata <- readr::read_csv(\n  here::here(\"data/tiny.csv\")\n)\n\n\nIt works in Windows, Mac, Linux (of course, in a Docker environment)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#remember",
+    "href": "code/slides/advancedr/index.html#remember",
+    "title": "",
+    "section": "Remember…",
+    "text": "Remember…\n\n\nIf the first line of your R script is setwd(\"C:\\Users\\jenny\\path\\that\\only\\I\\have\")\nI* will come into your office and SET YOUR COMPUTER ON FIRE 🔥.\n–Bryan (2018)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#renv-is-smarter-than-us",
+    "href": "code/slides/advancedr/index.html#renv-is-smarter-than-us",
+    "title": "",
+    "section": "renv Is Smarter than Us",
+    "text": "renv Is Smarter than Us\n\n\n\n\nInit the environment with renv::init(). It creates renv/ and renv.lock file\nAt some point, you can record your package and its version information with renv::snapshot()\nYour collaborater can install the packages just by renv::restore()\n\n\n\n\nrenv.lock\n\n{\n  \"R\": {\n    \"Version\": \"4.2.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://packagemanager.posit.co/cran/latest\"\n      }\n    ]\n  },\n  \"Packages\": {\n    \"DBI\": {\n      \"Package\": \"DBI\",\n      \"Version\": \"1.1.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"b2866e62bab9378c3cc9476a1954226b\",\n      \"Requirements\": []\n    },\n    \"MASS\": {\n      \"Package\": \"MASS\",\n      \"Version\": \"7.3-58.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"CRAN\",\n      \"Hash\": \"762e1804143a332333c054759f89a706\",\n      \"Requirements\": []\n    },\n    \"Matrix\": {\n      \"Package\": \"Matrix\",\n      \"Version\": \"1.5-1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"CRAN\",\n      \"Hash\": \"539dc0c0c05636812f1080f473d2c177\",\n      \"Requirements\": [\n        \"lattice\"\n      ]\n    },\n    \"R6\": {\n      \"Package\": \"R6\",\n      \"Version\": \"2.5.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"470851b6d5d0ac559e9d01bb352b4021\",\n      \"Requirements\": []\n    },\n    \"RColorBrewer\": {\n      \"Package\": \"RColorBrewer\",\n      \"Version\": \"1.1-3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"45f0398006e83a5b10b72a90663d8d8c\",\n      \"Requirements\": []\n    },\n    \"askpass\": {\n      \"Package\": \"askpass\",\n      \"Version\": \"1.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"e8a22846fff485f0be3770c2da758713\",\n      \"Requirements\": [\n        \"sys\"\n      ]\n    },\n    \"assertthat\": {\n      \"Package\": \"assertthat\",\n      \"Version\": \"0.2.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"50c838a310445e954bc13f26f26a6ecf\",\n      \"Requirements\": []\n    },\n    \"backports\": {\n      \"Package\": \"backports\",\n      \"Version\": \"1.4.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"c39fbec8a30d23e721980b8afb31984c\",\n      \"Requirements\": []\n    },\n    \"base64enc\": {\n      \"Package\": \"base64enc\",\n      \"Version\": \"0.1-3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"543776ae6848fde2f48ff3816d0628bc\",\n      \"Requirements\": []\n    },\n    \"bit\": {\n      \"Package\": \"bit\",\n      \"Version\": \"4.0.5\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"d242abec29412ce988848d0294b208fd\",\n      \"Requirements\": []\n    },\n    \"bit64\": {\n      \"Package\": \"bit64\",\n      \"Version\": \"4.0.5\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"9fe98599ca456d6552421db0d6772d8f\",\n      \"Requirements\": [\n        \"bit\"\n      ]\n    },\n    \"blob\": {\n      \"Package\": \"blob\",\n      \"Version\": \"1.2.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"10d231579bc9c06ab1c320618808d4ff\",\n      \"Requirements\": [\n        \"rlang\",\n        \"vctrs\"\n      ]\n    },\n    \"broom\": {\n      \"Package\": \"broom\",\n      \"Version\": \"1.0.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"1773f8d5102f9853ecd18a0d13d460fd\",\n      \"Requirements\": [\n        \"backports\",\n        \"dplyr\",\n        \"ellipsis\",\n        \"generics\",\n        \"glue\",\n        \"purrr\",\n        \"rlang\",\n        \"stringr\",\n        \"tibble\",\n        \"tidyr\"\n      ]\n    },\n    \"bslib\": {\n      \"Package\": \"bslib\",\n      \"Version\": \"0.4.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"a7fbf03946ad741129dc81098722fca1\",\n      \"Requirements\": [\n        \"base64enc\",\n        \"cachem\",\n        \"htmltools\",\n        \"jquerylib\",\n        \"jsonlite\",\n        \"memoise\",\n        \"mime\",\n        \"rlang\",\n        \"sass\"\n      ]\n    },\n    \"cachem\": {\n      \"Package\": \"cachem\",\n      \"Version\": \"1.0.6\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"648c5b3d71e6a37e3043617489a0a0e9\",\n      \"Requirements\": [\n        \"fastmap\",\n        \"rlang\"\n      ]\n    },\n    \"callr\": {\n      \"Package\": \"callr\",\n      \"Version\": \"3.7.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"CRAN\",\n      \"Hash\": \"9b2191ede20fa29828139b9900922e51\",\n      \"Requirements\": [\n        \"R6\",\n        \"processx\"\n      ]\n    },\n    \"cellranger\": {\n      \"Package\": \"cellranger\",\n      \"Version\": \"1.1.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"f61dbaec772ccd2e17705c1e872e9e7c\",\n      \"Requirements\": [\n        \"rematch\",\n        \"tibble\"\n      ]\n    },\n    \"cli\": {\n      \"Package\": \"cli\",\n      \"Version\": \"3.5.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"eb9fc121ad9a1075c471107ef185be46\",\n      \"Requirements\": []\n    },\n    \"clipr\": {\n      \"Package\": \"clipr\",\n      \"Version\": \"0.8.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"3f038e5ac7f41d4ac41ce658c85e3042\",\n      \"Requirements\": []\n    },\n    \"colorspace\": {\n      \"Package\": \"colorspace\",\n      \"Version\": \"2.0-3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"bb4341986bc8b914f0f0acf2e4a3f2f7\",\n      \"Requirements\": []\n    },\n    \"cpp11\": {\n      \"Package\": \"cpp11\",\n      \"Version\": \"0.4.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"ed588261931ee3be2c700d22e94a29ab\",\n      \"Requirements\": []\n    },\n    \"crayon\": {\n      \"Package\": \"crayon\",\n      \"Version\": \"1.5.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"e8a1e41acf02548751f45c718d55aa6a\",\n      \"Requirements\": []\n    },\n    \"curl\": {\n      \"Package\": \"curl\",\n      \"Version\": \"4.3.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"0eb86baa62f06e8855258fa5a8048667\",\n      \"Requirements\": []\n    },\n    \"data.table\": {\n      \"Package\": \"data.table\",\n      \"Version\": \"1.14.6\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"aecef50008ea7b57c76f1cb5c127fb02\",\n      \"Requirements\": []\n    },\n    \"dbplyr\": {\n      \"Package\": \"dbplyr\",\n      \"Version\": \"2.2.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"f6c7eb9617e4d2a86bb7182fff99c805\",\n      \"Requirements\": [\n        \"DBI\",\n        \"R6\",\n        \"assertthat\",\n        \"blob\",\n        \"cli\",\n        \"dplyr\",\n        \"glue\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"pillar\",\n        \"purrr\",\n        \"rlang\",\n        \"tibble\",\n        \"tidyselect\",\n        \"vctrs\",\n        \"withr\"\n      ]\n    },\n    \"digest\": {\n      \"Package\": \"digest\",\n      \"Version\": \"0.6.31\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"8b708f296afd9ae69f450f9640be8990\",\n      \"Requirements\": []\n    },\n    \"dplyr\": {\n      \"Package\": \"dplyr\",\n      \"Version\": \"1.0.10\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"539412282059f7f0c07295723d23f987\",\n      \"Requirements\": [\n        \"R6\",\n        \"generics\",\n        \"glue\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"pillar\",\n        \"rlang\",\n        \"tibble\",\n        \"tidyselect\",\n        \"vctrs\"\n      ]\n    },\n    \"dtplyr\": {\n      \"Package\": \"dtplyr\",\n      \"Version\": \"1.2.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"c5f8828a0b459a703db190b001ad4818\",\n      \"Requirements\": [\n        \"crayon\",\n        \"data.table\",\n        \"dplyr\",\n        \"ellipsis\",\n        \"glue\",\n        \"lifecycle\",\n        \"rlang\",\n        \"tibble\",\n        \"tidyselect\",\n        \"vctrs\"\n      ]\n    },\n    \"ellipsis\": {\n      \"Package\": \"ellipsis\",\n      \"Version\": \"0.3.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"bb0eec2fe32e88d9e2836c2f73ea2077\",\n      \"Requirements\": [\n        \"rlang\"\n      ]\n    },\n    \"evaluate\": {\n      \"Package\": \"evaluate\",\n      \"Version\": \"0.19\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"5aac3cd0a3ccb1a738941796b28c26fe\",\n      \"Requirements\": []\n    },\n    \"fansi\": {\n      \"Package\": \"fansi\",\n      \"Version\": \"1.0.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"83a8afdbe71839506baa9f90eebad7ec\",\n      \"Requirements\": []\n    },\n    \"farver\": {\n      \"Package\": \"farver\",\n      \"Version\": \"2.1.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"8106d78941f34855c440ddb946b8f7a5\",\n      \"Requirements\": []\n    },\n    \"fastmap\": {\n      \"Package\": \"fastmap\",\n      \"Version\": \"1.1.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"77bd60a6157420d4ffa93b27cf6a58b8\",\n      \"Requirements\": []\n    },\n    \"forcats\": {\n      \"Package\": \"forcats\",\n      \"Version\": \"0.5.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"9d95bc88206321cd1bc98480ecfd74bb\",\n      \"Requirements\": [\n        \"cli\",\n        \"ellipsis\",\n        \"glue\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"rlang\",\n        \"tibble\",\n        \"withr\"\n      ]\n    },\n    \"fs\": {\n      \"Package\": \"fs\",\n      \"Version\": \"1.5.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"7c89603d81793f0d5486d91ab1fc6f1d\",\n      \"Requirements\": []\n    },\n    \"gargle\": {\n      \"Package\": \"gargle\",\n      \"Version\": \"1.2.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"cca71329ad88e21267f09255d3f008c2\",\n      \"Requirements\": [\n        \"cli\",\n        \"fs\",\n        \"glue\",\n        \"httr\",\n        \"jsonlite\",\n        \"rappdirs\",\n        \"rlang\",\n        \"rstudioapi\",\n        \"withr\"\n      ]\n    },\n    \"generics\": {\n      \"Package\": \"generics\",\n      \"Version\": \"0.1.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"15e9634c0fcd294799e9b2e929ed1b86\",\n      \"Requirements\": []\n    },\n    \"ggplot2\": {\n      \"Package\": \"ggplot2\",\n      \"Version\": \"3.4.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"fd2aab12f54400c6bca43687231e246b\",\n      \"Requirements\": [\n        \"MASS\",\n        \"cli\",\n        \"glue\",\n        \"gtable\",\n        \"isoband\",\n        \"lifecycle\",\n        \"mgcv\",\n        \"rlang\",\n        \"scales\",\n        \"tibble\",\n        \"vctrs\",\n        \"withr\"\n      ]\n    },\n    \"glue\": {\n      \"Package\": \"glue\",\n      \"Version\": \"1.6.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"4f2596dfb05dac67b9dc558e5c6fba2e\",\n      \"Requirements\": []\n    },\n    \"googledrive\": {\n      \"Package\": \"googledrive\",\n      \"Version\": \"2.0.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"c3a25adbbfbb03f12e6f88c5fb1f3024\",\n      \"Requirements\": [\n        \"cli\",\n        \"gargle\",\n        \"glue\",\n        \"httr\",\n        \"jsonlite\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"pillar\",\n        \"purrr\",\n        \"rlang\",\n        \"tibble\",\n        \"uuid\",\n        \"vctrs\",\n        \"withr\"\n      ]\n    },\n    \"googlesheets4\": {\n      \"Package\": \"googlesheets4\",\n      \"Version\": \"1.0.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"3b449d5292327880fc6cb61d0b2e9063\",\n      \"Requirements\": [\n        \"cellranger\",\n        \"cli\",\n        \"curl\",\n        \"gargle\",\n        \"glue\",\n        \"googledrive\",\n        \"httr\",\n        \"ids\",\n        \"magrittr\",\n        \"purrr\",\n        \"rematch2\",\n        \"rlang\",\n        \"tibble\",\n        \"vctrs\"\n      ]\n    },\n    \"gtable\": {\n      \"Package\": \"gtable\",\n      \"Version\": \"0.3.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"36b4265fb818f6a342bed217549cd896\",\n      \"Requirements\": []\n    },\n    \"haven\": {\n      \"Package\": \"haven\",\n      \"Version\": \"2.5.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"5b45a553fca2217a07b6f9c843304c44\",\n      \"Requirements\": [\n        \"cli\",\n        \"cpp11\",\n        \"forcats\",\n        \"hms\",\n        \"lifecycle\",\n        \"readr\",\n        \"rlang\",\n        \"tibble\",\n        \"tidyselect\",\n        \"vctrs\"\n      ]\n    },\n    \"here\": {\n      \"Package\": \"here\",\n      \"Version\": \"1.0.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"24b224366f9c2e7534d2344d10d59211\",\n      \"Requirements\": [\n        \"rprojroot\"\n      ]\n    },\n    \"highr\": {\n      \"Package\": \"highr\",\n      \"Version\": \"0.10\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"06230136b2d2b9ba5805e1963fa6e890\",\n      \"Requirements\": [\n        \"xfun\"\n      ]\n    },\n    \"hms\": {\n      \"Package\": \"hms\",\n      \"Version\": \"1.1.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"41100392191e1244b887878b533eea91\",\n      \"Requirements\": [\n        \"ellipsis\",\n        \"lifecycle\",\n        \"pkgconfig\",\n        \"rlang\",\n        \"vctrs\"\n      ]\n    },\n    \"htmltools\": {\n      \"Package\": \"htmltools\",\n      \"Version\": \"0.5.4\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"9d27e99cc90bd701c0a7a63e5923f9b7\",\n      \"Requirements\": [\n        \"base64enc\",\n        \"digest\",\n        \"ellipsis\",\n        \"fastmap\",\n        \"rlang\"\n      ]\n    },\n    \"httr\": {\n      \"Package\": \"httr\",\n      \"Version\": \"1.4.4\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"57557fac46471f0dbbf44705cc6a5c8c\",\n      \"Requirements\": [\n        \"R6\",\n        \"curl\",\n        \"jsonlite\",\n        \"mime\",\n        \"openssl\"\n      ]\n    },\n    \"ids\": {\n      \"Package\": \"ids\",\n      \"Version\": \"1.0.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"99df65cfef20e525ed38c3d2577f7190\",\n      \"Requirements\": [\n        \"openssl\",\n        \"uuid\"\n      ]\n    },\n    \"isoband\": {\n      \"Package\": \"isoband\",\n      \"Version\": \"0.2.7\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"0080607b4a1a7b28979aecef976d8bc2\",\n      \"Requirements\": []\n    },\n    \"janitor\": {\n      \"Package\": \"janitor\",\n      \"Version\": \"2.1.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"6de84a8c67fb247e721166049c84695f\",\n      \"Requirements\": [\n        \"dplyr\",\n        \"lifecycle\",\n        \"lubridate\",\n        \"magrittr\",\n        \"purrr\",\n        \"rlang\",\n        \"snakecase\",\n        \"stringi\",\n        \"stringr\",\n        \"tidyr\",\n        \"tidyselect\"\n      ]\n    },\n    \"jquerylib\": {\n      \"Package\": \"jquerylib\",\n      \"Version\": \"0.1.4\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"5aab57a3bd297eee1c1d862735972182\",\n      \"Requirements\": [\n        \"htmltools\"\n      ]\n    },\n    \"jsonlite\": {\n      \"Package\": \"jsonlite\",\n      \"Version\": \"1.8.4\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"a4269a09a9b865579b2635c77e572374\",\n      \"Requirements\": []\n    },\n    \"knitr\": {\n      \"Package\": \"knitr\",\n      \"Version\": \"1.41\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"6d4971f3610e75220534a1befe81bc92\",\n      \"Requirements\": [\n        \"evaluate\",\n        \"highr\",\n        \"stringr\",\n        \"xfun\",\n        \"yaml\"\n      ]\n    },\n    \"labeling\": {\n      \"Package\": \"labeling\",\n      \"Version\": \"0.4.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"3d5108641f47470611a32d0bdf357a72\",\n      \"Requirements\": []\n    },\n    \"lattice\": {\n      \"Package\": \"lattice\",\n      \"Version\": \"0.20-45\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"CRAN\",\n      \"Hash\": \"b64cdbb2b340437c4ee047a1f4c4377b\",\n      \"Requirements\": []\n    },\n    \"lifecycle\": {\n      \"Package\": \"lifecycle\",\n      \"Version\": \"1.0.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"001cecbeac1cff9301bdc3775ee46a86\",\n      \"Requirements\": [\n        \"cli\",\n        \"glue\",\n        \"rlang\"\n      ]\n    },\n    \"lubridate\": {\n      \"Package\": \"lubridate\",\n      \"Version\": \"1.9.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"2af4550c2f0f7fbe7cbbf3dbf4ea3902\",\n      \"Requirements\": [\n        \"generics\",\n        \"timechange\"\n      ]\n    },\n    \"magrittr\": {\n      \"Package\": \"magrittr\",\n      \"Version\": \"2.0.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"7ce2733a9826b3aeb1775d56fd305472\",\n      \"Requirements\": []\n    },\n    \"memoise\": {\n      \"Package\": \"memoise\",\n      \"Version\": \"2.0.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"e2817ccf4a065c5d9d7f2cfbe7c1d78c\",\n      \"Requirements\": [\n        \"cachem\",\n        \"rlang\"\n      ]\n    },\n    \"mgcv\": {\n      \"Package\": \"mgcv\",\n      \"Version\": \"1.8-41\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"CRAN\",\n      \"Hash\": \"6b3904f13346742caa3e82dd0303d4ad\",\n      \"Requirements\": [\n        \"Matrix\",\n        \"nlme\"\n      ]\n    },\n    \"mime\": {\n      \"Package\": \"mime\",\n      \"Version\": \"0.12\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"18e9c28c1d3ca1560ce30658b22ce104\",\n      \"Requirements\": []\n    },\n    \"modelr\": {\n      \"Package\": \"modelr\",\n      \"Version\": \"0.1.10\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"bc23cda9c6a8f91dc1c10e1994494711\",\n      \"Requirements\": [\n        \"broom\",\n        \"magrittr\",\n        \"purrr\",\n        \"rlang\",\n        \"tibble\",\n        \"tidyr\",\n        \"tidyselect\",\n        \"vctrs\"\n      ]\n    },\n    \"munsell\": {\n      \"Package\": \"munsell\",\n      \"Version\": \"0.5.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"6dfe8bf774944bd5595785e3229d8771\",\n      \"Requirements\": [\n        \"colorspace\"\n      ]\n    },\n    \"nlme\": {\n      \"Package\": \"nlme\",\n      \"Version\": \"3.1-160\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"CRAN\",\n      \"Hash\": \"02e3c6e7df163aafa8477225e6827bc5\",\n      \"Requirements\": [\n        \"lattice\"\n      ]\n    },\n    \"openssl\": {\n      \"Package\": \"openssl\",\n      \"Version\": \"2.0.5\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"b04c27110bf367b4daa93f34f3d58e75\",\n      \"Requirements\": [\n        \"askpass\"\n      ]\n    },\n    \"pillar\": {\n      \"Package\": \"pillar\",\n      \"Version\": \"1.8.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"f2316df30902c81729ae9de95ad5a608\",\n      \"Requirements\": [\n        \"cli\",\n        \"fansi\",\n        \"glue\",\n        \"lifecycle\",\n        \"rlang\",\n        \"utf8\",\n        \"vctrs\"\n      ]\n    },\n    \"pkgconfig\": {\n      \"Package\": \"pkgconfig\",\n      \"Version\": \"2.0.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"01f28d4278f15c76cddbea05899c5d6f\",\n      \"Requirements\": []\n    },\n    \"prettyunits\": {\n      \"Package\": \"prettyunits\",\n      \"Version\": \"1.1.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"95ef9167b75dde9d2ccc3c7528393e7e\",\n      \"Requirements\": []\n    },\n    \"processx\": {\n      \"Package\": \"processx\",\n      \"Version\": \"3.8.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"a33ee2d9bf07564efb888ad98410da84\",\n      \"Requirements\": [\n        \"R6\",\n        \"ps\"\n      ]\n    },\n    \"progress\": {\n      \"Package\": \"progress\",\n      \"Version\": \"1.2.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"14dc9f7a3c91ebb14ec5bb9208a07061\",\n      \"Requirements\": [\n        \"R6\",\n        \"crayon\",\n        \"hms\",\n        \"prettyunits\"\n      ]\n    },\n    \"ps\": {\n      \"Package\": \"ps\",\n      \"Version\": \"1.7.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"68dd03d98a5efd1eb3012436de45ba83\",\n      \"Requirements\": []\n    },\n    \"purrr\": {\n      \"Package\": \"purrr\",\n      \"Version\": \"1.0.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"1ad491d27989ec6c26a2918ad6df116b\",\n      \"Requirements\": [\n        \"cli\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"rlang\",\n        \"vctrs\"\n      ]\n    },\n    \"rappdirs\": {\n      \"Package\": \"rappdirs\",\n      \"Version\": \"0.3.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"5e3c5dc0b071b21fa128676560dbe94d\",\n      \"Requirements\": []\n    },\n    \"readr\": {\n      \"Package\": \"readr\",\n      \"Version\": \"2.1.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"2dfbfc673ccb3de3d8836b4b3bd23d14\",\n      \"Requirements\": [\n        \"R6\",\n        \"cli\",\n        \"clipr\",\n        \"cpp11\",\n        \"crayon\",\n        \"hms\",\n        \"lifecycle\",\n        \"rlang\",\n        \"tibble\",\n        \"tzdb\",\n        \"vroom\"\n      ]\n    },\n    \"readxl\": {\n      \"Package\": \"readxl\",\n      \"Version\": \"1.4.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"5c1fbc365ac0a3fe7728ac79108b8e64\",\n      \"Requirements\": [\n        \"cellranger\",\n        \"cpp11\",\n        \"progress\",\n        \"tibble\"\n      ]\n    },\n    \"rematch\": {\n      \"Package\": \"rematch\",\n      \"Version\": \"1.0.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"c66b930d20bb6d858cd18e1cebcfae5c\",\n      \"Requirements\": []\n    },\n    \"rematch2\": {\n      \"Package\": \"rematch2\",\n      \"Version\": \"2.1.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"76c9e04c712a05848ae7a23d2f170a40\",\n      \"Requirements\": [\n        \"tibble\"\n      ]\n    },\n    \"renv\": {\n      \"Package\": \"renv\",\n      \"Version\": \"0.16.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"c9e8442ab69bc21c9697ecf856c1e6c7\",\n      \"Requirements\": []\n    },\n    \"reprex\": {\n      \"Package\": \"reprex\",\n      \"Version\": \"2.0.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"d66fe009d4c20b7ab1927eb405db9ee2\",\n      \"Requirements\": [\n        \"callr\",\n        \"cli\",\n        \"clipr\",\n        \"fs\",\n        \"glue\",\n        \"knitr\",\n        \"lifecycle\",\n        \"rlang\",\n        \"rmarkdown\",\n        \"rstudioapi\",\n        \"withr\"\n      ]\n    },\n    \"rlang\": {\n      \"Package\": \"rlang\",\n      \"Version\": \"1.0.6\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"4ed1f8336c8d52c3e750adcdc57228a7\",\n      \"Requirements\": []\n    },\n    \"rmarkdown\": {\n      \"Package\": \"rmarkdown\",\n      \"Version\": \"2.19\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"4e29299e1f4c7eabb0b8365b338adf3c\",\n      \"Requirements\": [\n        \"bslib\",\n        \"evaluate\",\n        \"htmltools\",\n        \"jquerylib\",\n        \"jsonlite\",\n        \"knitr\",\n        \"stringr\",\n        \"tinytex\",\n        \"xfun\",\n        \"yaml\"\n      ]\n    },\n    \"rprojroot\": {\n      \"Package\": \"rprojroot\",\n      \"Version\": \"2.0.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"1de7ab598047a87bba48434ba35d497d\",\n      \"Requirements\": []\n    },\n    \"rstudioapi\": {\n      \"Package\": \"rstudioapi\",\n      \"Version\": \"0.14\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"690bd2acc42a9166ce34845884459320\",\n      \"Requirements\": []\n    },\n    \"rvest\": {\n      \"Package\": \"rvest\",\n      \"Version\": \"1.0.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"a4a5ac819a467808c60e36e92ddf195e\",\n      \"Requirements\": [\n        \"cli\",\n        \"glue\",\n        \"httr\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"rlang\",\n        \"selectr\",\n        \"tibble\",\n        \"withr\",\n        \"xml2\"\n      ]\n    },\n    \"sass\": {\n      \"Package\": \"sass\",\n      \"Version\": \"0.4.4\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"c76cbac7ca04ce82d8c38e29729987a3\",\n      \"Requirements\": [\n        \"R6\",\n        \"fs\",\n        \"htmltools\",\n        \"rappdirs\",\n        \"rlang\"\n      ]\n    },\n    \"scales\": {\n      \"Package\": \"scales\",\n      \"Version\": \"1.2.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"906cb23d2f1c5680b8ce439b44c6fa63\",\n      \"Requirements\": [\n        \"R6\",\n        \"RColorBrewer\",\n        \"farver\",\n        \"labeling\",\n        \"lifecycle\",\n        \"munsell\",\n        \"rlang\",\n        \"viridisLite\"\n      ]\n    },\n    \"selectr\": {\n      \"Package\": \"selectr\",\n      \"Version\": \"0.4-2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"3838071b66e0c566d55cc26bd6e27bf4\",\n      \"Requirements\": [\n        \"R6\",\n        \"stringr\"\n      ]\n    },\n    \"snakecase\": {\n      \"Package\": \"snakecase\",\n      \"Version\": \"0.11.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"4079070fc210c7901c0832a3aeab894f\",\n      \"Requirements\": [\n        \"stringi\",\n        \"stringr\"\n      ]\n    },\n    \"stringi\": {\n      \"Package\": \"stringi\",\n      \"Version\": \"1.7.8\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"a68b980681bcbc84c7a67003fa796bfb\",\n      \"Requirements\": []\n    },\n    \"stringr\": {\n      \"Package\": \"stringr\",\n      \"Version\": \"1.5.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"671a4d384ae9d32fc47a14e98bfa3dc8\",\n      \"Requirements\": [\n        \"cli\",\n        \"glue\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"rlang\",\n        \"stringi\",\n        \"vctrs\"\n      ]\n    },\n    \"sys\": {\n      \"Package\": \"sys\",\n      \"Version\": \"3.4.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"34c16f1ef796057bfa06d3f4ff818a5d\",\n      \"Requirements\": []\n    },\n    \"tibble\": {\n      \"Package\": \"tibble\",\n      \"Version\": \"3.1.8\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"56b6934ef0f8c68225949a8672fe1a8f\",\n      \"Requirements\": [\n        \"fansi\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"pillar\",\n        \"pkgconfig\",\n        \"rlang\",\n        \"vctrs\"\n      ]\n    },\n    \"tidyr\": {\n      \"Package\": \"tidyr\",\n      \"Version\": \"1.2.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"cdb403db0de33ccd1b6f53b83736efa8\",\n      \"Requirements\": [\n        \"cpp11\",\n        \"dplyr\",\n        \"ellipsis\",\n        \"glue\",\n        \"lifecycle\",\n        \"magrittr\",\n        \"purrr\",\n        \"rlang\",\n        \"tibble\",\n        \"tidyselect\",\n        \"vctrs\"\n      ]\n    },\n    \"tidyselect\": {\n      \"Package\": \"tidyselect\",\n      \"Version\": \"1.2.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"79540e5fcd9e0435af547d885f184fd5\",\n      \"Requirements\": [\n        \"cli\",\n        \"glue\",\n        \"lifecycle\",\n        \"rlang\",\n        \"vctrs\",\n        \"withr\"\n      ]\n    },\n    \"tidyverse\": {\n      \"Package\": \"tidyverse\",\n      \"Version\": \"1.3.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"972389aea7fa1a34739054a810d0c6f6\",\n      \"Requirements\": [\n        \"broom\",\n        \"cli\",\n        \"crayon\",\n        \"dbplyr\",\n        \"dplyr\",\n        \"dtplyr\",\n        \"forcats\",\n        \"ggplot2\",\n        \"googledrive\",\n        \"googlesheets4\",\n        \"haven\",\n        \"hms\",\n        \"httr\",\n        \"jsonlite\",\n        \"lubridate\",\n        \"magrittr\",\n        \"modelr\",\n        \"pillar\",\n        \"purrr\",\n        \"readr\",\n        \"readxl\",\n        \"reprex\",\n        \"rlang\",\n        \"rstudioapi\",\n        \"rvest\",\n        \"stringr\",\n        \"tibble\",\n        \"tidyr\",\n        \"xml2\"\n      ]\n    },\n    \"timechange\": {\n      \"Package\": \"timechange\",\n      \"Version\": \"0.1.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"4657195cc632097bb8d140d626b519fb\",\n      \"Requirements\": [\n        \"cpp11\"\n      ]\n    },\n    \"tinytex\": {\n      \"Package\": \"tinytex\",\n      \"Version\": \"0.43\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"facc02f3d63ed7dd765513c004c394ce\",\n      \"Requirements\": [\n        \"xfun\"\n      ]\n    },\n    \"tzdb\": {\n      \"Package\": \"tzdb\",\n      \"Version\": \"0.3.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"b2e1cbce7c903eaf23ec05c58e59fb5e\",\n      \"Requirements\": [\n        \"cpp11\"\n      ]\n    },\n    \"utf8\": {\n      \"Package\": \"utf8\",\n      \"Version\": \"1.2.2\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"c9c462b759a5cc844ae25b5942654d13\",\n      \"Requirements\": []\n    },\n    \"uuid\": {\n      \"Package\": \"uuid\",\n      \"Version\": \"1.1-0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"f1cb46c157d080b729159d407be83496\",\n      \"Requirements\": []\n    },\n    \"vctrs\": {\n      \"Package\": \"vctrs\",\n      \"Version\": \"0.5.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"970324f6572b4fd81db507b5d4062cb0\",\n      \"Requirements\": [\n        \"cli\",\n        \"glue\",\n        \"lifecycle\",\n        \"rlang\"\n      ]\n    },\n    \"viridisLite\": {\n      \"Package\": \"viridisLite\",\n      \"Version\": \"0.4.1\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"62f4b5da3e08d8e5bcba6cac15603f70\",\n      \"Requirements\": []\n    },\n    \"vroom\": {\n      \"Package\": \"vroom\",\n      \"Version\": \"1.6.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"64f81fdead6e0d250fb041e175d123ab\",\n      \"Requirements\": [\n        \"bit64\",\n        \"cli\",\n        \"cpp11\",\n        \"crayon\",\n        \"glue\",\n        \"hms\",\n        \"lifecycle\",\n        \"progress\",\n        \"rlang\",\n        \"tibble\",\n        \"tidyselect\",\n        \"tzdb\",\n        \"vctrs\",\n        \"withr\"\n      ]\n    },\n    \"withr\": {\n      \"Package\": \"withr\",\n      \"Version\": \"2.5.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"c0e49a9760983e81e55cdd9be92e7182\",\n      \"Requirements\": []\n    },\n    \"xfun\": {\n      \"Package\": \"xfun\",\n      \"Version\": \"0.36\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"f5baec54606751aa53ac9c0e05848ed6\",\n      \"Requirements\": []\n    },\n    \"xml2\": {\n      \"Package\": \"xml2\",\n      \"Version\": \"1.3.3\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"40682ed6a969ea5abfd351eb67833adc\",\n      \"Requirements\": []\n    },\n    \"yaml\": {\n      \"Package\": \"yaml\",\n      \"Version\": \"2.3.6\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"RSPM\",\n      \"Hash\": \"9b570515751dcbae610f29885e025b41\",\n      \"Requirements\": []\n    }\n  }\n}\n\n\n\n\n\nBut Dropbox might ruin…"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#advanced-renv-with-cloud-storage",
+    "href": "code/slides/advancedr/index.html#advanced-renv-with-cloud-storage",
+    "title": "",
+    "section": "(Advanced) renv with Cloud Storage",
+    "text": "(Advanced) renv with Cloud Storage"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#advanced-docker",
+    "href": "code/slides/advancedr/index.html#advanced-docker",
+    "title": "",
+    "section": "(Advanced) Docker",
+    "text": "(Advanced) Docker\n\nProblems renv can solve are only packages. They may come from differences in\n\nR versions ⇒ Always use the latest version of R\nNon-R dependencies (e.g., geospatial packages) ⇒ Docker can solve\nOS (only Windows binary produces bugs…) ⇒ Docker can solve\n\n\n\nDocker\n\nA virtual machine. Write a blueprint (Dockerfile) including information of OS (Linux), Application (R and others), and Packages\nIf you work on Docker, others can perfectly replicate your environment"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#handson-1",
+    "href": "code/slides/advancedr/index.html#handson-1",
+    "title": "",
+    "section": "Handson 1",
+    "text": "Handson 1\n\n\nClone (or download) the course repositiory\nOpen the course project (workshop-r-2022.Rproj)\nRun renv::restore() in R console\nConfirm you can render sample notebooks without any problem\n\n\n\n\n\n\n\n\nWarning\n\n\nPlease make sure if you are using the latest R version 4.2.2 (2022-10-31)."
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#fundamental-theorem-of-readability",
+    "href": "code/slides/advancedr/index.html#fundamental-theorem-of-readability",
+    "title": "",
+    "section": "Fundamental Theorem of Readability",
+    "text": "Fundamental Theorem of Readability\n\n\n\n\n\n\n\nFundamental Theorem of Readability (Boswell and Foucher (2011))\n\n\nCode should be written to minimize the time it would take for someone else to understand it.\n\n\n\n\n\n\\[\n\\text{Code} := \\arg\\min_{c \\in \\mathcal{C}}\\mathbb{E}_i[R_{i}(c)]\n\\]\nwhere\n\n\\(\\mathcal{C}\\): Set of codes that work\n\\(i\\): A potential reader including yourself at a different time point\n\\(R_{i}(c)\\): Time taken by person \\(i\\) to understand code \\(c\\)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#naming",
+    "href": "code/slides/advancedr/index.html#naming",
+    "title": "",
+    "section": "Naming",
+    "text": "Naming\n\nFor readability, you need to name variables informatively and non-misleadingly\n\n\n\n\n\n\n  \n  \n    \n      \n      🙆 Good\n      🙅 Bad\n    \n  \n  \n    Bool\nis_female, has_kids\nfemale, no_kids\n    Category\nindustry8, emp3\nindustry, emp_status\n    Bins\nage_bin5, wage_bin10\nage, wage"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#naming-1",
+    "href": "code/slides/advancedr/index.html#naming-1",
+    "title": "",
+    "section": "Naming",
+    "text": "Naming\n\nFor readability, you need to name variables informatively and non-misleadingly\n\n\n\n\n\n\n  \n  \n    \n      \n      🙆 Good\n      🙅 Bad\n    \n  \n  \n    Bool\nis_female, has_kids\nfemale, no_kids\n    Category\nindustry8, emp3\nindustry, emp_status\n    Bins\nage_bin5, wage_bin10\nage, wage\n  \n  \n  \n\n\n\n\n\nBoolean\n\nis_*, has_*, should_* indicates the type boolean.\nStarting with not_*/no_* increases a step of recognition"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#naming-2",
+    "href": "code/slides/advancedr/index.html#naming-2",
+    "title": "",
+    "section": "Naming",
+    "text": "Naming\n\nFor readability, you need to name variables informatively and non-misleadingly\n\n\n\n\n\n\n  \n  \n    \n      \n      🙆 Good\n      🙅 Bad\n    \n  \n  \n    Bool\nis_female, has_kids\nfemale, no_kids\n    Category\nindustry8, emp3\nindustry, emp_status\n    Bins\nage_bin5, wage_bin10\nage, wage\n  \n  \n  \n\n\n\n\n\nCategorical\n\nAttached number indicates if it is categorical and its number"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#naming-3",
+    "href": "code/slides/advancedr/index.html#naming-3",
+    "title": "",
+    "section": "Naming",
+    "text": "Naming\n\nFor readability, you need to name variables informatively and non-misleadingly\n\n\n\n\n\n\n  \n  \n    \n      \n      🙆 Good\n      🙅 Bad\n    \n  \n  \n    Bool\nis_female, has_kids\nfemale, no_kids\n    Category\nindustry8, emp3\nindustry, emp_status\n    Bins\nage_bin5, wage_bin10\nage, wage\n  \n  \n  \n\n\n\n\n\nBins of continuous variables\n\nNeed to avoid the confusion with its continuous variable\nAttached number shows the width of the bin"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#rename-at-once",
+    "href": "code/slides/advancedr/index.html#rename-at-once",
+    "title": "",
+    "section": "Rename at Once",
+    "text": "Rename at Once\n\n\n\nraw <- read_delim(here(\"data/raw/accident_bike/txt/year=2022/file.txt\"),\n        delim = \";\", show_col_types = FALSE)\n\n\n\nRows: 42,547\nColumns: 5\n$ num_expediente <dbl> 2.022e+04, 2.022e+04, 2.022e+05, 2.022e+05, 2.022e+05, …\n$ fecha          <chr> \"01/01/2022\", \"01/01/2022\", \"01/01/2022\", \"01/01/2022\",…\n$ hora           <time> 01:30:00, 01:30:00, 00:30:00, 00:30:00, 00:30:00, 01:5…\n$ localizacion   <chr> \"AVDA. ALBUFERA, 19\", \"AVDA. ALBUFERA, 19\", \"PLAZA. CAN…\n$ numero         <chr> \"19\", \"19\", \"2\", \"2\", \"2\", \"53\", \"53\", \"728\", \"728\", \"+…\n\n\n\n\ncode <- read_csv(here(\"data/translate/accident_bike.csv\"),\n                     show_col_types = FALSE)\nrenamed <- raw |>\n  rename_at(vars(code$spanish), ~code$english)\n\n\n\nRows: 42,547\nColumns: 5\n$ id_1922    <dbl> 2.022e+04, 2.022e+04, 2.022e+05, 2.022e+05, 2.022e+05, 2.02…\n$ date       <chr> \"01/01/2022\", \"01/01/2022\", \"01/01/2022\", \"01/01/2022\", \"01…\n$ hms        <time> 01:30:00, 01:30:00, 00:30:00, 00:30:00, 00:30:00, 01:50:00…\n$ street     <chr> \"AVDA. ALBUFERA, 19\", \"AVDA. ALBUFERA, 19\", \"PLAZA. CANOVAS…\n$ num_street <chr> \"19\", \"19\", \"2\", \"2\", \"2\", \"53\", \"53\", \"728\", \"728\", \"+0050…\n\n\n\n\n\n\n\n \n  \n    spanish \n    english \n  \n \n\n  \n    num_expediente \n    id_1922 \n  \n  \n    fecha \n    date \n  \n  \n    hora \n    hms \n  \n  \n    localizacion \n    street \n  \n  \n    numero \n    num_street \n  \n  \n    cod_distrito \n    code_district \n  \n  \n    distrito \n    district \n  \n  \n    tipo_accidente \n    type_accident \n  \n  \n    estado_meteorológico \n    weather \n  \n  \n    tipo_vehiculo \n    type_vehicle \n  \n  \n    tipo_persona \n    type_person \n  \n  \n    rango_edad \n    age_c \n  \n  \n    sexo \n    gender \n  \n  \n    cod_lesividad \n    code_injury8 \n  \n  \n    lesividad \n    injury8 \n  \n  \n    coordenada_x_utm \n    coord_x \n  \n  \n    coordenada_y_utm \n    coord_y \n  \n  \n    positiva_alcohol \n    positive_alcohol \n  \n  \n    positiva_droga \n    positive_drug"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#type-date-time",
+    "href": "code/slides/advancedr/index.html#type-date-time",
+    "title": "",
+    "section": "Type: Date & Time",
+    "text": "Type: Date & Time\n\nlubridate provides strong date-parsering functions.\n\n\nlubridate::ymd(\"2021/08/31\")\n\n[1] \"2021-08-31\"\n\nlubridate::mdy(\"Sep. 10, 19\")\n\n[1] \"2019-09-10\"\n\nlubridate::dmy_hm(\"02/04/1999 16:00\", tz=\"America/New_York\")\n\n[1] \"1999-04-02 16:00:00 EST\""
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#section-2",
+    "href": "code/slides/advancedr/index.html#section-2",
+    "title": "",
+    "section": "",
+    "text": "renamed |> select(date, hms) |> head()\n\n# A tibble: 6 × 2\n  date       hms   \n  <chr>      <time>\n1 01/01/2022 01:30 \n2 01/01/2022 01:30 \n3 01/01/2022 00:30 \n4 01/01/2022 00:30 \n5 01/01/2022 00:30 \n6 01/01/2022 01:50 \n\n\n\n\nrenamed |>\n  mutate(time = lubridate::dmy_hms(str_c(date, hms), tz = \"Europe/Madrid\")) |>\n  select(date, hms, time) |>\n  head()\n\n# A tibble: 6 × 3\n  date       hms    time               \n  <chr>      <time> <dttm>             \n1 01/01/2022 01:30  2022-01-01 01:30:00\n2 01/01/2022 01:30  2022-01-01 01:30:00\n3 01/01/2022 00:30  2022-01-01 00:30:00\n4 01/01/2022 00:30  2022-01-01 00:30:00\n5 01/01/2022 00:30  2022-01-01 00:30:00\n6 01/01/2022 01:50  2022-01-01 01:50:00"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#type-categorical-variables",
+    "href": "code/slides/advancedr/index.html#type-categorical-variables",
+    "title": "",
+    "section": "Type: Categorical Variables",
+    "text": "Type: Categorical Variables\n\n\n\n\nrenamed |>\n  mutate(\n    type_person = recode_factor(type_person,\n        \"Conductor\" = \"Driver\",\n        \"Pasajero\" = \"Passenger\",\n        \"Peatón\" = \"Pedestrian\",\n        \"NULL\"= NULL)) |>\n  janitor::tabyl(type_person)\n\n type_person     n    percent\n      Driver 34567 0.81244271\n   Passenger  6503 0.15284274\n  Pedestrian  1477 0.03471455\n\n\n\n\nrecode_factor() finishes:\n\nDefine as factor variables\nOrder factor variable\nRename & Translate (labels in plots & tables)\nHandle NA values (next slide)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#handle-na-values",
+    "href": "code/slides/advancedr/index.html#handle-na-values",
+    "title": "",
+    "section": "Handle NA Values",
+    "text": "Handle NA Values\nSome datasets include NA values as string format\n\nunique(renamed$weather) # \"Se desconoce\" is also essentially NA\n\n[1] \"Despejado\"      \"NULL\"           \"Se desconoce\"   \"Lluvia débil\"  \n[5] \"Nublado\"        \"LLuvia intensa\" \"Granizando\"     \"Nevando\"       \n\n\n\n\nSolution 1: Define NA values when you load\n\nsol1 <- read_delim(here(\"data/raw/accident_bike/txt/year=2019/file.txt\"),\n                 delim = \";\", show_col_types = FALSE,\n                 na = c(\"\", \"NA\", \"NULL\", \"Se desconoce\", \"Desconocido\")) |>\n        rename(weather = \"estado_meteorológico\")\n\nunique(sol1$weather)\n\n[1] \"Despejado\"      NA               \"Lluvia débil\"   \"Nublado\"       \n[5] \"LLuvia intensa\" \"Granizando\"     \"Nevando\"       \n\n\n\n\nCannot use when specific numbers as NA values (9, 99,…)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#section-3",
+    "href": "code/slides/advancedr/index.html#section-3",
+    "title": "",
+    "section": "",
+    "text": "Solution2: na_if()\n\nrenamed |>\n  mutate(\n    weather_old = weather,# Presentation Purpose\n    weather = na_if(weather, \"Se desconoce\"),\n    weather = na_if(weather, \"NULL\"),\n    ) |>\n  select(weather_old, weather) |>\n  head()\n\n# A tibble: 6 × 2\n  weather_old weather  \n  <chr>       <chr>    \n1 Despejado   Despejado\n2 Despejado   Despejado\n3 NULL        <NA>     \n4 NULL        <NA>     \n5 NULL        <NA>     \n6 Despejado   Despejado\n\n\n\nWorks for any case. But need to write for each NA value."
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#section-4",
+    "href": "code/slides/advancedr/index.html#section-4",
+    "title": "",
+    "section": "",
+    "text": "Soltion 3: Recode as NULL\n\nrenamed |>\n  mutate(\n    weather_spanish = weather,# Presentation Purpose\n    weather = recode_factor(weather,\n        \"Despejado\" = \"sunny\",\n        \"Nublado\" = \"cloud\",\n        \"Lluvia débil\" = \"soft rain\",\n        \"Lluvia intensa\" = \"hard rain\",\n        \"LLuvia intensa\" = \"hard rain\",\n        \"Nevando\" = \"snow\",\n        \"Granizando\" = \"hail\",\n        \"Se desconoce\" = NULL,\n        \"NULL\" = NULL)) |>\n  select(weather_spanish, weather) |>\n  head()\n\n# A tibble: 6 × 2\n  weather_spanish weather\n  <chr>           <fct>  \n1 Despejado       sunny  \n2 Despejado       sunny  \n3 NULL            <NA>   \n4 NULL            <NA>   \n5 NULL            <NA>   \n6 Despejado       sunny  \n\n\n\n\nOnly works for categorical variables. But practically useful."
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#parquet-format",
+    "href": "code/slides/advancedr/index.html#parquet-format",
+    "title": "",
+    "section": "Parquet Format",
+    "text": "Parquet Format\n\n\n\n\n\n\n\n  \n  \n    \n      \n      Speed\n      Size\n      Keep Type\n      Multi-Language\n    \n  \n  \n    csv, tsv\n❌\n❌\n❌\nAll\n    rds, RData\n❌\n✔️\n✔️\n❌\n    parquet\n✔️\n✔️\n✔️\nPython, Julia, MATLAB, Stata,...\n  \n  \n  \n\n\n\n\n\nYou can find a benchmark in Kastrun (2022)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#arrowread_parquet",
+    "href": "code/slides/advancedr/index.html#arrowread_parquet",
+    "title": "",
+    "section": "arrow::read_parquet()",
+    "text": "arrow::read_parquet()\n\nYou can load parquet data as column-information only\n\n\n\n\ndf <- arrow::read_parquet(\n  here(\"data/cleaned/accident_bike.parquet\"),\n  as_data_frame = TRUE)\n\ndf\n\n# A tibble: 168,574 × 23\n   id_1922    date  hms   street num_s…¹ code_…² distr…³ type_…⁴ weather type_…⁵\n   <chr>      <chr> <chr> <chr>  <chr>     <int> <chr>   <chr>   <fct>   <chr>  \n 1 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 2 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 3 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 4 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 5 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 6 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n 7 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n 8 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n 9 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n10 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n# … with 168,564 more rows, 13 more variables: type_person <fct>, age_c <fct>,\n#   gender <fct>, code_injury8 <chr>, injury8 <fct>, coord_x <chr>,\n#   coord_y <chr>, positive_alcohol <lgl>, positive_drug <lgl>, year <int>,\n#   time <dttm>, is_died <lgl>, is_hospitalized <lgl>, and abbreviated variable\n#   names ¹​num_street, ²​code_district, ³​district, ⁴​type_accident, ⁵​type_vehicle\n\n\n\n\ninfo <- arrow::read_parquet(\n  here(\"data/cleaned/accident_bike.parquet\"),\n  as_data_frame = FALSE)\n\ninfo\n\nTable\n168574 rows x 23 columns\n$id_1922 <string>\n$date <string>\n$hms <string>\n$street <string>\n$num_street <string>\n$code_district <int32>\n$district <string>\n$type_accident <string>\n$weather <dictionary<values=string, indices=int32>>\n$type_vehicle <string>\n$type_person <dictionary<values=string, indices=int32>>\n$age_c <dictionary<values=string, indices=int32>>\n$gender <dictionary<values=string, indices=int32>>\n$code_injury8 <string>\n$injury8 <dictionary<values=string, indices=int32>>\n$coord_x <string>\n$coord_y <string>\n$positive_alcohol <bool>\n$positive_drug <bool>\n$year <int32>\n$time <timestamp[us, tz=Europe/Madrid]>\n$is_died <bool>\n$is_hospitalized <bool>"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#release-parquet-on-memory",
+    "href": "code/slides/advancedr/index.html#release-parquet-on-memory",
+    "title": "",
+    "section": "Release Parquet on Memory",
+    "text": "Release Parquet on Memory\n\n\n\ninfo |>\n  collect()\n\n# A tibble: 168,574 × 23\n   id_1922    date  hms   street num_s…¹ code_…² distr…³ type_…⁴ weather type_…⁵\n   <chr>      <chr> <chr> <chr>  <chr>     <int> <chr>   <chr>   <fct>   <chr>  \n 1 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 2 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 3 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 4 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 5 2020S0195… 01/0… 4:30… AVDA.… 57           13 Puente… Colisi… sunny   Turismo\n 6 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n 7 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n 8 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n 9 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n10 2021S0000… 01/0… 0:50… AVDA.… 1            12 Usera   Colisi… sunny   Turismo\n# … with 168,564 more rows, 13 more variables: type_person <fct>, age_c <fct>,\n#   gender <fct>, code_injury8 <chr>, injury8 <fct>, coord_x <chr>,\n#   coord_y <chr>, positive_alcohol <lgl>, positive_drug <lgl>, year <int>,\n#   time <dttm>, is_died <lgl>, is_hospitalized <lgl>, and abbreviated variable\n#   names ¹​num_street, ²​code_district, ³​district, ⁴​type_accident, ⁵​type_vehicle\n\n\n\n\ninfo |>\n  filter(is_hospitalized) |>\n  select(time, gender, age_c, positive_alcohol) |>\n  collect()\n\n# A tibble: 8,724 × 4\n   time                gender age_c positive_alcohol\n   <dttm>              <fct>  <fct> <lgl>           \n 1 2021-01-01 00:50:00 Women  35-39 FALSE           \n 2 2021-01-01 00:50:00 Men    15-17 FALSE           \n 3 2021-01-01 00:50:00 Men    <5    FALSE           \n 4 2021-01-01 00:30:00 Men    40-44 TRUE            \n 5 2021-01-01 00:30:00 Women  45-49 TRUE            \n 6 2021-01-01 22:30:00 Men    40-44 FALSE           \n 7 2021-01-01 11:38:00 Men    45-49 FALSE           \n 8 2021-01-02 17:15:00 Men    10-14 FALSE           \n 9 2021-01-02 21:30:00 Men    25-29 FALSE           \n10 2021-01-02 23:10:00 Men    18-20 FALSE           \n# … with 8,714 more rows\n\n\n\n\n\ndplyr::collect() releases the loaded parquet data on memory\nYou can load them after select() or filter()\nAlso, group_by() and summarize() are available\nQuite useful for large datasets"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#parquet-with-partitioned-dataset",
+    "href": "code/slides/advancedr/index.html#parquet-with-partitioned-dataset",
+    "title": "",
+    "section": "Parquet with Partitioned Dataset",
+    "text": "Parquet with Partitioned Dataset\n\n\n\ndata/raw/accident_bike/parquet/\n├── year=2019\n│   └── part-0.parquet\n├── year=2020\n│   └── part-0.parquet\n├── year=2021\n│   └── part-0.parquet\n└── year=2022\n    └── part-0.parquet\n\n\ninfo <- open_dataset(\n          here(\"data/raw/accident_bike/parquet\"))\ninfo\n\nFileSystemDataset with 4 Parquet files\nnum_expediente: string\nfecha: string\nhora: string\nlocalizacion: string\nnumero: string\ncod_distrito: int32\ndistrito: string\ntipo_accidente: string\nestado_meteorológico: string\ntipo_vehiculo: string\ntipo_persona: string\nrango_edad: string\nsexo: string\ncod_lesividad: string\nlesividad: string\ncoordenada_x_utm: string\ncoordenada_y_utm: string\npositiva_alcohol: string\npositiva_droga: string\nyear: int32\n\n\n\n\n\nGiven this structure, arrow::open_dataset() loads them as one parquet file\nA Partitioning variable (year) becomes a new variable\nFor more instructions, you can refer to Mock (2022)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#cleaning-workflow",
+    "href": "code/slides/advancedr/index.html#cleaning-workflow",
+    "title": "",
+    "section": "Cleaning Workflow",
+    "text": "Cleaning Workflow\n1. Naming\n\nPut informative and non-misleading names\nIf necessary, translate the variable names\nYou can use a correspondence table and rename variables at once\n\n2. Determine Types\n\nDate: lubridate parsing functions\nCategorical: recode_factor()\nNA-values: na_if() and recode_factor()\n\n3. Export\n\nParquet format is better than any other data format\nParquet makes it easy to handle large datasets"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#data-ink-ratio",
+    "href": "code/slides/advancedr/index.html#data-ink-ratio",
+    "title": "",
+    "section": "Data-ink Ratio",
+    "text": "Data-ink Ratio\n\n\n\n\n\n\n\nData-ink Ratio Principle (Tufte 2001)\n\n\nMaximize the data-ink ratio in a plot:\n\\[\n\\text{Data-ink ratio} := \\frac{\\text{Data-ink}}{\\text{Total ink used to print in the graphic}}\n\\]\n\n\n\n\n\n\n\n\n\n\n\nCollolary\n\n\nOmit all the proportions of a graphic that can be erased without losing information"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#maximize-data-ink-ratio",
+    "href": "code/slides/advancedr/index.html#maximize-data-ink-ratio",
+    "title": "",
+    "section": "Maximize Data-ink Ratio",
+    "text": "Maximize Data-ink Ratio\n\n\n\naccident_bike |>\n  ggplot(aes(x = type_person, fill = gender)) +\n  geom_bar(position = \"dodge\")"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#maximize-data-ink-ratio-1",
+    "href": "code/slides/advancedr/index.html#maximize-data-ink-ratio-1",
+    "title": "",
+    "section": "Maximize Data-ink Ratio",
+    "text": "Maximize Data-ink Ratio\n\n\n\naccident_bike |>\n  ggplot(aes(x = type_person, fill = gender)) +\n  geom_bar(position = \"dodge\") +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  theme_minimal() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.x = element_blank())\n\n\n\n\n\nNumber of Persons Hospitalized\n\n\n\n\n\n\n\n\nOmit axis label. The title of the plot can tell them\nOmit legend label. The label “gender” does not add any information\nOmit background grids"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#more-readability-order-bar-plot",
+    "href": "code/slides/advancedr/index.html#more-readability-order-bar-plot",
+    "title": "",
+    "section": "More Readability: Order Bar Plot",
+    "text": "More Readability: Order Bar Plot\n\n\n\naccident_bike |>\n  ggplot(aes(x = fct_rev(type_person),\n         fill = fct_rev(gender))) +\n  geom_bar(position = \"dodge\") +\n  coord_flip() +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  theme_minimal() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.y = element_blank(),\n        legend.position = c(0.9, 0.1)) +\n  guides(fill = guide_legend(reverse = TRUE))\n\n\n\n\n\nNumber of Persons Hospitalized\n\n\n\n\n\n\n\n\nCoord flipped. Reorder the factor variables\nPut legends inside the plot to make the plot bigger"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#more-readability-increase-font-size",
+    "href": "code/slides/advancedr/index.html#more-readability-increase-font-size",
+    "title": "",
+    "section": "More Readability: Increase Font Size",
+    "text": "More Readability: Increase Font Size\n\n\n\naccident_bike |>\n  ggplot(aes(x = fct_rev(type_person),\n         fill = fct_rev(gender))) +\n  geom_bar(position = \"dodge\") +\n  coord_flip() +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  theme_minimal() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.y = element_blank(),\n        legend.position = c(0.9, 0.1),\n        axis.text.x = element_text(size = 20),\n        axis.text.y = element_text(size = 25),\n        legend.text = element_text(size = 20)) +\n  guides(fill = guide_legend(reverse = TRUE))\n\n\n\n\n\nNumber of Persons Hospitalized"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#r-color-brewers-palettes",
+    "href": "code/slides/advancedr/index.html#r-color-brewers-palettes",
+    "title": "",
+    "section": "R Color Brewer’s Palettes",
+    "text": "R Color Brewer’s Palettes"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#r-color-brewers-palettes-1",
+    "href": "code/slides/advancedr/index.html#r-color-brewers-palettes-1",
+    "title": "",
+    "section": "R Color Brewer’s Palettes",
+    "text": "R Color Brewer’s Palettes\n\n\n\naccident_bike |>\n  ggplot(aes(x = fct_rev(type_person),\n         fill = fct_rev(gender))) +\n  geom_bar(position = \"dodge\") +\n  coord_flip() +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  scale_fill_brewer(palette = \"Accent\") +\n  theme_minimal() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.y = element_blank(),\n        legend.position = c(0.9, 0.1),\n        axis.text.x = element_text(size = 20),\n        axis.text.y = element_text(size = 25),\n        legend.text = element_text(size = 20)) +\n  guides(fill = guide_legend(reverse = TRUE))\n\n\n\n\nNumber of Persons Hospitalized"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#color-safe-pallette-okabe-ito-palette",
+    "href": "code/slides/advancedr/index.html#color-safe-pallette-okabe-ito-palette",
+    "title": "",
+    "section": "Color-Safe Pallette: Okabe-Ito Palette",
+    "text": "Color-Safe Pallette: Okabe-Ito Palette\n\n\n\naccident_bike |>\n  ggplot(aes(x = fct_rev(type_person),\n         fill = fct_rev(gender))) +\n  geom_bar(position = \"dodge\") +\n  coord_flip() +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  see::scale_fill_okabeito() +\n  theme_minimal() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.y = element_blank(),\n        legend.position = c(0.9, 0.1),\n        axis.text.x = element_text(size = 20),\n        axis.text.y = element_text(size = 25),\n        legend.text = element_text(size = 20)) +\n  guides(fill = guide_legend(reverse = TRUE))\n\n\n\n\nNumber of Persons Hospitalized"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#custom-palette",
+    "href": "code/slides/advancedr/index.html#custom-palette",
+    "title": "",
+    "section": "Custom Palette",
+    "text": "Custom Palette\n\n\n\naccident_bike |>\n  ggplot(aes(x = fct_rev(type_person),\n         fill = fct_rev(gender))) +\n  geom_bar(position = \"dodge\") +\n  coord_flip() +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  scale_fill_manual(values = c(\"#E7B800\", \"#00AFBB\")) +\n  theme_minimal() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.y = element_blank(),\n        legend.position = c(0.9, 0.1),\n        axis.text.x = element_text(size = 20),\n        axis.text.y = element_text(size = 25),\n        legend.text = element_text(size = 20)) +\n  guides(fill = guide_legend(reverse = TRUE))\n\n\n\n\nNumber of Persons Hospitalized"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#fonts",
+    "href": "code/slides/advancedr/index.html#fonts",
+    "title": "",
+    "section": "Fonts",
+    "text": "Fonts\n\n\nGoolge Fonts\n\nYou can download well-designed free fonts\nMy recommendation: Condensed fonts\n\n\nRoboto Condensed, Fira Sans Condensed, IBM Plex Sans Condensed,…\n\n\n\n\nshowtext\n\nYour collaborators need to download the fonts\nfont_add_google() and showtext_auto() automatically solve the problem"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#roboto-condensed",
+    "href": "code/slides/advancedr/index.html#roboto-condensed",
+    "title": "",
+    "section": "Roboto Condensed",
+    "text": "Roboto Condensed\n\n\n\nlibrary(showtext)\nfont_base  <- \"Roboto Condensed\"\nfont_light <- \"Roboto Condensed Light 300\"\nfont_add_google(font_base, font_light)\nshowtext_auto()\n\naccident_bike |>\n  ggplot(aes(x = fct_rev(type_person), fill = fct_rev(gender))) +\n  geom_bar(position = \"dodge\") +\n  coord_flip() +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  see::scale_fill_okabeito() +\n  theme_minimal() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.y = element_blank(),\n        legend.position = c(0.9, 0.1),\n        axis.text.x = element_text(size = 20, family = font_light),\n        axis.text.y = element_text(size = 25, family = font_base),\n        legend.text = element_text(size = 20, family = font_light)) +\n  guides(fill = guide_legend(reverse = TRUE))\n\n\n\n\nNumber of Persons Hospitalized"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#global-options",
+    "href": "code/slides/advancedr/index.html#global-options",
+    "title": "",
+    "section": "Global Options",
+    "text": "Global Options\n\nDon’t worry. You can set the default theme before plotting. (e.g. Scherer (2021))\n\ntheme_set(theme_minimal(base_size = 12, base_family = \"Roboto Condensed\"))\ntheme_update(\n  axis.ticks = element_line(color = \"grey92\"),\n  axis.ticks.length = unit(.5, \"lines\"),\n  panel.grid.minor = element_blank(),\n  legend.title = element_text(size = 12),\n  legend.text = element_text(color = \"grey30\"),\n  plot.title = element_text(size = 18, face = \"bold\"),\n  plot.subtitle = element_text(size = 12, color = \"grey30\"),\n  plot.caption = element_text(size = 9, margin = margin(t = 15))\n)\n\nAlternatively, create a custom theme and color palette (e.g. Heiss (2021))"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#third-party-themes-hrbrthemes",
+    "href": "code/slides/advancedr/index.html#third-party-themes-hrbrthemes",
+    "title": "",
+    "section": "Third-party Themes: hrbrthemes",
+    "text": "Third-party Themes: hrbrthemes\n\n\n\naccident_bike |>\n  ggplot(aes(x = fct_rev(type_person),\n         fill = fct_rev(gender))) +\n  geom_bar(position = \"dodge\") +\n  coord_flip() +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  hrbrthemes::scale_fill_ipsum() +\n  hrbrthemes::theme_ipsum_rc() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.y = element_blank(),\n        legend.position = c(0.9, 0.1),\n        axis.text.x = element_text(size = 20),\n        axis.text.y = element_text(size = 25),\n        legend.text = element_text(size = 20)) +\n  guides(fill = guide_legend(reverse = TRUE))\n\n\n\n\nNumber of Persons Hospitalized"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#third-party-themes-ggpubr-ggsci-plaette",
+    "href": "code/slides/advancedr/index.html#third-party-themes-ggpubr-ggsci-plaette",
+    "title": "",
+    "section": "Third-party Themes:: ggpubr & ggsci Plaette",
+    "text": "Third-party Themes:: ggpubr & ggsci Plaette\n\n\n\np <- accident_bike |>\n  ggplot(aes(x = fct_rev(type_person),\n         fill = fct_rev(gender))) +\n  geom_bar(position = \"dodge\") +\n  coord_flip() +\n  labs(x = NULL, y = NULL, fill = NULL) +\n  ggpubr::theme_pubr() +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.y = element_blank(),\n        legend.position = c(0.9, 0.1),\n        axis.text.x = element_text(size = 20),\n        axis.text.y = element_text(size = 25),\n        legend.text = element_text(size = 20)) +\n  guides(fill = guide_legend(reverse = TRUE))\n\nggpubr::set_palette(p, \"jco\") # choose one of ggsci palette\n\n\n\n\nNumber of Persons Hospitalized"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#patchwork",
+    "href": "code/slides/advancedr/index.html#patchwork",
+    "title": "",
+    "section": "Patchwork",
+    "text": "Patchwork\n\n\n\n\nlibrary(patchwork)\n\n(p_default + p_custom) / (p_hrbrthemes + p_ggpubr)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#takeaway",
+    "href": "code/slides/advancedr/index.html#takeaway",
+    "title": "",
+    "section": "Takeaway",
+    "text": "Takeaway\nMaximize Data-ink Ratio\n\nOmit all the unnecessary elements in a plot\n\nColors & Fonts\n\nColor Palette: RColorBrewer, Okabe-Ito, ggsci\nFonts: Google Fonts. Especially, condensed fonts.\nReady-made Themes: hrbrthemes, ggpubr\n\nFurther Readings (Online Books)\n\n“Data Visualization: A Practical Introduction” Healy (2018)\n“Fundamentals of Data Visualization” Wilke (2019)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#kableextra-example",
+    "href": "code/slides/advancedr/index.html#kableextra-example",
+    "title": "",
+    "section": "kableExtra: Example",
+    "text": "kableExtra: Example\n\n\n\n\n\n\ntab\n\n# A tibble: 6 × 9\n# Groups:   weather [6]\n  weather   n_Men_2019 n_Men_2…¹ n_Men…² n_Men…³ n_Wom…⁴ n_Wom…⁵ n_Wom…⁶ n_Wom…⁷\n  <fct>          <int>     <int>   <int>   <int>   <int>   <int>   <int>   <int>\n1 sunny          24399     14969   19208   19420   11971    6958    9417    9298\n2 cloud           1159      1190    1325    1633     555     554     630     774\n3 soft rain       2126      1198    1281    1408    1068     542     605     716\n4 hard rain        386       202     386     352     222      96     210     179\n5 snow               2         2     124       5      NA      NA      38       1\n6 hail              11         5       6       4       3       3       1       2\n# … with abbreviated variable names ¹​n_Men_2020, ²​n_Men_2021, ³​n_Men_2022,\n#   ⁴​n_Women_2019, ⁵​n_Women_2020, ⁶​n_Women_2021, ⁷​n_Women_2022\n\n\n\n\nlibrary(kableExtra)\noptions(knitr.kable.NA = '')\n\nktb <- tab |>\n  kbl(format = \"latex\", booktabs = TRUE,\n      col.names = c(\" \", 2019:2022, 2019:2022)) |>\n  add_header_above(c(\" \", \"Men\" = 4, \"Women\" = 4)) |>\n  pack_rows(index = c(\"Good\" = 2, \"Bad\" = 4))\n\nktb |>\n  save_kable(here(\"output/tex/kableextra/tb_accident_bike.tex\"))\n\n\n\n\n\n\n\nbooktabs = TRUE for booktabs package in LaTeX\nYou can specify the column names by col.names\nYou can pack columns and rows by add_header_above() and pack_rows()\nsave_kable() saves in a tex file if the file name ends with “.tex”"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#kableextra",
+    "href": "code/slides/advancedr/index.html#kableextra",
+    "title": "",
+    "section": "kableExtra",
+    "text": "kableExtra\nDataframe (tibble) to Table\n\nCreate a tibble table by dplyr::group_by & dpyr::summarize and janitor::tabyl()\nFor regression tables, you can use modelsummary (next slide)\n\nPack Columns and Rows\n\nAs far as I know, Python, Julia, and Stata do not allow us to pack them easily\n\nMore Complicated Tables\n\nYou can refer to Hao Zhu’s document\nIf a table contains a mathematical expression, use escape=FALSE. See a discussion in stacoverflow"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#modelsummary",
+    "href": "code/slides/advancedr/index.html#modelsummary",
+    "title": "",
+    "section": "modelsummary",
+    "text": "modelsummary\n\n\n\nGiven the following regression results,\n\n\nlibrary(fixest) # for faster regression with fixed effect\n\nmodels <- list(\n    \"(1)\" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender,\n                family = binomial(logit), data = data),\n    \"(2)\" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle,\n                family = binomial(logit), data = data),\n    \"(3)\" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle + weather,\n                family = binomial(logit), data = data),\n    \"(4)\" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender,\n                family = binomial(logit), data = data),\n    \"(5)\" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle,\n                family = binomial(logit), data = data),\n    \"(6)\" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle + weather,\n                family = binomial(logit), data = data)\n)"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#modelsummary-init",
+    "href": "code/slides/advancedr/index.html#modelsummary-init",
+    "title": "",
+    "section": "modelsummary: Init",
+    "text": "modelsummary: Init\n\n\n\nmodelsummary(models)\n\n\n\n\n\n\n \n  \n      \n    (1) \n    (2) \n    (3) \n    (4) \n    (5) \n    (6) \n  \n \n\n  \n    type_personPassenger \n    0.049 \n    0.530 \n    0.507 \n    −1.781 \n    −1.575 \n    −1.565 \n  \n  \n     \n    (0.104) \n    (0.071) \n    (0.070) \n    (0.759) \n    (0.783) \n    (0.784) \n  \n  \n    type_personPedestrian \n    2.124 \n    2.402 \n    2.323 \n    2.280 \n    2.418 \n    2.422 \n  \n  \n     \n    (0.115) \n    (0.066) \n    (0.064) \n    (0.301) \n    (0.287) \n    (0.285) \n  \n  \n    positive_alcoholTRUE \n    −0.077 \n    0.310 \n    0.353 \n    −13.710 \n    −13.455 \n    −13.492 \n  \n  \n     \n    (0.088) \n    (0.095) \n    (0.093) \n    (0.053) \n    (0.064) \n    (0.063) \n  \n  \n    Num.Obs. \n    149918 \n    149831 \n    134006 \n    90852 \n    89300 \n    86330 \n  \n  \n    R2 \n    0.055 \n    0.171 \n    0.165 \n    0.107 \n    0.145 \n    0.148 \n  \n  \n    R2 Adj. \n    0.054 \n    0.170 \n    0.163 \n    0.086 \n    0.113 \n    0.112 \n  \n  \n    R2 Within \n    0.047 \n    0.054 \n    0.052 \n    0.073 \n    0.076 \n    0.076 \n  \n  \n    R2 Within Adj. \n    0.047 \n    0.054 \n    0.052 \n    0.070 \n    0.072 \n    0.073 \n  \n  \n    AIC \n    62871.0 \n    55210.6 \n    53565.4 \n    1601.9 \n    1552.2 \n    1534.5 \n  \n  \n    BIC \n    63079.3 \n    55696.5 \n    54085.1 \n    1780.8 \n    1824.8 \n    1834.2 \n  \n  \n    RMSE \n    0.23 \n    0.22 \n    0.23 \n    0.04 \n    0.04 \n    0.04 \n  \n  \n    Std.Errors \n    by: age_c \n    by: age_c \n    by: age_c \n    by: age_c \n    by: age_c \n    by: age_c \n  \n  \n    FE: age_c \n    X \n    X \n    X \n    X \n    X \n    X \n  \n  \n    FE: gender \n    X \n    X \n    X \n    X \n    X \n    X \n  \n  \n    FE: type_vehicle \n     \n    X \n    X \n     \n    X \n    X \n  \n  \n    FE: weather \n     \n     \n    X \n     \n     \n    X"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#modelsummary-modify-coefficients",
+    "href": "code/slides/advancedr/index.html#modelsummary-modify-coefficients",
+    "title": "",
+    "section": "modelsummary: Modify Coefficients",
+    "text": "modelsummary: Modify Coefficients\n\n\n\ncm  <-  c(\n    \"type_personpassenger\" = \"Passenger\",\n    \"type_personpedestrian\" = \"Pedestrian\",\n    \"positive_alcoholTRUE\" = \"Positive Alcohol\"\n)\n\nmodelsummary(models,\n  coef_map = cm\n)\n\n\n\n\n\n\n \n  \n      \n    (1) \n    (2) \n    (3) \n    (4) \n    (5) \n    (6) \n  \n \n\n  \n    Positive Alcohol \n    −0.077 \n    0.310 \n    0.353 \n    −13.710 \n    −13.455 \n    −13.492 \n  \n  \n     \n    (0.088) \n    (0.095) \n    (0.093) \n    (0.053) \n    (0.064) \n    (0.063) \n  \n  \n    Num.Obs. \n    149918 \n    149831 \n    134006 \n    90852 \n    89300 \n    86330 \n  \n  \n    R2 \n    0.055 \n    0.171 \n    0.165 \n    0.107 \n    0.145 \n    0.148 \n  \n  \n    R2 Adj. \n    0.054 \n    0.170 \n    0.163 \n    0.086 \n    0.113 \n    0.112 \n  \n  \n    R2 Within \n    0.047 \n    0.054 \n    0.052 \n    0.073 \n    0.076 \n    0.076 \n  \n  \n    R2 Within Adj. \n    0.047 \n    0.054 \n    0.052 \n    0.070 \n    0.072 \n    0.073 \n  \n  \n    AIC \n    62871.0 \n    55210.6 \n    53565.4 \n    1601.9 \n    1552.2 \n    1534.5 \n  \n  \n    BIC \n    63079.3 \n    55696.5 \n    54085.1 \n    1780.8 \n    1824.8 \n    1834.2 \n  \n  \n    RMSE \n    0.23 \n    0.22 \n    0.23 \n    0.04 \n    0.04 \n    0.04 \n  \n  \n    Std.Errors \n    by: age_c \n    by: age_c \n    by: age_c \n    by: age_c \n    by: age_c \n    by: age_c \n  \n  \n    FE: age_c \n    X \n    X \n    X \n    X \n    X \n    X \n  \n  \n    FE: gender \n    X \n    X \n    X \n    X \n    X \n    X \n  \n  \n    FE: type_vehicle \n     \n    X \n    X \n     \n    X \n    X \n  \n  \n    FE: weather \n     \n     \n    X \n     \n     \n    X"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#modelsummary-modify-statitics",
+    "href": "code/slides/advancedr/index.html#modelsummary-modify-statitics",
+    "title": "",
+    "section": "modelsummary: Modify Statitics",
+    "text": "modelsummary: Modify Statitics\n\n\n\ncm  <-  c(\n    \"type_personpassenger\" = \"Passenger\",\n    \"type_personpedestrian\" = \"Pedestrian\",\n    \"positive_alcoholTRUE\" = \"Positive Alcohol\"\n)\n\ngm <- tibble(\n    raw = c(\"nobs\", \"FE: age_c\", \"FE: gender\", \"FE: type_vehicle\", \"FE: weather\"),\n    clean = c(\"Observations\", \"FE: Age Group\", \"FE: Gender\", \"FE: Type of Vehicle\", \"FE: Weather\"),\n    fmt = c(0, 0, 0, 0, 0)\n)\n\nmodelsummary(models,\n  coef_map = cm,\n  gof_map = gm\n)\n\n\n\n\n\n\n \n  \n      \n    (1) \n    (2) \n    (3) \n    (4) \n    (5) \n    (6) \n  \n \n\n  \n    Positive Alcohol \n    −0.077 \n    0.310 \n    0.353 \n    −13.710 \n    −13.455 \n    −13.492 \n  \n  \n     \n    (0.088) \n    (0.095) \n    (0.093) \n    (0.053) \n    (0.064) \n    (0.063) \n  \n  \n    Observations \n    149918 \n    149831 \n    134006 \n    90852 \n    89300 \n    86330 \n  \n  \n    FE: Age Group \n    X \n    X \n    X \n    X \n    X \n    X \n  \n  \n    FE: Gender \n    X \n    X \n    X \n    X \n    X \n    X \n  \n  \n    FE: Type of Vehicle \n     \n    X \n    X \n     \n    X \n    X \n  \n  \n    FE: Weather \n     \n     \n    X \n     \n     \n    X"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#modelsummary-stars-headers",
+    "href": "code/slides/advancedr/index.html#modelsummary-stars-headers",
+    "title": "",
+    "section": "modelsummary: Stars & Headers",
+    "text": "modelsummary: Stars & Headers\n\n\n\ncode-line-numbers=\"7,16\"\ncm  <-  c(\n    \"type_personpassenger\" = \"Passenger\",\n    \"type_personpedestrian\" = \"Pedestrian\",\n    \"positive_alcoholTRUE\" = \"Positive Alcohol\"\n)\n\ngm <- tibble(\n    raw = c(\"nobs\", \"FE: age_c\", \"FE: gender\", \"FE: type_vehicle\", \"FE: weather\"),\n    clean = c(\"Observations\", \"FE: Age Group\", \"FE: Gender\", \"FE: Type of Vehicle\", \"FE: Weather\"),\n    fmt = c(0, 0, 0, 0, 0)\n)\n\nmodelsummary(models,\n  stars = c(\"+\" = .1, \"*\" = .05, \"**\" = .01),\n  coef_map = cm,\n  gof_map = gm) |>\n  add_header_above(c(\" \", \"Hospitalization\" = 3, \"Died within 24 hours\" = 3)) \n\n\n\n\n\n\n \n\n\nHospitalization\nDied within 24 hours\n\n  \n      \n    (1) \n    (2) \n    (3) \n    (4) \n    (5) \n    (6) \n  \n \n\n  \n    Positive Alcohol \n    −0.077 \n    0.310** \n    0.353** \n    −13.710** \n    −13.455** \n    −13.492** \n  \n  \n     \n    (0.088) \n    (0.095) \n    (0.093) \n    (0.053) \n    (0.064) \n    (0.063) \n  \n  \n    Observations \n    149918 \n    149831 \n    134006 \n    90852 \n    89300 \n    86330 \n  \n  \n    FE: Age Group \n    X \n    X \n    X \n    X \n    X \n    X \n  \n  \n    FE: Gender \n    X \n    X \n    X \n    X \n    X \n    X \n  \n  \n    FE: Type of Vehicle \n     \n    X \n    X \n     \n    X \n    X \n  \n  \n    FE: Weather \n     \n     \n    X \n     \n     \n    X \n  \n\n\n + p < 0.1, * p < 0.05, ** p < 0.01"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#modelsummary-export-to-latex",
+    "href": "code/slides/advancedr/index.html#modelsummary-export-to-latex",
+    "title": "",
+    "section": "modelsummary: Export to \\(\\LaTeX\\)",
+    "text": "modelsummary: Export to \\(\\LaTeX\\)\n\n\n\ncm  <-  c(\n    \"type_personpassenger\" = \"Passenger\",\n    \"type_personpedestrian\" = \"Pedestrian\",\n    \"positive_alcoholTRUE\" = \"Positive Alcohol\"\n)\n\ngm <- tibble(\n    raw = c(\"nobs\", \"FE: age_c\", \"FE: gender\", \"FE: type_vehicle\", \"FE: weather\"),\n    clean = c(\"Observations\", \"FE: Age Group\", \"FE: Gender\", \"FE: Type of Vehicle\", \"FE: Weather\"),\n    fmt = c(0, 0, 0, 0, 0)\n)\n\nmodelsummary(models,\n  output = \"latex_tabular\",\n  stars = c(\"+\" = .1, \"*\" = .05, \"**\" = .01),\n  coef_map = cm,\n  gof_map = gm) |>\n  add_header_above(c(\" \", \"Hospitalization\" = 3, \"Died within 24 hours\" = 3)) |>\n  row_spec(7, hline_after = T) |>\n  save_kable(here(\"output/tex/modelsummary/reg_accident_bike.tex\"))\n\n\n\n\n\noutput = \"latex_tabular\" produces a tex file not containing table tag"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#takeaway-1",
+    "href": "code/slides/advancedr/index.html#takeaway-1",
+    "title": "",
+    "section": "Takeaway",
+    "text": "Takeaway\n\nkableExtra & modelsummary\n\nYou can quickly export tibble (dataframe) as latex table by kableExtra\nmodelsummary produces kableExtra object from regression results\nYou can see the latex table in output/tex/ and the compiled results in code/thesis/\n\n\nFurther Readings\n\nOfficial Document modelsummary and Zhu (2021)\ngt is a great alternative to kableExtra. I use gt tables in my slides"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#what-is-quarto-.qmd",
+    "href": "code/slides/advancedr/index.html#what-is-quarto-.qmd",
+    "title": "",
+    "section": "What Is Quarto (.qmd)?",
+    "text": "What Is Quarto (.qmd)?\n\n\n\n\nI use Quarto for\n\nReporting: Easy to show the progress to supervisor/coauthors\nPresentation: Reveal.js produces reasonably beautiful slides"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#quarto-markdown-is-easy-version-of-latex",
+    "href": "code/slides/advancedr/index.html#quarto-markdown-is-easy-version-of-latex",
+    "title": "",
+    "section": "Quarto (Markdown) Is Easy-version of \\(\\LaTeX\\)!",
+    "text": "Quarto (Markdown) Is Easy-version of \\(\\LaTeX\\)!\n\n\nQuarto (Markdown)\nHeadings\n# Heading 1\n## Heading 2\n### Heading 3\n\n\\(\\LaTeX\\)\n\n\\section{Heading 1}\n\\subsection{Heading 2}\n\\subsubsection{Heading 3}\n\n\n\n\nBullet points\n- item 1\n- item 2\n- item 3\n\n\n\\begin{itemize}\n  \\item item 1\n  \\item item 2\n  \\item item 3\n\\end{itemize}\n\n\n\n\nEnumerate\n1. item 1\n1. item 2\n1. item 3\n\n\n\\begin{enumerate}\n  \\item item 1\n  \\item item 2\n  \\item item 3\n\\end{enumerate}"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#quarto-markdown-is-easy-version-of-latex-1",
+    "href": "code/slides/advancedr/index.html#quarto-markdown-is-easy-version-of-latex-1",
+    "title": "",
+    "section": "Quarto (Markdown) Is Easy-version of \\(\\LaTeX\\)!",
+    "text": "Quarto (Markdown) Is Easy-version of \\(\\LaTeX\\)!\n\n\nQuarto (Markdown)\nText Formatting\n**bold letters**\n_italic letters_\n$f_n(x)$\n\n\\(\\LaTeX\\)\n\n\\textbf{bold letters}\n\\textit{italic letters}\n$f_n(x)$\n\n\n\n\nDisplay Math\n$$\n\\begin{aligned}\nu(x) &= \\frac{c^{1 - \\gamma}}{1 - \\gamma} \\\\\nu'(x) &= c^{1- \\gamma}\n\\end{aligned}\n$$\n\n\n\\begin{align*}\nu(x) &= \\frac{c^{1 - \\gamma}}{1 - \\gamma} \\\\\nu'(x) &= c^{1- \\gamma}\n\\end{align*}\n\n\n\n\nCross References\n@bib_tex_key\n@fig-label_fig\n@tbl-label_tbl\n\n\n\\cite(bib_tex_key)\n\\ref{fig:label_fig}\n\\ref{tbl:label_tbl}"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#quarto-presentation",
+    "href": "code/slides/advancedr/index.html#quarto-presentation",
+    "title": "",
+    "section": "Quarto Presentation",
+    "text": "Quarto Presentation\n\n\nQuarto (Reveal.js)\n## First Slide\n\nBlah, Blah, Blah\n\n## Second Slide\n\nYeah, Yeah, Yeah\n\n\\(\\LaTeX\\) (Beamer)\n\\begin{frame}{First Slide}\n\nBlah, Blah, Blah\n\n\\end{frame}\n\n\\begin{frame}{Secon Slide}\n\nYeah, Yeah, Yeah\n\n\\end{frame}"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#quarto-presentation-fragments",
+    "href": "code/slides/advancedr/index.html#quarto-presentation-fragments",
+    "title": "",
+    "section": "Quarto Presentation: Fragments",
+    "text": "Quarto Presentation: Fragments\n\n\nQuarto (Reveal.js)\nPause\nFirst fragment\n\n. . .\n\nSecond fragment\n\n\\(\\LaTeX\\) (Beamer)\n\nFirst fragment\n\n\\pause\n\nSecond fragment\n\n\n\n\nIncremental List\n::: {.incremental}\n\n- 1st element\n- 2nd element\n- 3rd element\n\n:::\n\n\n\\begin{itemize}[<+->]\n    \\item 1st element\n    \\item 2nd element\n    \\item 3rd element\n\\end{itemize}\n\n\n For more complicated examples, see Tom Mock’s this part of the slides"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#why-do-i-use-quarto",
+    "href": "code/slides/advancedr/index.html#why-do-i-use-quarto",
+    "title": "",
+    "section": "Why Do I Use Quarto?",
+    "text": "Why Do I Use Quarto?\n\nReports\n\nAnalysis, Results, and Interpretation are done in one file\nEasy to communicate with supervisor/coauthors\n\nPresentations\n\nI prefer its design to Beamer. Highly customizable\nSame effort as Beamer slides. The syntax is almost the same\nFor more reasons and techniques, read my blog"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#references",
+    "href": "code/slides/advancedr/index.html#references",
+    "title": "",
+    "section": "References",
+    "text": "References\n\n\nBoswell, Dustin, and Trevor Foucher. 2011. The Art of Readable Code. 1st ed. Theory in Practice. Sebastopol, Calif: O’Reilly.\n\n\nBryan, Jenny. 2018. “Zen And The aRt Of Workflow Maintenance.” Part of 47 JAIIO. https://github.com/jennybc/zen-art-workflow.\n\n\nHealy, Kieran. 2018. Data Visualization: A Practical Introduction. 1st edition. Princeton, NJ: Princeton University Press. https://socviz.co/.\n\n\nHeiss, Andrew. 2021. “Who Cares About Crackdowns? Exploring the Role of Trust in Individual Philanthropy.” https://github.com/andrewheiss/who-cares-about-crackdown/blob/ad6312957de927674a5da2437a2f993e52f53d88/R/graphics.R.\n\n\nKastrun, Tomaz. 2022. “Comparing Performances of CSV to RDS, Parquet, and Feather File Formats in R  R-Bloggers.” R-bloggers. R-Bloggers. https://www.r-bloggers.com/2022/05/comparing-performances-of-csv-to-rds-parquet-and-feather-file-formats-in-r/.\n\n\nMock, Tom. 2022. “Outrageously Efficient Exploratory Data Analysis with Apache Arrow and Dplyr.” Voltron Data. https://jthomasmock.github.io/arrow-dplyr/.\n\n\nScherer, C’edric. 2021. “Ggplot Wizardry: My Favorite Tricks and Secrets for Beautiful Plots in R.” Online. https://www.cedricscherer.com/slides/useR-2021_ggplot-wizardry-extended.pdf.\n\n\nTufte, Edward R. 2001. The Visual Display of Quantitative Information. Cheshire, Conn.\n\n\nWilke, Claus O. 2019. Fundamentals of Data Visualization: A Primer on Making Informative and Compelling Figures. Sebastopol, CA. https://clauswilke.com/dataviz/.\n\n\nZhu, Hao. 2021. “Create Awesome LaTeX Table with Knitr::kable and kableExtra,” February. https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_pdf.pdf."
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#section",
+    "href": "code/slides/tidyverse/index.html#section",
+    "title": "",
+    "section": "",
+    "text": "An Introduction to tidyverse\n\n\nKazuharu Yanagimoto\n\n\nJanuary 13, 2023"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#pipe-operator",
+    "href": "code/slides/tidyverse/index.html#pipe-operator",
+    "title": "",
+    "section": "Pipe Operator |>",
+    "text": "Pipe Operator |>\n\n|> inserts the previous object into the first argument of the next function\n\n\n\n\nmtcars |>\n  subset(cyl==4) |>\n  head()\n\n                mpg cyl  disp hp drat    wt  qsec vs am gear carb\nDatsun 710     22.8   4 108.0 93 3.85 2.320 18.61  1  1    4    1\nMerc 240D      24.4   4 146.7 62 3.69 3.190 20.00  1  0    4    2\nMerc 230       22.8   4 140.8 95 3.92 3.150 22.90  1  0    4    2\nFiat 128       32.4   4  78.7 66 4.08 2.200 19.47  1  1    4    1\nHonda Civic    30.4   4  75.7 52 4.93 1.615 18.52  1  1    4    2\nToyota Corolla 33.9   4  71.1 65 4.22 1.835 19.90  1  1    4    1\n\n\n\n\nhead(subset(mtcars, cyl==4))\n\n                mpg cyl  disp hp drat    wt  qsec vs am gear carb\nDatsun 710     22.8   4 108.0 93 3.85 2.320 18.61  1  1    4    1\nMerc 240D      24.4   4 146.7 62 3.69 3.190 20.00  1  0    4    2\nMerc 230       22.8   4 140.8 95 3.92 3.150 22.90  1  0    4    2\nFiat 128       32.4   4  78.7 66 4.08 2.200 19.47  1  1    4    1\nHonda Civic    30.4   4  75.7 52 4.93 1.615 18.52  1  1    4    2\nToyota Corolla 33.9   4  71.1 65 4.22 1.835 19.90  1  1    4    1"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#pipe-operator-1",
+    "href": "code/slides/tidyverse/index.html#pipe-operator-1",
+    "title": "",
+    "section": "Pipe Operator |>",
+    "text": "Pipe Operator |>\n\nTo insert it to the second or later argument, you can use _\n\nmtcars |>\n  lm(mpg ~ disp, data = _)\n\n\nCall:\nlm(formula = mpg ~ disp, data = mtcars)\n\nCoefficients:\n(Intercept)         disp  \n   29.59985     -0.04122  \n\n\n\n\n%>% in tidyverse used to be used\n|> is officially supported and recommended after R version 4.1\n|> works without loading any package, but %>% needs magnitr"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#tibble",
+    "href": "code/slides/tidyverse/index.html#tibble",
+    "title": "",
+    "section": "tibble",
+    "text": "tibble\n\nIn tidyverse packages, data frames are handled by tibble format.\n\n\n\ntibble(\n  x = 1:5, \n  y = 1, \n  z = x ^ 2 + y\n)\n\n# A tibble: 5 × 3\n      x     y     z\n  <int> <dbl> <dbl>\n1     1     1     2\n2     2     1     5\n3     3     1    10\n4     4     1    17\n5     5     1    26\n\n\n\n\ntibble::tribble(\n  ~x, ~y, ~z,\n  \"a\", 2, 3.6,\n  \"b\", 1, 8.5\n)\n\n# A tibble: 2 × 3\n  x         y     z\n  <chr> <dbl> <dbl>\n1 a         2   3.6\n2 b         1   8.5\n\n\n\n\n\nFor detail, see Tibbles vs. data.frame in Wickham and Grolemund (2017)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#glimpse",
+    "href": "code/slides/tidyverse/index.html#glimpse",
+    "title": "",
+    "section": "glimpse",
+    "text": "glimpse\n\nlibrary(palmerpenguins) # Example Dataset\npenguins |>\n  head()\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year\n  <fct>   <fct>              <dbl>         <dbl>       <int>   <int> <fct> <int>\n1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007\n2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007\n3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007\n4 Adelie  Torgersen           NA            NA            NA      NA <NA>   2007\n5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007\n6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g\n\n\n\npenguins |>\n  glimpse()\n\nRows: 344\nColumns: 8\n$ species           <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…\n$ island            <fct> Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…\n$ bill_length_mm    <dbl> 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …\n$ bill_depth_mm     <dbl> 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …\n$ flipper_length_mm <int> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…\n$ body_mass_g       <int> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …\n$ sex               <fct> male, female, female, NA, female, male, female, male…\n$ year              <int> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#select",
+    "href": "code/slides/tidyverse/index.html#select",
+    "title": "",
+    "section": "select",
+    "text": "select\n\npenguins |>\n  select(species, body_mass_g:year, starts_with(\"bill\")) |>\n  head()\n\n# A tibble: 6 × 6\n  species body_mass_g sex     year bill_length_mm bill_depth_mm\n  <fct>         <int> <fct>  <int>          <dbl>         <dbl>\n1 Adelie         3750 male    2007           39.1          18.7\n2 Adelie         3800 female  2007           39.5          17.4\n3 Adelie         3250 female  2007           40.3          18  \n4 Adelie           NA <NA>    2007           NA            NA  \n5 Adelie         3450 female  2007           36.7          19.3\n6 Adelie         3650 male    2007           39.3          20.6\n\n\n\npenguins |>\n  select(-year) |>\n  head()\n\n# A tibble: 6 × 7\n  species island    bill_length_mm bill_depth_mm flipper_length_mm body_…¹ sex  \n  <fct>   <fct>              <dbl>         <dbl>             <int>   <int> <fct>\n1 Adelie  Torgersen           39.1          18.7               181    3750 male \n2 Adelie  Torgersen           39.5          17.4               186    3800 fema…\n3 Adelie  Torgersen           40.3          18                 195    3250 fema…\n4 Adelie  Torgersen           NA            NA                  NA      NA <NA> \n5 Adelie  Torgersen           36.7          19.3               193    3450 fema…\n6 Adelie  Torgersen           39.3          20.6               190    3650 male \n# … with abbreviated variable name ¹​body_mass_g"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#filter",
+    "href": "code/slides/tidyverse/index.html#filter",
+    "title": "",
+    "section": "filter",
+    "text": "filter\n\npenguins |>\n  filter(year >= 2008, between(bill_length_mm, 39, 41)) |>\n  head()\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year\n  <fct>   <fct>              <dbl>         <dbl>       <int>   <int> <fct> <int>\n1 Adelie  Biscoe              39.6          17.7         186    3500 fema…  2008\n2 Adelie  Biscoe              40.1          18.9         188    4300 male   2008\n3 Adelie  Biscoe              39            17.5         186    3550 fema…  2008\n4 Adelie  Biscoe              40.6          18.8         193    3800 male   2008\n5 Adelie  Torgersen           39.7          18.4         190    3900 male   2008\n6 Adelie  Torgersen           39.6          17.2         196    3550 fema…  2008\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g\n\n\n\npenguins |>\n  filter(!is.na(sex)) |>\n  head()\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year\n  <fct>   <fct>              <dbl>         <dbl>       <int>   <int> <fct> <int>\n1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007\n2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007\n3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007\n4 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007\n5 Adelie  Torgersen           39.3          20.6         190    3650 male   2007\n6 Adelie  Torgersen           38.9          17.8         181    3625 fema…  2007\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#rename",
+    "href": "code/slides/tidyverse/index.html#rename",
+    "title": "",
+    "section": "rename",
+    "text": "rename\n\npenguins |>\n  rename(gender = sex) |> # I know it is penguin\n  head()\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² gender  year\n  <fct>   <fct>              <dbl>         <dbl>      <int>   <int> <fct>  <int>\n1 Adelie  Torgersen           39.1          18.7        181    3750 male    2007\n2 Adelie  Torgersen           39.5          17.4        186    3800 female  2007\n3 Adelie  Torgersen           40.3          18          195    3250 female  2007\n4 Adelie  Torgersen           NA            NA           NA      NA <NA>    2007\n5 Adelie  Torgersen           36.7          19.3        193    3450 female  2007\n6 Adelie  Torgersen           39.3          20.6        190    3650 male    2007\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g\n\n\nYou can rename when you select\n\npenguins |>\n  select(time = year, gender = sex, starts_with(\"bill\")) |>\n  head()\n\n# A tibble: 6 × 4\n   time gender bill_length_mm bill_depth_mm\n  <int> <fct>           <dbl>         <dbl>\n1  2007 male             39.1          18.7\n2  2007 female           39.5          17.4\n3  2007 female           40.3          18  \n4  2007 <NA>             NA            NA  \n5  2007 female           36.7          19.3\n6  2007 male             39.3          20.6"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#mutate",
+    "href": "code/slides/tidyverse/index.html#mutate",
+    "title": "",
+    "section": "mutate",
+    "text": "mutate\n\n\npenguins |>\n  mutate(\n    flipper_length_cm = flipper_length_mm / 10,\n    sex = recode(sex, male = \"Male\", female = \"Female\"),\n    species_by_sex = case_when(\n      species == \"Adelie\" & sex == \"Male\" ~ \"Am\",\n      species == \"Adelie\" & sex == \"Female\" ~ \"Af\",\n      species == \"Chinstrap\" & sex == \"Memale\" ~ \"Cm\",\n      species == \"Chinstrap\" & sex == \"Female\" ~ \"Cf\",\n      species == \"Gentoo\" & sex == \"Male\" ~ \"Gm\",\n      species == \"Gentoo\" & sex == \"Female\" ~ \"Gf\",\n    )) |>\n  head()\n\n# A tibble: 6 × 10\n  species island    bill_l…¹ bill_…² flipp…³ body_…⁴ sex    year flipp…⁵ speci…⁶\n  <fct>   <fct>        <dbl>   <dbl>   <int>   <int> <fct> <int>   <dbl> <chr>  \n1 Adelie  Torgersen     39.1    18.7     181    3750 Male   2007    18.1 Am     \n2 Adelie  Torgersen     39.5    17.4     186    3800 Fema…  2007    18.6 Af     \n3 Adelie  Torgersen     40.3    18       195    3250 Fema…  2007    19.5 Af     \n4 Adelie  Torgersen     NA      NA        NA      NA <NA>   2007    NA   <NA>   \n5 Adelie  Torgersen     36.7    19.3     193    3450 Fema…  2007    19.3 Af     \n6 Adelie  Torgersen     39.3    20.6     190    3650 Male   2007    19   Am     \n# … with abbreviated variable names ¹​bill_length_mm, ²​bill_depth_mm,\n#   ³​flipper_length_mm, ⁴​body_mass_g, ⁵​flipper_length_cm, ⁶​species_by_sex"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#summarize-group_by",
+    "href": "code/slides/tidyverse/index.html#summarize-group_by",
+    "title": "",
+    "section": "summarize & group_by",
+    "text": "summarize & group_by\n\n\npenguins |>\n  filter(!is.na(sex)) |>\n  group_by(species, sex) |>\n  summarize(\n    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),\n    sd_bill_length_mm = sd(bill_length_mm, na.rm = TRUE)\n  )\n\n# A tibble: 6 × 4\n# Groups:   species [3]\n  species   sex    mean_bill_length_mm sd_bill_length_mm\n  <fct>     <fct>                <dbl>             <dbl>\n1 Adelie    female                37.3              2.03\n2 Adelie    male                  40.4              2.28\n3 Chinstrap female                46.6              3.11\n4 Chinstrap male                  51.1              1.56\n5 Gentoo    female                45.6              2.05\n6 Gentoo    male                  49.5              2.72"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#across-mutate",
+    "href": "code/slides/tidyverse/index.html#across-mutate",
+    "title": "",
+    "section": "across & mutate",
+    "text": "across & mutate\n\n\npenguins |>\n  mutate(across(bill_length_mm:bill_depth_mm, ~.x / 10)) |>\n  rename_at(vars(bill_length_mm:bill_depth_mm), ~str_replace(.x, \"mm\", \"cm\")) |>\n  head()\n\n# A tibble: 6 × 8\n  species island    bill_length_cm bill_depth_cm flipper_l…¹ body_…² sex    year\n  <fct>   <fct>              <dbl>         <dbl>       <int>   <int> <fct> <int>\n1 Adelie  Torgersen           3.91          1.87         181    3750 male   2007\n2 Adelie  Torgersen           3.95          1.74         186    3800 fema…  2007\n3 Adelie  Torgersen           4.03          1.8          195    3250 fema…  2007\n4 Adelie  Torgersen          NA            NA             NA      NA <NA>   2007\n5 Adelie  Torgersen           3.67          1.93         193    3450 fema…  2007\n6 Adelie  Torgersen           3.93          2.06         190    3650 male   2007\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g\n\n\n\nYou can replace existing columns at once by across()\n~ creates an anonymous (temporal) function. .x is the argument"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#across-summarize",
+    "href": "code/slides/tidyverse/index.html#across-summarize",
+    "title": "",
+    "section": "across & summarize",
+    "text": "across & summarize\n\n\npenguins |>\n  filter(!is.na(sex)) |>\n  group_by(species, sex) |>\n  summarize(\n    across(bill_length_mm:body_mass_g,\n          list(mean = ~mean(.x, na.rm = TRUE),\n               sd = ~sd(.x, na.rm = TRUE)))\n  )\n\n# A tibble: 6 × 10\n# Groups:   species [3]\n  species  sex   bill_…¹ bill_…² bill_…³ bill_…⁴ flipp…⁵ flipp…⁶ body_…⁷ body_…⁸\n  <fct>    <fct>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>\n1 Adelie   fema…    37.3    2.03    17.6   0.943    188.    5.60   3369.    269.\n2 Adelie   male     40.4    2.28    19.1   1.02     192.    6.60   4043.    347.\n3 Chinstr… fema…    46.6    3.11    17.6   0.781    192.    5.75   3527.    285.\n4 Chinstr… male     51.1    1.56    19.3   0.761    200.    5.98   3939.    362.\n5 Gentoo   fema…    45.6    2.05    14.2   0.540    213.    3.90   4680.    282.\n6 Gentoo   male     49.5    2.72    15.7   0.741    222.    5.67   5485.    313.\n# … with abbreviated variable names ¹​bill_length_mm_mean, ²​bill_length_mm_sd,\n#   ³​bill_depth_mm_mean, ⁴​bill_depth_mm_sd, ⁵​flipper_length_mm_mean,\n#   ⁶​flipper_length_mm_sd, ⁷​body_mass_g_mean, ⁸​body_mass_g_sd\n\n\n\nYou can summarize multiple columns by multiple functions at once\nThe names in the list becomes the suffix of the new columns"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#janitortabyl",
+    "href": "code/slides/tidyverse/index.html#janitortabyl",
+    "title": "",
+    "section": "janitor::tabyl()",
+    "text": "janitor::tabyl()\n\n\n\n\npenguins |>\n  janitor::tabyl(species)\n\n   species   n   percent\n    Adelie 152 0.4418605\n Chinstrap  68 0.1976744\n    Gentoo 124 0.3604651\n\n\n\n\npenguins |>\n  janitor::tabyl(species, sex)\n\n   species female male NA_\n    Adelie     73   73   6\n Chinstrap     34   34   0\n    Gentoo     58   61   5\n\n\n\n\n\n\n\npenguins |>\n  janitor::tabyl(species) |>\n  janitor::adorn_percentages()\n\n   species         n     percent\n    Adelie 0.9971014 0.002898551\n Chinstrap 0.9971014 0.002898551\n    Gentoo 0.9971014 0.002898551\n\n\n\n\npenguins |>\n  janitor::tabyl(species, sex) |>\n  janitor::adorn_percentages(denominator = \"row\")\n\n   species    female      male        NA_\n    Adelie 0.4802632 0.4802632 0.03947368\n Chinstrap 0.5000000 0.5000000 0.00000000\n    Gentoo 0.4677419 0.4919355 0.04032258\n\n\n\n\n\njanitor::tabyl() gives frequency tables in tibble format"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#join",
+    "href": "code/slides/tidyverse/index.html#join",
+    "title": "",
+    "section": "*_join()",
+    "text": "*_join()\n\ninner_join(df1, df2)\nleft_join(df1, df2)\nright_join(df1, df2)\nfull_join(df1, df2)\nsemi_join(df1, df2)\nanti_join(df1, df2)\n\nIn most of cases, left_join is enough. For details of other functions, read Rational data section in Wickham and Grolemund (2017)."
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#left_join",
+    "href": "code/slides/tidyverse/index.html#left_join",
+    "title": "",
+    "section": "left_join()",
+    "text": "left_join()\n\nlibrary(nycflights13) # Dataset\nflights |> glimpse()\n\nRows: 336,776\nColumns: 19\n$ year           <int> 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2…\n$ month          <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ day            <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ dep_time       <int> 517, 533, 542, 544, 554, 554, 555, 557, 557, 558, 558, …\n$ sched_dep_time <int> 515, 529, 540, 545, 600, 558, 600, 600, 600, 600, 600, …\n$ dep_delay      <dbl> 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -2, -1…\n$ arr_time       <int> 830, 850, 923, 1004, 812, 740, 913, 709, 838, 753, 849,…\n$ sched_arr_time <int> 819, 830, 850, 1022, 837, 728, 854, 723, 846, 745, 851,…\n$ arr_delay      <dbl> 11, 20, 33, -18, -25, 12, 19, -14, -8, 8, -2, -3, 7, -1…\n$ carrier        <chr> \"UA\", \"UA\", \"AA\", \"B6\", \"DL\", \"UA\", \"B6\", \"EV\", \"B6\", \"…\n$ flight         <int> 1545, 1714, 1141, 725, 461, 1696, 507, 5708, 79, 301, 4…\n$ tailnum        <chr> \"N14228\", \"N24211\", \"N619AA\", \"N804JB\", \"N668DN\", \"N394…\n$ origin         <chr> \"EWR\", \"LGA\", \"JFK\", \"JFK\", \"LGA\", \"EWR\", \"EWR\", \"LGA\",…\n$ dest           <chr> \"IAH\", \"IAH\", \"MIA\", \"BQN\", \"ATL\", \"ORD\", \"FLL\", \"IAD\",…\n$ air_time       <dbl> 227, 227, 160, 183, 116, 150, 158, 53, 140, 138, 149, 1…\n$ distance       <dbl> 1400, 1416, 1089, 1576, 762, 719, 1065, 229, 944, 733, …\n$ hour           <dbl> 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6…\n$ minute         <dbl> 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59, 0…\n$ time_hour      <dttm> 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-01 0…\n\n\n\nplanes |> glimpse()\n\nRows: 3,322\nColumns: 9\n$ tailnum      <chr> \"N10156\", \"N102UW\", \"N103US\", \"N104UW\", \"N10575\", \"N105UW…\n$ year         <int> 2004, 1998, 1999, 1999, 2002, 1999, 1999, 1999, 1999, 199…\n$ type         <chr> \"Fixed wing multi engine\", \"Fixed wing multi engine\", \"Fi…\n$ manufacturer <chr> \"EMBRAER\", \"AIRBUS INDUSTRIE\", \"AIRBUS INDUSTRIE\", \"AIRBU…\n$ model        <chr> \"EMB-145XR\", \"A320-214\", \"A320-214\", \"A320-214\", \"EMB-145…\n$ engines      <int> 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, …\n$ seats        <int> 55, 182, 182, 182, 55, 182, 182, 182, 182, 182, 55, 55, 5…\n$ speed        <int> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ engine       <chr> \"Turbo-fan\", \"Turbo-fan\", \"Turbo-fan\", \"Turbo-fan\", \"Turb…"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#left_join-1",
+    "href": "code/slides/tidyverse/index.html#left_join-1",
+    "title": "",
+    "section": "left_join()",
+    "text": "left_join()\n\n\nflights |>\n  left_join(planes, by = \"tailnum\", suffix = c(\"\", \"_built\")) |>\n  select(year, month, day, dep_time, arr_time, carrier, flight, tailnum, year_built, type, model)\n\n# A tibble: 336,776 × 11\n    year month   day dep_time arr_t…¹ carrier flight tailnum year_…² type  model\n   <int> <int> <int>    <int>   <int> <chr>    <int> <chr>     <int> <chr> <chr>\n 1  2013     1     1      517     830 UA        1545 N14228     1999 Fixe… 737-…\n 2  2013     1     1      533     850 UA        1714 N24211     1998 Fixe… 737-…\n 3  2013     1     1      542     923 AA        1141 N619AA     1990 Fixe… 757-…\n 4  2013     1     1      544    1004 B6         725 N804JB     2012 Fixe… A320…\n 5  2013     1     1      554     812 DL         461 N668DN     1991 Fixe… 757-…\n 6  2013     1     1      554     740 UA        1696 N39463     2012 Fixe… 737-…\n 7  2013     1     1      555     913 B6         507 N516JB     2000 Fixe… A320…\n 8  2013     1     1      557     709 EV        5708 N829AS     1998 Fixe… CL-6…\n 9  2013     1     1      557     838 B6          79 N593JB     2004 Fixe… A320…\n10  2013     1     1      558     753 AA         301 N3ALAA       NA <NA>  <NA> \n# … with 336,766 more rows, and abbreviated variable names ¹​arr_time,\n#   ²​year_built\n\n\n\nIf the key name is different, you can write by = c(\"LEFT_KEY\" = \"RIGHT_KEY)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#tidy-data-approach",
+    "href": "code/slides/tidyverse/index.html#tidy-data-approach",
+    "title": "",
+    "section": "Tidy Data Approach",
+    "text": "Tidy Data Approach\n\n\n\n\n\n\n\nTidy Data (Wickham (2014), Wickham and Grolemund (2017))\n\n\n\nEach variable must have its own column.\nEach observation must have its own row.\nEach value must have its own cell.\n\n\n\n\n\nHence, tidy data is in long format rather than in wide format (unlike Stata…)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#pivot_longer-pivot_wider",
+    "href": "code/slides/tidyverse/index.html#pivot_longer-pivot_wider",
+    "title": "",
+    "section": "pivot_longer & pivot_wider",
+    "text": "pivot_longer & pivot_wider\nThis data is not tidy\n\n\n\n\n\n\ntb1\n\n# A tibble: 3 × 3\n  country     `1999` `2000`\n  <chr>        <dbl>  <dbl>\n1 Afghanistan    745   2666\n2 Brazil       37737  80488\n3 China       212258 213766\n\n\n\n\ntb2\n\n# A tibble: 6 × 4\n  country      year type           count\n  <chr>       <dbl> <chr>          <dbl>\n1 Afghanistan  1999 cases            745\n2 Afghanistan  1999 population  19987071\n3 Afghanistan  2000 cases           2666\n4 Afghanistan  2000 population  20595360\n5 Brazil       1999 cases          37737\n6 Brazil       1999 population 172006362\n\n\n\n\nMake it tidy\n\n\n\ntb1 |>\n  pivot_longer(c(`1999`, `2000`),\n    names_to = \"year\", values_to = \"cases\")\n\n# A tibble: 6 × 3\n  country     year   cases\n  <chr>       <chr>  <dbl>\n1 Afghanistan 1999     745\n2 Afghanistan 2000    2666\n3 Brazil      1999   37737\n4 Brazil      2000   80488\n5 China       1999  212258\n6 China       2000  213766\n\n\n\n\ntb2 |>\n  pivot_wider(names_from = type, values_from = count)\n\n# A tibble: 3 × 4\n  country      year cases population\n  <chr>       <dbl> <dbl>      <dbl>\n1 Afghanistan  1999   745   19987071\n2 Afghanistan  2000  2666   20595360\n3 Brazil       1999 37737  172006362"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#separate-unite",
+    "href": "code/slides/tidyverse/index.html#separate-unite",
+    "title": "",
+    "section": "separate & unite",
+    "text": "separate & unite\nThis data is not tidy\n\n\n\n\n\n\ntb1\n\n# A tibble: 6 × 3\n  country      year rate             \n  <chr>       <dbl> <chr>            \n1 Afghanistan  1999 745/19987071     \n2 Afghanistan  2000 2666/20595360    \n3 Brazil       1999 37737/172006362  \n4 Brazil       2000 80488/174504898  \n5 China        1999 212258/1272915272\n6 China        2000 213766/1280428583\n\n\n\n\ntb2\n\n# A tibble: 6 × 5\n  country     century year_d2  cases population\n  <chr>         <dbl>   <dbl>  <dbl>      <dbl>\n1 Afghanistan      19      99    745   19987071\n2 Afghanistan      20       0   2666   20595360\n3 Brazil           19      99  37737  172006362\n4 Brazil           20       0  80488  174504898\n5 China            19      99 212258 1272915272\n6 China            20       0 213766 1280428583\n\n\n\n\nMake it tidy\n\n\n\ntb1 |> \n  separate(rate, into = c(\"cases\", \"population\")) |>\n  mutate(across(c(\"cases\", \"population\"), as.numeric))\n\n# A tibble: 6 × 4\n  country      year  cases population\n  <chr>       <dbl>  <dbl>      <dbl>\n1 Afghanistan  1999    745   19987071\n2 Afghanistan  2000   2666   20595360\n3 Brazil       1999  37737  172006362\n4 Brazil       2000  80488  174504898\n5 China        1999 212258 1272915272\n6 China        2000 213766 1280428583\n\n\n\n\ntb2 |>\n  unite(year, century, year_d2, sep = \"\") |>\n  mutate(year = as.integer(year))\n\n# A tibble: 6 × 4\n  country      year  cases population\n  <chr>       <int>  <dbl>      <dbl>\n1 Afghanistan  1999    745   19987071\n2 Afghanistan   200   2666   20595360\n3 Brazil       1999  37737  172006362\n4 Brazil        200  80488  174504898\n5 China        1999 212258 1272915272\n6 China         200 213766 1280428583"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#layers",
+    "href": "code/slides/tidyverse/index.html#layers",
+    "title": "",
+    "section": "Layers",
+    "text": "Layers"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#aes-geom_",
+    "href": "code/slides/tidyverse/index.html#aes-geom_",
+    "title": "",
+    "section": "aes() & geom_*",
+    "text": "aes() & geom_*"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#color-fill",
+    "href": "code/slides/tidyverse/index.html#color-fill",
+    "title": "",
+    "section": "Color & Fill",
+    "text": "Color & Fill"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#shape-size",
+    "href": "code/slides/tidyverse/index.html#shape-size",
+    "title": "",
+    "section": "Shape & Size",
+    "text": "Shape & Size"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#scale",
+    "href": "code/slides/tidyverse/index.html#scale",
+    "title": "",
+    "section": "Scale",
+    "text": "Scale"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#facet",
+    "href": "code/slides/tidyverse/index.html#facet",
+    "title": "",
+    "section": "Facet",
+    "text": "Facet"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#theme",
+    "href": "code/slides/tidyverse/index.html#theme",
+    "title": "",
+    "section": "Theme",
+    "text": "Theme"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#references",
+    "href": "code/slides/tidyverse/index.html#references",
+    "title": "",
+    "section": "References",
+    "text": "References\n\n\nWickham, Hadley. 2014. “Tidy Data.” Journal of Statistical Software 59 (10): 1–23. https://doi.org/10.18637/jss.v059.i10.\n\n\nWickham, Hadley, and Garrett Grolemund. 2017. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. 1st edition. Sebastopol, CA: O’Reilly Media. https://r4ds.had.co.nz/."
+  }
+]
