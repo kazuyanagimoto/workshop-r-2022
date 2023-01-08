@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "code/10_notebooks/intro_dplyr.html#dplyr-tidyr-basics",
+    "href": "code/10_notebooks/intro_dplyr.html#dplyr-tidyr-basics",
+    "title": "Introduction to tidyverse",
+    "section": "dplyr & tidyr Basics",
+    "text": "dplyr & tidyr Basics\n\nhead, glimpse\nselect, filter\nmutate\nrename, recode\nif_else, case_when\nsummarize, group_by\nacross()\njanitor::tabyl\njoins\npivot_wider, pivot_longer"
+  },
+  {
+    "objectID": "code/10_notebooks/intro_dplyr.html#ggplot2-basics",
+    "href": "code/10_notebooks/intro_dplyr.html#ggplot2-basics",
+    "title": "Introduction to tidyverse",
+    "section": "ggplot2 Basics",
+    "text": "ggplot2 Basics"
+  }
+]
