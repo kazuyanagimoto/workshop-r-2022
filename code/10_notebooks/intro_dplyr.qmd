@@ -1,0 +1,30 @@
+---
+title: "Introduction to `tidyverse`"
+format:
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+---
+
+### What is Tidy Data?
+
+
+### Pipe `|>` Operator
+
+## `dplyr` & `tidyr` Basics 
+
+- head, glimpse
+- select, filter
+- mutate
+- rename, recode
+- if_else, case_when
+- summarize, group_by
+- across()
+- janitor::tabyl
+- joins
+- pivot_wider, pivot_longer
+
+## `ggplot2` Basics
+
+## 

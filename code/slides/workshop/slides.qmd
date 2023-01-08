@@ -38,15 +38,6 @@ library(arrow)
 library(tidyverse)
 library(gt)
 library(kableExtra)
-
-color_base <- "#1C5253"
-color_base_light <- xaringanthemer::lighten_color(color_base, strength = 0.33)
-color_text <- "#272822"
-color_bg <- "#FFFFFF"
-color_accent <- "#EB811B"
-color_accent_light <- xaringanthemer::lighten_color(color_accent, strength = 0.33)
-grey <- scales::alpha("grey", 0.7)
-dark_gray <- "#6d6d6d"
 ```
 
 
@@ -56,7 +47,7 @@ dark_gray <- "#6d6d6d"
 ::: {.question}
 Q. Why Don't Your Codes Work on My Computer?
 
-::: {.fragment .fade-in-then-semiout}
+::: {.fragment .fade-in-then-semi-out}
 
 A. Conflicts in _Path_ or _Package Version_
 
@@ -1558,6 +1549,8 @@ For readability, you need to name variables **informatively** and **non-misleadi
 
 ```{r}
 #| echo: false
+
+color_base_light <- "#668b8b"
 
 gtb |>
   tab_style(
