@@ -9,7 +9,7 @@ services:
             - RENV_PATHS_CACHE=/home/rstudio/.renv/cache
             - PYTHONUSERBASE=/home/rstudio/.pip
         volumes:
-            - .:/home/rstudio/work
+            - .:/home/rstudio/workshop-r-2022
             - $HOME/.renv:/home/rstudio/.renv/cache
             - $HOME/.TinyTeX:/home/rstudio/.TinyTeX
             - $HOME/.pip:/home/rstudio/.pip

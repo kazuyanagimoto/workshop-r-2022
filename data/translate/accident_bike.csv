@@ -1,0 +1,20 @@
+spanish," english"
+num_expediente,id_1922
+fecha,date
+hora,hms
+localizacion,street
+numero,num_street
+cod_distrito,code_district
+distrito,district
+tipo_accidente,type_accident
+estado_meteorológico,weather
+tipo_vehiculo,type_vehicle
+tipo_persona,type_person
+rango_edad,age_c
+sexo,gender
+cod_lesividad,code_injury8
+lesividad,injury8
+coordenada_x_utm,coord_x
+coordenada_y_utm,coord_y
+positiva_alcohol,positive_alcohol
+positiva_droga,positive_drug
