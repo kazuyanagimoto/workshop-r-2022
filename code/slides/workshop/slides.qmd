@@ -6,8 +6,8 @@ execute:
     cache: true
 format:
   revealjs:
-    standalone: true
-    embed-resources: true
+    standalone: false
+    embed-resources: false
     width: 1600
     height: 900
     theme: [default, custom.scss]
@@ -17,10 +17,10 @@ format:
     pdf-separate-fragments: false
 ---
 
-## {background-color="#1C5253" visibility="uncounted"}
+## {background-image="https://source.unsplash.com/5QgIuuBxKwM" visibility="uncounted"}
 
 ::: {.title}
-An Advanced Introduction to {{< fa brands r-project >}}
+An Advanced<br>Introduction to {{< fa brands r-project >}}
 :::
 
 ::: {.author}
@@ -53,13 +53,19 @@ dark_gray <- "#6d6d6d"
 # Project Based Workflow {background-color="#1C5253" visibility="uncounted"}
 
 ## {}
-
-::: {.center-x}
+::: {.question}
 Q. Why Don't Your Codes Work on My Computer?
 
-A. Conflicts in **Path** or **Package Version**
+::: {.fragment .fade-in-then-semiout}
 
-A. You don't use `here` and `renv`
+A. Conflicts in _Path_ or _Package Version_
+
+:::
+::: {.fragment .fade-in}
+
+A. You don't use `here` and `renv` under **R projct**
+
+:::
 :::
 
 ## R Project
@@ -2824,13 +2830,346 @@ modelsummary(models,
 
 # Quarto {background-color="#1C5253" visibility="uncounted"}
 
-## What Is Quarto?
+## What Is Quarto (.qmd)?
 
-## Markdown ⇔ $\LaTeX$
+<br>
 
-## Interactive Plots
+![](img/quarto.drawio.svg)
+
+<br>
+
+. . .
+
+I use Quarto for
+
+- **Reporting**: Easy to show the progress to supervisor/coauthors
+- **Presentation**: Reveal.js produces reasonably beautiful slides
+
+
+## Quarto (Markdown) Is Easy-version of $\LaTeX$!
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+**Quarto** (Markdown)
+
+Headings
+
+``` markdown
+# Heading 1
+## Heading 2
+### Heading 3
+```
+
+:::
+
+::: {.column width="50%"}
+
+**$\LaTeX$**
+
+<br>
+
+```{.latex}
+\section{Heading 1}
+\subsection{Heading 2}
+\subsubsection{Heading 3}
+```
+
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+Bullet points
+
+``` markdown
+- item 1
+- item 2
+- item 3
+```
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+```{.latex}
+\begin{itemize}
+  \item item 1
+  \item item 2
+  \item item 3
+\end{itemize}
+```
+
+:::
+
+::::
+
+
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+Enumerate
+
+``` markdown
+1. item 1
+1. item 2
+1. item 3
+```
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+```{.latex}
+\begin{enumerate}
+  \item item 1
+  \item item 2
+  \item item 3
+\end{enumerate}
+```
+
+:::
+::::
+
+## Quarto (Markdown) Is Easy-version of $\LaTeX$!
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+**Quarto** (Markdown)
+
+Text Formatting
+
+``` markdown
+**bold letters**
+_italic letters_
+$f_n(x)$
+```
+
+:::
+
+::: {.column width="50%"}
+
+**$\LaTeX$**
+
+<br>
+
+```{.latex}
+\textbf{bold letters}
+\textit{italic letters}
+$f_n(x)$
+```
+
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+Display Math
+
+``` markdown
+$$
+\begin{aligned}
+u(x) &= \frac{c^{1 - \gamma}}{1 - \gamma} \\
+u'(x) &= c^{1- \gamma}
+\end{aligned}
+$$
+```
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+```{.latex}
+\begin{align*}
+u(x) &= \frac{c^{1 - \gamma}}{1 - \gamma} \\
+u'(x) &= c^{1- \gamma}
+\end{align*}
+```
+
+:::
+
+::::
+
+
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+Cross References
+
+``` markdown
+@bib_tex_key
+@fig-label_fig
+@tbl-label_tbl
+```
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+```{.latex}
+\cite(bib_tex_key)
+\ref{fig:label_fig}
+\ref{tbl:label_tbl}
+```
+
+:::
+::::
 
 ## Quarto Presentation
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+**Quarto** (Reveal.js)
+
+``` markdown
+## First Slide
+
+Blah, Blah, Blah
+
+## Second Slide
+
+Yeah, Yeah, Yeah
+
+```
+
+:::
+
+::: {.column width="50%"}
+
+**$\LaTeX$** (Beamer)
+
+```{.latex}
+\begin{frame}{First Slide}
+
+Blah, Blah, Blah
+
+\end{frame}
+
+\begin{frame}{Secon Slide}
+
+Yeah, Yeah, Yeah
+
+\end{frame}
+
+```
+
+:::
+::::
+
+## Quarto Presentation: Fragments
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Quarto** (Reveal.js)
+
+Pause
+
+``` markdown
+First fragment
+
+. . .
+
+Second fragment
+
+```
+
+:::
+
+::: {.column width="50%"}
+**$\LaTeX$** (Beamer)
+
+<br>
+
+```{.latex}
+First fragment
+
+\pause
+
+Second fragment
+
+```
+
+:::
+::::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+Incremental List
+
+``` markdown
+::: {.incremental}
+
+- 1st element
+- 2nd element
+- 3rd element
+
+:::
+
+```
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+```{.latex}
+\begin{itemize}[<+->]
+    \item 1st element
+    \item 2nd element
+    \item 3rd element
+\end{itemize}
+```
+
+:::
+::::
+
+<br>
+For more complicated examples, see Tom Mock's [this part](https://rstudio-conf-2022.github.io/get-started-quarto/materials/05-presentations.html#/lists) of the slides
+
+## Why Do I Use Quarto?
+
+<br>
+
+**Reports**
+
+- Analysis, Results, and Interpretation are done in one file
+- Easy to communicate with supervisor/coauthors
+
+**Presentations**
+
+- I prefer its design to Beamer. Highly customizable
+- Same effort as Beamer slides. The syntax is almost the same
+- For more reasons and techniques, read my [blog](https://kazuyanagimoto.com/blog/2022/12/27/quarto_tips/)
+
 
 ## References {visibility="uncounted"}
 ::: {#refs}
