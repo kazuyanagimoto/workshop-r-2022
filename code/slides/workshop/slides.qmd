@@ -3,7 +3,7 @@ execute:
     echo: true
     warning: false
     message: false
-    cache: false
+    cache: true
 format:
   revealjs:
     standalone: true
@@ -132,9 +132,9 @@ It works in Windows, Mac, Linux (of course, in a Docker environment)
 >If the first line of your R script is
 >`setwd("C:\Users\jenny\path\that\only\I\have")`
 >
->I* will come into your office and SET YOUR COMPPUTER ON FIRE 🔥.
+>I* will come into your office and SET YOUR COMPUTER ON FIRE 🔥.
 >
->--Jenny Bryan
+>--@bryan_zen_2018
 
 :::
 
@@ -1503,7 +1503,7 @@ Please make sure if you are using the latest `r version$version.string`.
 
 ::: {.callout-note}
 
-## Fundamental Theorem of Readability
+## Fundamental Theorem of Readability (@boswell_art_2011)
 
 Code should be written to minimize the time it would take for someone else to understand it.
 
@@ -1846,7 +1846,7 @@ gtb
 
 <br>
 
-You can find a benchmark in tomaztsql's [blog](https://www.r-bloggers.com/2022/05/comparing-performances-of-csv-to-rds-parquet-and-feather-file-formats-in-r/)
+You can find a benchmark in @kastrun_comparing_2022
 
 ## `arrow::read_parquet()`
 
@@ -1947,8 +1947,7 @@ info
 
 - Given this structure, `arrow::open_dataset()` loads them as one parquet file
 - A Partitioning variable (`year`) becomes a new variable
-- For more instructions, you can refer to Tom Mock's [slides](https://jthomasmock.github.io/arrow-dplyr/)
-
+- For more instructions, you can refer to @mock_outrageously_2022 
 
 
 ## Cleaning Workflow
@@ -2333,6 +2332,7 @@ accident_bike |>
 <br>
 
 Don't worry. You can set the default theme before plotting.
+(e.g. @scherer_ggplot_2021)
 
 <br>
 
@@ -2352,7 +2352,7 @@ theme_update(
 
 <br>
 
-Alternatively, create a custom theme and color palette (Andrew Heiss's [code](https://github.com/andrewheiss/who-cares-about-crackdown/blob/ad6312957de927674a5da2437a2f993e52f53d88/R/graphics.R))
+Alternatively, create a custom theme and color palette (e.g. @heiss_who_2021)
 
 ## Third-party Themes: `hrbrthemes`
 
@@ -2499,8 +2499,10 @@ library(patchwork)
 - **Fonts**: Google Fonts. Especially, _condensed_ fonts.
 - **Ready-made Themes**: `hrbrthemes`, `ggpubr`
 
-#### Further Readings
+#### Further Readings (Online Books)
 
+- "Data Visualization: A Practical Introduction" **@healy_data_2018**
+- "Fundamentals of Data Visualization" **@wilke_fundamentals_2019**
 
 
 # Automated Table Creation {background-color="#1C5253" visibility="uncounted"}
@@ -2829,3 +2831,7 @@ modelsummary(models,
 ## Interactive Plots
 
 ## Quarto Presentation
+
+## References {visibility="uncounted"}
+::: {#refs}
+:::
