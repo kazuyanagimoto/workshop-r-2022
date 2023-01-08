@@ -1,23 +1,20 @@
-# My Docker Template for R
+# An Advanced Introduction to R
 
-## Quick Start
-1. Clone this repository
-1. Make sure you have `~/.renv`, `~/.TinyTeX`, and `~/.pip` folders in your HOST machine
-1. Open it in VSCode and add Remote-Containers Extension
-1. From command pallete, choose "open folder in container"
-1. Open `localhost:8787` in a browser
-1. Create a project for this projet directory (by default, choose `/home/rstudio/work`)
-1. RUN `renv::init()` in the R console
-1. RUN `pip install -r requirements.txt --user` for DVC install (if you have never used this template)
-1. Set up a [DVC](https://dvc.org/) environment
-    1. Prepare a folder in Google Drive (and copy the folder code)
-    1. Init DVC
-        ```{bash}
-        dvc init
-        dvc remote add --default myremote gdrive://GDRIVE_FOLDER_CODE
-        ```
+## Materials
 
+### "An Introduction to tidyverse"
+[HTML](https://kazuyanagimoto.com/workshop-r-2022/code/slides/tidyverse/),
+[qmd](https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/tidyverse/index.qmd)
 
+### "An Advanced Introduction to R"
+[HTML](https://kazuyanagimoto.com/workshop-r-2022/code/slides/advancedr/),
+[qmd](https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/index.qmd)
+
+## Preparation
+
+- Download the **latest version** of R and Rstudio
+- I use something new syntax in R. I cannot guarantee if my codes work in your environments
+- I've never seen a person who keeps R and Rstudio the latest. You must check it.
 
 ## Data
 
