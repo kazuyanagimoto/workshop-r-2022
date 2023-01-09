@@ -8,8 +8,7 @@ execute:
     cache: false
 format:
     html:
-        self-contained: true
-        code-fold: true
+        embed-resources: true
 ---
 
 In this exercise, we are going to see a relationship between **fertility rate** and
@@ -56,8 +55,7 @@ Look through the data. Check
 :::
 
 ```{r}
-fertility |> glimpse()
-unpaid_male |> glimpse()
+# Your Codes Here
 ```
 
 
@@ -77,11 +75,7 @@ oecd <- whoville::oecd_member_states()
 :::
 
 ```{r}
-fertility_oecd <- fertility |>
-  filter(iso3c %in% oecd)
-
-unpaid_male_oecd <- unpaid_male |>
-  filter(iso3c %in% oecd)
+# Your Codes Here
 ```
 
 ::: {.callout-tip}
@@ -98,20 +92,11 @@ I know the second one is tough. See the answer if you want.
 :::
 
 ```{r}
-mean_fertility <- fertility_oecd |>
-  group_by(country) |>
-  summarize(fertility = mean(fertility, na.rm = TRUE))
-
-mean_fertility
+# Your Codes Here
 ```
 
 ```{r}
-latest_unpaid <- unpaid_male_oecd |>
-  filter(!is.na(hour_unpaid)) |>
-  group_by(country) |>
-  top_n(n = 1, wt = year)
-
-latest_unpaid
+# Your Codes Here
 ```
 
 
@@ -124,10 +109,7 @@ Merge the two data frames you got in the last question.
 :::
 
 ```{r}
-data  <- mean_fertility |>
-  left_join(latest_unpaid, by = "country")
-
-data
+# Your Codes Here
 ```
 
 ## `ggplot2`
@@ -147,13 +129,7 @@ To make it better, try
 
 
 ```{r}
-data |>
-  ggplot(aes(x = hour_unpaid, y = fertility)) +
-  geom_point() +
-  stat_smooth(formula = 'y ~ x',
-              method = "lm", se = FALSE) +
-  coord_cartesian(ylim = c(1.1, 2.3)) +
-  theme_minimal()
+# Your Codes Here
 ```
 
 
@@ -168,14 +144,7 @@ It is known that `ggrepel::geom_text_repel()` works better than the original `ge
 
 
 ```{r}
-data |>
-  ggplot(aes(x = hour_unpaid, y = fertility, label = country)) +
-  geom_point() +
-  ggrepel::geom_text_repel() +
-  stat_smooth(formula = 'y ~ x',
-              method = "lm", se = FALSE) +
-  coord_cartesian(ylim = c(1.1, 2.3)) +
-  theme_minimal()
+# Your Codes Here
 ```
 
 

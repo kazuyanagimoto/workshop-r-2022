@@ -648,7 +648,7 @@ penguins |>
 
 ::::
 
-## Theme
+## Themes
 
 ```{r}
 #| output-location: column
@@ -678,6 +678,7 @@ For more detail, read [documents](https://ggplot2.tidyverse.org/reference/theme.
 ::: {.column width="20%"}
 
 ![](img/ggplot_layers/layers.drawio.svg){fig-align="center"}
+
 :::
 
 ::::
@@ -751,7 +752,7 @@ For more built-in themes, you can find in [ggtheme](https://ggplot2.tidyverse.or
 
 - Open the Quarto Notebook `code/10_notebooks/handson_tidyverse.qmd`
 - Answer the question in the notebook
-- You can find my answer as a qmd file or [webpage](https://kazuyanagimoto.com/workshop-r-2022/docs/code/10_notebooks/handson_tidyverse_answer/)
+- You can find my answer as a qmd file or [webpage](https://kazuyanagimoto.com/workshop-r-2022/code/10_notebooks/handson_tidyverse_answer.html)
 - The webpage version folds codes. It allows you to read only the code where you get stacked
 
 
