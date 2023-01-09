@@ -6,8 +6,8 @@ execute:
     cache: false
 format:
   revealjs:
-    standalone: false
-    embed-resources: false
+    standalone: true
+    embed-resources: true
     width: 1600
     height: 900
     theme: [default, custom.scss]
@@ -494,19 +494,266 @@ tb2 |>
 
 # ggplot2 Basics {background-color="#1C5253" visibility="uncounted"}
 
-## Layers
+## Grammer of Graphics
 
-## `aes()` & `geom_*`
+<br>
 
-## Color & Fill
+::: {.callout-note}
 
-## Shape & Size
+## Grammar of Graphics [@wilkinson_grammar_1999]
 
-## Scale
+1. Graphics are made of distinct layers of grammatical elements
+1. Plots are built with appropriate aesthetic mappings to make these plots meaningful
 
-## Facet
+:::
+
+. . .
+
+:::: {.columns}
+
+::: {.column width="70%"}
+
+`ggplot2`
+
+- designed to represent the grammar of graphics
+- connects layers by `+` instead of `|>`
+
+:::
+
+::: {.column width="30%"}
+
+![](img/ggplot_layers/layers.drawio.svg){fig-align="center"}
+:::
+
+::::
+
+## Aethentics & Geometries
+
+```{r}
+#| output-location: column
+penguins |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm)) +
+  geom_point()
+```
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="80%"}
+
+`geom_*()` functions specify the type of plots (density, bar, scatter,...)
+
+:::
+
+::: {.column width="20%"}
+
+![](img/ggplot_layers/layer-3.drawio.svg){fig-align="center"}
+:::
+
+::::
+
+
+## Facets
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "5"
+penguins |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm)) +
+  geom_point() +
+  facet_wrap(~species)
+```
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="80%"}
+
+:::
+
+::: {.column width="20%"}
+
+![](img/ggplot_layers/layer-4.drawio.svg){fig-align="center"}
+:::
+
+::::
+
+## Statistics
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "6,7"
+penguins |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm)) +
+  geom_point() +
+  facet_wrap(~species) +
+  stat_smooth(formula = 'y ~ x',
+              method = "lm", se = FALSE)
+```
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="80%"}
+
+
+:::
+
+::: {.column width="20%"}
+
+![](img/ggplot_layers/layer-5.drawio.svg){fig-align="center"}
+:::
+
+::::
+
+## Coordinates
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "2,8,9"
+
+penguins |>
+  filter(species == "Adelie") |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm)) +
+  geom_point() +
+  stat_smooth(formula = 'y ~ x',
+              method = "lm", se = FALSE) +
+  coord_cartesian(xlim = c(170, 230),
+                  ylim = c(30, 60))
+```
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="80%"}
+
+- `coord_cartesan()` is a zoom-in and zoom-out function
+- It is more recommended than `scale_*_continuous()`, which removes points if they are out of `xlim` (`ylim`)
+
+
+:::
+
+::: {.column width="20%"}
+
+![](img/ggplot_layers/layer-6.drawio.svg){fig-align="center"}
+:::
+
+::::
 
 ## Theme
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "8"
+penguins |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm)) +
+  geom_point() +
+  facet_wrap(~species) +
+  stat_smooth(formula = 'y ~ x',
+              method = "lm", se = FALSE) +
+  theme(axis.text.x = element_text(color = "red"))
+```
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="80%"}
+
+You can configure all the elements in a plot.
+For more detail, read [documents](https://ggplot2.tidyverse.org/reference/theme.html)
+
+
+:::
+
+::: {.column width="20%"}
+
+![](img/ggplot_layers/layers.drawio.svg){fig-align="center"}
+:::
+
+::::
+
+
+## Size of Points
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "4"
+penguins |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm)) +
+  geom_point(size = 4)
+```
+
+<br>
+
+For `geom_line()`, use `linewidth = 4`
+
+## Color
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "4"
+penguins |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm,
+             color = species)) +
+  geom_point(size = 4)
+```
+
+<br>
+
+For `geom_bar()`, use `fill = species`
+
+## Color & Shape
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "5"
+penguins |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm,
+             color = species,
+             shape = species)) +
+  geom_point(size = 4)
+```
+
+## Built-in Themes
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "7"
+penguins |>
+  ggplot(aes(x = flipper_length_mm,
+             y = bill_length_mm,
+             color = species,
+             shape = species)) +
+  geom_point(size = 4) +
+  theme_minimal()
+```
+
+<br>
+
+For more built-in themes, you can find in [ggtheme](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+
+## Handson
+
+<br>
+
+- Open the Quarto Notebook `code/10_notebooks/handson_tidyverse.qmd`
+- Answer the question in the notebook
+- You can find my answer as a qmd file or [webpage](https://kazuyanagimoto.com/workshop-r-2022/docs/code/10_notebooks/handson_tidyverse_answer/)
+- The webpage version folds codes. It allows you to read only the code where you get stacked
+
 
 ## References {visibility="uncounted"}
 ::: {#refs}

@@ -1,0 +1,150 @@
+---
+title: "Handson for `tidyverse`"
+author: Kazuharu Yanagimoto
+date: '`r format(Sys.time(), "%B %d, %Y")`'
+execute:
+    warning: false
+    message: false
+    cache: false
+format:
+    html:
+        self-contained: true
+---
+
+In this exercise, we are going to see a relationship between **fertility rate** and
+**male's unpaid work**.
+
+Both data is available in the World Bank Data:
+
+- [Fertility rate](https://data.worldbank.org/indicator/SP.DYN.TFRT.IN)
+- [Proportion of time spent on unpaid domestic and care work, male](https://data.worldbank.org/indicator/SG.TIM.UWRK.MA)
+
+You can load them by the `WDI` package.
+
+```{r}
+library(tidyverse)
+library(WDI)
+
+fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2010, end = 2019) |>
+  rename(fertility = "SP.DYN.TFRT.IN")
+unpaid_male <- WDI(indicator = "SG.TIM.UWRK.MA", start = 2010, end = 2019) |>
+  rename(hour_unpaid = "SG.TIM.UWRK.MA")
+```
+
+::: {.callout-warning}
+
+## Quarto Notebook Cache
+
+If you like to solve exercises by compiling the notebook,
+set `cache: true` in the top yaml.
+
+:::
+
+
+## `dplyr` & `tidyr`
+
+::: {.callout-tip}
+
+## Q1 `glimpse`
+
+Look through the data. Check
+
+- What type of values are in the `country` column
+- How many `NA` values are in the data
+
+:::
+
+```{r}
+# Your Codes Here
+```
+
+
+
+::: {.callout-tip}
+
+## Q2 `filter`
+
+Let's focus only on OECD countries. 
+Using the following vector `oecd`, choose only OECD-member countries.
+
+```{r}
+#remotes::install_github("caldwellst/whotilities")
+oecd <- whoville::oecd_member_states()
+```
+
+:::
+
+```{r}
+# Your Codes Here
+```
+
+::: {.callout-tip}
+
+## Q3 `group_by` & `summarize`
+
+Now, we want to have a data point for each country.
+Considering the data, compute
+
+- Mean of fertility rate by country
+- Latest data point in `unpaid_male` of each country (use `top_n()`)
+
+I know the second one is tough. See the answer if you want.
+:::
+
+```{r}
+# Your Codes Here
+```
+
+```{r}
+# Your Codes Here
+```
+
+
+::: {.callout-tip}
+
+## Q4 `left_join()`
+
+Merge the two data frames you got in the last question.
+
+:::
+
+```{r}
+# Your Codes Here
+```
+
+## `ggplot2`
+
+::: {.callout-tip}
+
+## Q5 `geom_point()`
+
+Plot a scatter plot of male hours of unpaid work and fertility rate.
+To make it better, try
+
+- Fit a linear line
+- Change the coordinates
+- Pick another theme
+
+:::
+
+
+```{r}
+# Your Codes Here
+```
+
+
+::: {.callout-tip}
+
+## Q6 (Extra) `ggrepel::geom_text_repel()`
+
+Put country labels on data points.
+It is known that `ggrepel::geom_text_repel()` works better than the original `geom_text()`.
+
+:::
+
+
+```{r}
+# Your Codes Here
+```
+
+

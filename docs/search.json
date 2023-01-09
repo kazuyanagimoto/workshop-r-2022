@@ -571,14 +571,14 @@
     "href": "code/slides/tidyverse/index.html#aes-geom_",
     "title": "",
     "section": "aes() & geom_*",
-    "text": "aes() & geom_*"
+    "text": "aes() & geom_*\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point()"
   },
   {
     "objectID": "code/slides/tidyverse/index.html#color-fill",
     "href": "code/slides/tidyverse/index.html#color-fill",
     "title": "",
     "section": "Color & Fill",
-    "text": "Color & Fill"
+    "text": "Color & Fill\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm,\n             color = species)) +\n  geom_point()"
   },
   {
     "objectID": "code/slides/tidyverse/index.html#shape-size",
@@ -606,13 +606,174 @@
     "href": "code/slides/tidyverse/index.html#theme",
     "title": "",
     "section": "Theme",
-    "text": "Theme"
+    "text": "Theme\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point() +\n  facet_wrap(~species) +\n  stat_smooth(formula = 'y ~ x',\n              method = \"lm\", se = FALSE) +\n  theme(axis.text.x = element_text(color = \"red\"))\n\n\n\n\n\n\n\n\n\nYou can configure all the elements in a plot. For more detail, read documents"
   },
   {
     "objectID": "code/slides/tidyverse/index.html#references",
     "href": "code/slides/tidyverse/index.html#references",
     "title": "",
     "section": "References",
-    "text": "References\n\n\nWickham, Hadley. 2014. “Tidy Data.” Journal of Statistical Software 59 (10): 1–23. https://doi.org/10.18637/jss.v059.i10.\n\n\nWickham, Hadley, and Garrett Grolemund. 2017. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. 1st edition. Sebastopol, CA: O’Reilly Media. https://r4ds.had.co.nz/."
+    "text": "References\n\n\nWickham, Hadley. 2014. “Tidy Data.” Journal of Statistical Software 59 (10): 1–23. https://doi.org/10.18637/jss.v059.i10.\n\n\nWickham, Hadley, and Garrett Grolemund. 2017. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. 1st edition. Sebastopol, CA: O’Reilly Media. https://r4ds.had.co.nz/.\n\n\nWilkinson, Leland. 1999. The Grammar of Graphics. Springer New York."
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#grammer-of-graphics",
+    "href": "code/slides/tidyverse/index.html#grammer-of-graphics",
+    "title": "",
+    "section": "Grammer of Graphics",
+    "text": "Grammer of Graphics\n\n\n\n\n\n\n\nGrammar of Graphics (Wilkinson 1999)\n\n\n\nGraphics are made of distinct layers of grammatical elements\nPlots are built with appropriate aesthetic mappings to make these plots meaningful\n\n\n\n\n\n\n\nggplot2\n\ndesigned to represent the grammar of graphics\nconnects layers by + instead of |>"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#facets",
+    "href": "code/slides/tidyverse/index.html#facets",
+    "title": "",
+    "section": "Facets",
+    "text": "Facets\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point() +\n  facet_wrap(~species)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#statistics",
+    "href": "code/slides/tidyverse/index.html#statistics",
+    "title": "",
+    "section": "Statistics",
+    "text": "Statistics\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point() +\n  facet_wrap(~species) +\n  stat_smooth(formula = 'y ~ x',\n              method = \"lm\", se = FALSE)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#aethentics-geometries",
+    "href": "code/slides/tidyverse/index.html#aethentics-geometries",
+    "title": "",
+    "section": "Aethentics & Geometries",
+    "text": "Aethentics & Geometries\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point()\n\n\n\n\n\n\n\n\n\ngeom_*() functions specify the type of plots (density, bar, scatter,…)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#coordinates",
+    "href": "code/slides/tidyverse/index.html#coordinates",
+    "title": "",
+    "section": "Coordinates",
+    "text": "Coordinates\n\n\npenguins |>\n  filter(species == \"Adelie\") |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point() +\n  stat_smooth(formula = 'y ~ x',\n              method = \"lm\", se = FALSE) +\n  coord_cartesian(xlim = c(170, 230),\n                  ylim = c(30, 60))\n\n\n\n\n\n\n\n\n\n\ncoord_cartesan() is a zoom-in and zoom-out function\nIt is more recommended than scale_*_continuous(), which removes points if they are out of xlim (ylim)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#built-in-themes",
+    "href": "code/slides/tidyverse/index.html#built-in-themes",
+    "title": "",
+    "section": "Built-in Themes",
+    "text": "Built-in Themes\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm,\n             color = species,\n             shape = species)) +\n  geom_point(size = 4) +\n  theme_minimal()\n\n\n\n\n\n\n\nFor more built-in themes, you can find in ggtheme"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#themes",
+    "href": "code/slides/tidyverse/index.html#themes",
+    "title": "",
+    "section": "Themes",
+    "text": "Themes\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point() +\n  facet_wrap(~species) +\n  stat_smooth(formula = 'y ~ x',\n              method = \"lm\", se = FALSE) +\n  theme(axis.text.x = element_text(color = \"red\"))\n\n\n\n\n\n\n\n\n\nYou can configure all the elements in a plot. For more detail, read documents"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#color",
+    "href": "code/slides/tidyverse/index.html#color",
+    "title": "",
+    "section": "Color",
+    "text": "Color\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm,\n             color = species)) +\n  geom_point(size = 4)\n\n\n\n\n\n\n\nFor geom_bar(), use fill = species"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#color-shape",
+    "href": "code/slides/tidyverse/index.html#color-shape",
+    "title": "",
+    "section": "Color & Shape",
+    "text": "Color & Shape\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm,\n             color = species,\n             shape = species)) +\n  geom_point(size = 4)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#size-of-points",
+    "href": "code/slides/tidyverse/index.html#size-of-points",
+    "title": "",
+    "section": "Size of Points",
+    "text": "Size of Points\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point(size = 4)\n\n\n\n\n\n\n\nFor geom_line(), use linewidth = 4"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#size-of-points-auto-animatetrue-visibiltyuncounted",
+    "href": "code/slides/tidyverse/index.html#size-of-points-auto-animatetrue-visibiltyuncounted",
+    "title": "",
+    "section": "Size of Points {auto-animate=“true”, visibilty=“uncounted”}",
+    "text": "Size of Points {auto-animate=“true”, visibilty=“uncounted”}\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point(size = 4)"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#size-of-points-1",
+    "href": "code/slides/tidyverse/index.html#size-of-points-1",
+    "title": "",
+    "section": "Size of Points",
+    "text": "Size of Points\n\n\npenguins |>\n  ggplot(aes(x = flipper_length_mm,\n             y = bill_length_mm)) +\n  geom_point(size = 4)"
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse.html",
+    "href": "code/10_notebooks/handson_tidyverse.html",
+    "title": "Handson for tidyverse",
+    "section": "",
+    "text": "In this exercise, we are going to see a relationship between fertility rate and male’s unpaid work.\nBoth data is available in the World Bank Data:\nYou can load them by the WDI package."
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse.html#dplyr-tidyr",
+    "href": "code/10_notebooks/handson_tidyverse.html#dplyr-tidyr",
+    "title": "Handson for tidyverse",
+    "section": "dplyr & tidyr",
+    "text": "dplyr & tidyr\n\n\n\n\n\n\nQ1 glimpse\n\n\n\nLook through the data. Check\n\nWhat type of values are in the country column\nHow many NA values are in the data\n\n\n\n\n\nCode\nfertility |> glimpse()\n\n\nRows: 2,660\nColumns: 5\n$ country   <chr> \"Africa Eastern and Southern\", \"Africa Eastern and Southern\"…\n$ iso2c     <chr> \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", …\n$ iso3c     <chr> \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE…\n$ year      <int> 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, …\n$ fertility <dbl> 4.482899, 4.527707, 4.570410, 4.615671, 4.677619, 4.739863, …\n\n\nCode\nunpaid_male |> glimpse()\n\n\nRows: 2,660\nColumns: 5\n$ country     <chr> \"Africa Eastern and Southern\", \"Africa Eastern and Souther…\n$ iso2c       <chr> \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\", \"ZH\"…\n$ iso3c       <chr> \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"AFE\", \"A…\n$ year        <int> 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010…\n$ hour_unpaid <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n\n\n\n\n\n\n\n\nQ2 filter\n\n\n\nLet’s focus only on OECD countries. Using the following vector oecd, choose only OECD-member countries.\n\n\nCode\n#remotes::install_github(\"caldwellst/whotilities\")\noecd <- whoville::oecd_member_states()\n\n\n\n\n\n\nCode\nfertility_oecd <- fertility |>\n  filter(iso3c %in% oecd)\n\nunpaid_male_oecd <- unpaid_male |>\n  filter(iso3c %in% oecd)\n\n\n\n\n\n\n\n\nQ3 group_by & summarize\n\n\n\nNow, we want to have a data point for each country. Considering the data, compute\n\nMean of fertility rate by country\nLatest data point in unpaid_male of each country (use top_n())\n\nI know the second one is tough. See the answer if you want.\n\n\n\n\nCode\nmean_fertility <- fertility_oecd |>\n  group_by(country) |>\n  summarize(fertility = mean(fertility, na.rm = TRUE))\n\nmean_fertility\n\n\n# A tibble: 37 × 2\n   country   fertility\n   <chr>         <dbl>\n 1 Australia      1.82\n 2 Austria        1.47\n 3 Belgium        1.72\n 4 Canada         1.58\n 5 Chile          1.71\n 6 Colombia       1.87\n 7 Czechia        1.57\n 8 Denmark        1.74\n 9 Estonia        1.60\n10 Finland        1.64\n# … with 27 more rows\n\n\n\n\nCode\nlatest_unpaid <- unpaid_male_oecd |>\n  filter(!is.na(hour_unpaid)) |>\n  group_by(country) |>\n  top_n(n = 1, wt = year)\n\nlatest_unpaid\n\n\n# A tibble: 26 × 5\n# Groups:   country [26]\n   country  iso2c iso3c  year hour_unpaid\n   <chr>    <chr> <chr> <int>       <dbl>\n 1 Belgium  BE    BEL    2013       10.1 \n 2 Canada   CA    CAN    2016        9.58\n 3 Chile    CL    CHL    2015        9.85\n 4 Colombia CO    COL    2017        2.93\n 5 Estonia  EE    EST    2010       10.8 \n 6 Finland  FI    FIN    2010       10.5 \n 7 France   FR    FRA    2010        9.49\n 8 Germany  DE    DEU    2013       10.4 \n 9 Greece   GR    GRC    2014        7.01\n10 Hungary  HU    HUN    2010        7.98\n# … with 16 more rows\n\n\n\n\n\n\n\n\nQ4 left_join()\n\n\n\nMerge the two data frames you got in the last question.\n\n\n\n\nCode\ndata  <- mean_fertility |>\n  left_join(latest_unpaid, by = \"country\")\n\ndata\n\n\n# A tibble: 37 × 6\n   country   fertility iso2c iso3c  year hour_unpaid\n   <chr>         <dbl> <chr> <chr> <int>       <dbl>\n 1 Australia      1.82 <NA>  <NA>     NA       NA   \n 2 Austria        1.47 <NA>  <NA>     NA       NA   \n 3 Belgium        1.72 BE    BEL    2013       10.1 \n 4 Canada         1.58 CA    CAN    2016        9.58\n 5 Chile          1.71 CL    CHL    2015        9.85\n 6 Colombia       1.87 CO    COL    2017        2.93\n 7 Czechia        1.57 <NA>  <NA>     NA       NA   \n 8 Denmark        1.74 <NA>  <NA>     NA       NA   \n 9 Estonia        1.60 EE    EST    2010       10.8 \n10 Finland        1.64 FI    FIN    2010       10.5 \n# … with 27 more rows"
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse.html#ggplot2",
+    "href": "code/10_notebooks/handson_tidyverse.html#ggplot2",
+    "title": "Handson for tidyverse",
+    "section": "ggplot2",
+    "text": "ggplot2\n\n\n\n\n\n\nQ5 geom_point()\n\n\n\nPlot a scatter plot of male hours of unpaid work and fertility rate. To make it better, try\n\nFit a linear line\nChange the coordinates\nPick another theme\n\n\n\n\n\nCode\ndata |>\n  ggplot(aes(x = hour_unpaid, y = fertility)) +\n  geom_point() +\n  stat_smooth(formula = 'y ~ x',\n              method = \"lm\", se = FALSE) +\n  coord_cartesian(ylim = c(1.1, 2.3)) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nQ6 (Extra) ggrepel::geom_text_repel()\n\n\n\nPut country labels on data points. It is known that ggrepel::geom_text_repel() works better than the original geom_text().\n\n\n\n\nCode\ndata |>\n  ggplot(aes(x = hour_unpaid, y = fertility, label = country)) +\n  geom_point() +\n  ggrepel::geom_text_repel() +\n  stat_smooth(formula = 'y ~ x',\n              method = \"lm\", se = FALSE) +\n  coord_cartesian(ylim = c(1.1, 2.3)) +\n  theme_minimal()"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html",
+    "href": "code/slides/tidyverse/index.html",
+    "title": "",
+    "section": "",
+    "text": "An Introduction to tidyverse\n\n\nKazuharu Yanagimoto\n\n\nJanuary 13, 2023"
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse_answer.html",
+    "href": "code/10_notebooks/handson_tidyverse_answer.html",
+    "title": "Handson for tidyverse",
+    "section": "",
+    "text": "In this exercise, we are going to see a relationship between fertility rate and male’s unpaid work.\nBoth data is available in the World Bank Data:\nYou can load them by the WDI package."
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse_answer.html#dplyr-tidyr",
+    "href": "code/10_notebooks/handson_tidyverse_answer.html#dplyr-tidyr",
+    "title": "Handson for tidyverse",
+    "section": "dplyr & tidyr",
+    "text": "dplyr & tidyr\n\n\n\n\n\n\nQ1 glimpse\n\n\n\nLook through the data. Check\n\nWhat type of values are in the country column\nHow many NA values are in the data\n\n\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ2 filter\n\n\n\nLet’s focus only on OECD countries. Using the following vector oecd, choose only OECD-member countries.\n\n#remotes::install_github(\"caldwellst/whotilities\")\noecd <- whoville::oecd_member_states()\n\n\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ3 group_by & summarize\n\n\n\nNow, we want to have a data point for each country. Considering the data, compute\n\nMean of fertility rate by country\nLatest data point in unpaid_male of each country (use top_n())\n\nI know the second one is tough. See the answer if you want.\n\n\n\n# Your Codes Here\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ4 left_join()\n\n\n\nMerge the two data frames you got in the last question.\n\n\n\n# Your Codes Here"
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse_answer.html#ggplot2",
+    "href": "code/10_notebooks/handson_tidyverse_answer.html#ggplot2",
+    "title": "Handson for tidyverse",
+    "section": "ggplot2",
+    "text": "ggplot2\n\n\n\n\n\n\nQ5 geom_point()\n\n\n\nPlot a scatter plot of male hours of unpaid work and fertility rate. To make it better, try\n\nFit a linear line\nChange the coordinates\nPick another theme\n\n\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ6 (Extra) ggrepel::geom_text_repel()\n\n\n\nPut country labels on data points. It is known that ggrepel::geom_text_repel() works better than the original geom_text().\n\n\n\n# Your Codes Here"
+  },
+  {
+    "objectID": "code/slides/tidyverse/index.html#handson",
+    "href": "code/slides/tidyverse/index.html#handson",
+    "title": "",
+    "section": "Handson",
+    "text": "Handson\n\n\nOpen the Quarto Notebook code/10_notebooks/handson_tidyverse.qmd\nAnswer the question in the notebook\nYou can find my answer as a qmd file or webpage\nThe webpage version folds codes. It allows you to read only the code where you get stacked"
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse_answer/index.html",
+    "href": "code/10_notebooks/handson_tidyverse_answer/index.html",
+    "title": "Handson for tidyverse",
+    "section": "",
+    "text": "In this exercise, we are going to see a relationship between fertility rate and male’s unpaid work.\nBoth data is available in the World Bank Data:\nYou can load them by the WDI package."
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse_answer/index.html#dplyr-tidyr",
+    "href": "code/10_notebooks/handson_tidyverse_answer/index.html#dplyr-tidyr",
+    "title": "Handson for tidyverse",
+    "section": "dplyr & tidyr",
+    "text": "dplyr & tidyr\n\n\n\n\n\n\nQ1 glimpse\n\n\n\nLook through the data. Check\n\nWhat type of values are in the country column\nHow many NA values are in the data\n\n\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ2 filter\n\n\n\nLet’s focus only on OECD countries. Using the following vector oecd, choose only OECD-member countries.\n\n#remotes::install_github(\"caldwellst/whotilities\")\noecd <- whoville::oecd_member_states()\n\n\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ3 group_by & summarize\n\n\n\nNow, we want to have a data point for each country. Considering the data, compute\n\nMean of fertility rate by country\nLatest data point in unpaid_male of each country (use top_n())\n\nI know the second one is tough. See the answer if you want.\n\n\n\n# Your Codes Here\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ4 left_join()\n\n\n\nMerge the two data frames you got in the last question.\n\n\n\n# Your Codes Here"
+  },
+  {
+    "objectID": "code/10_notebooks/handson_tidyverse_answer/index.html#ggplot2",
+    "href": "code/10_notebooks/handson_tidyverse_answer/index.html#ggplot2",
+    "title": "Handson for tidyverse",
+    "section": "ggplot2",
+    "text": "ggplot2\n\n\n\n\n\n\nQ5 geom_point()\n\n\n\nPlot a scatter plot of male hours of unpaid work and fertility rate. To make it better, try\n\nFit a linear line\nChange the coordinates\nPick another theme\n\n\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ6 (Extra) ggrepel::geom_text_repel()\n\n\n\nPut country labels on data points. It is known that ggrepel::geom_text_repel() works better than the original geom_text().\n\n\n\n# Your Codes Here"
   }
 ]
