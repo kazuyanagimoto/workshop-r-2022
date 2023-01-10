@@ -1,0 +1,440 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="563px" height="383px" viewBox="-0.5 -0.5 563 383" content="&lt;mxfile&gt;&lt;diagram id=&quot;R8wzxhX3WqjklhHqZVkE&quot; name=&quot;Page-1&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs>
+        <style type="text/css">
+            /* cyrillic-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw0aXpsog.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw9aXpsog.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw2aXpsog.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw3aXpsog.woff2") format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXo.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Fira Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firamono/v14/N0bX2SlFPv1weGeLZDtgK_7SodY.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Fira Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firamono/v14/N0bX2SlFPv1weGeLZDtgIv7SodY.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Fira Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firamono/v14/N0bX2SlFPv1weGeLZDtgKv7SodY.woff2") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Fira Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firamono/v14/N0bX2SlFPv1weGeLZDtgJf7SodY.woff2") format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Fira Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firamono/v14/N0bX2SlFPv1weGeLZDtgKP7SodY.woff2") format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Fira Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firamono/v14/N0bX2SlFPv1weGeLZDtgJv7S.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firasans/v16/va9E4kDNxMZdWfMOD5VvmojLeTY.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firasans/v16/va9E4kDNxMZdWfMOD5Vvk4jLeTY.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firasans/v16/va9E4kDNxMZdWfMOD5Vvm4jLeTY.woff2") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firasans/v16/va9E4kDNxMZdWfMOD5VvlIjLeTY.woff2") format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firasans/v16/va9E4kDNxMZdWfMOD5VvmIjLeTY.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firasans/v16/va9E4kDNxMZdWfMOD5VvmYjLeTY.woff2") format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/firasans/v16/va9E4kDNxMZdWfMOD5Vvl4jL.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu72xKOzY.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu5mxKOzY.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7mxKOzY.woff2") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4WxKOzY.woff2") format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7WxKOzY.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7GxKOzY.woff2") format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+        </style>
+    </defs>
+    <g>
+        <path d="M 311 51 L 414.25 166.26" fill="none" stroke="#0072b2" stroke-miterlimit="10" pointer-events="stroke"/>
+        <path d="M 417.75 170.17 L 410.48 167.29 L 414.25 166.26 L 415.69 162.62 Z" fill="#0072b2" stroke="#0072b2" stroke-miterlimit="10" pointer-events="all"/>
+        <path d="M 143.5 171 L 236.98 55.94" fill="none" stroke="#0072b2" stroke-miterlimit="10" pointer-events="stroke"/>
+        <path d="M 240.29 51.87 L 238.6 59.51 L 236.98 55.94 L 233.16 55.09 Z" fill="#0072b2" stroke="#0072b2" stroke-miterlimit="10" pointer-events="all"/>
+        <rect x="1" y="131" width="210" height="250" fill="none" stroke="#009e73" stroke-width="3" pointer-events="all"/>
+        <rect x="64.34" y="81" width="83.33" height="50" fill="none" stroke="none" pointer-events="all"/>
+        <path d="M 71.4 119.79 L 71.4 83.24 C 71.92 82.04 73.03 81.19 74.33 81 L 137.43 81 C 139.03 81.18 140.34 82.34 140.69 83.91 L 140.69 119.79 L 147.38 127.01 C 147.67 127.91 147.39 128.85 146.59 129.61 C 145.8 130.36 144.57 130.87 143.2 131 L 68.9 131 C 67.51 130.88 66.25 130.38 65.45 129.63 C 64.64 128.87 64.34 127.92 64.63 127.01 Z M 74.16 119.79 L 138.18 119.87 L 138.18 84.65 C 137.88 83.77 137.11 83.13 136.18 82.99 L 75.83 82.99 C 74.92 83.31 74.27 84.12 74.16 85.07 Z M 99.57 124.69 L 97.31 127.93 L 113.03 127.93 L 111.27 124.69 Z" fill="#009e73" stroke="none" pointer-events="all"/>
+        <rect x="31" y="331" width="150" height="30" rx="4.5" ry="4.5" fill="none" stroke="rgb(0, 0, 0)" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 346px; margin-left: 32px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                Global Cache
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="106" y="351" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    Global Cache
+                </text>
+            </switch>
+        </g>
+        <rect x="31" y="171" width="150" height="90" rx="13.5" ry="13.5" fill="none" stroke="rgb(0, 0, 0)" pointer-events="all"/>
+        <path d="M 131 191 L 146 191 L 152 197 L 152 221 L 131 221 Z" fill="none" stroke="#0080f0" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
+        <path d="M 146 191 L 146 197 L 152 197" fill="none" stroke="#0080f0" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 228px; margin-left: 142px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: nowrap;">
+                                renv.lock
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="142" y="243" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    ren...
+                </text>
+            </switch>
+        </g>
+        <path d="M 51 193.27 C 51 192.02 51.9 191 53 191 L 57 191 C 58.1 191 59 192.02 59 193.27 L 89 193.27 C 89.53 193.27 90.04 193.51 90.41 193.93 C 90.79 194.36 91 194.94 91 195.54 L 91 218.23 C 91 219.48 90.1 220.5 89 220.5 L 53 220.5 C 51.9 220.5 51 219.48 51 218.23 Z M 51 195.54 L 91 195.54" fill="none" stroke="#0080f0" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 228px; margin-left: 71px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: nowrap;">
+                                renv
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="71" y="243" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    renv
+                </text>
+            </switch>
+        </g>
+        <rect x="66" y="141" width="80" height="30" fill="none" stroke="none" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 156px; margin-left: 67px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                Project A
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="106" y="161" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    Project A
+                </text>
+            </switch>
+        </g>
+        <path d="M 69 331 L 69 257.37" fill="none" stroke="#e69f00" stroke-miterlimit="10" stroke-dasharray="3 3" pointer-events="stroke"/>
+        <path d="M 69 252.12 L 72.5 259.12 L 69 257.37 L 65.5 259.12 Z" fill="#e69f00" stroke="#e69f00" stroke-miterlimit="10" pointer-events="all"/>
+        <rect x="81" y="281" width="85" height="30" fill="none" stroke="none" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 83px; height: 1px; padding-top: 296px; margin-left: 82px;">
+                        <div data-drawio-colors="color: #E69F00; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(230, 159, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                Symbolic Link
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="124" y="301" fill="#E69F00" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    Symbolic Li...
+                </text>
+            </switch>
+        </g>
+        <rect x="351" y="131" width="210" height="250" fill="none" stroke="#cc79a7" stroke-width="3" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 208px; height: 1px; padding-top: 256px; margin-left: 352px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 12px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                <span style="color: rgba(0 , 0 , 0 , 0) ; font-family: monospace ; font-size: 0px">
+                                    %3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22Global%20Cache%22%20style%3D%22rounded%3D1%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3BfillColor%3Dnone%3BfontSize%3D15%3BfontFamily%3DMontserrat%3BfontSource%3Dhttps%253A%252F%252Ffonts.googleapis.com%252Fcss%253Ffamily%253DMontserrat%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22210%22%20y%3D%22410%22%20width%3D%22150%22%20height%3D%2230%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="456" y="260" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="12px" text-anchor="middle">
+                    %3CmxGraphModel%3E%3Croot%3E%3CmxCe...
+                </text>
+            </switch>
+        </g>
+        <rect x="414.34" y="81" width="83.33" height="50" fill="none" stroke="none" pointer-events="all"/>
+        <path d="M 421.4 119.79 L 421.4 83.24 C 421.92 82.04 423.03 81.19 424.33 81 L 487.43 81 C 489.03 81.18 490.34 82.34 490.69 83.91 L 490.69 119.79 L 497.38 127.01 C 497.67 127.91 497.39 128.85 496.59 129.61 C 495.8 130.36 494.57 130.87 493.2 131 L 418.9 131 C 417.51 130.88 416.25 130.38 415.45 129.63 C 414.64 128.87 414.34 127.92 414.63 127.01 Z M 424.16 119.79 L 488.18 119.87 L 488.18 84.65 C 487.88 83.77 487.11 83.13 486.18 82.99 L 425.83 82.99 C 424.92 83.31 424.27 84.12 424.16 85.07 Z M 449.57 124.69 L 447.31 127.93 L 463.03 127.93 L 461.27 124.69 Z" fill="#cc79a7" stroke="none" pointer-events="all"/>
+        <rect x="381" y="171" width="150" height="90" rx="13.5" ry="13.5" fill="none" stroke="rgb(0, 0, 0)" pointer-events="all"/>
+        <path d="M 481 191 L 496 191 L 502 197 L 502 221 L 481 221 Z" fill="none" stroke="#0080f0" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
+        <path d="M 496 191 L 496 197 L 502 197" fill="none" stroke="#0080f0" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 228px; margin-left: 492px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: nowrap;">
+                                renv.lock
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="492" y="243" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    ren...
+                </text>
+            </switch>
+        </g>
+        <path d="M 401 193.27 C 401 192.02 401.9 191 403 191 L 407 191 C 408.1 191 409 192.02 409 193.27 L 439 193.27 C 439.53 193.27 440.04 193.51 440.41 193.93 C 440.79 194.36 441 194.94 441 195.54 L 441 218.23 C 441 219.48 440.1 220.5 439 220.5 L 403 220.5 C 401.9 220.5 401 219.48 401 218.23 Z M 401 195.54 L 441 195.54" fill="none" stroke="#0080f0" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 228px; margin-left: 421px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: nowrap;">
+                                renv
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="421" y="243" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    renv
+                </text>
+            </switch>
+        </g>
+        <rect x="416" y="141" width="80" height="30" fill="none" stroke="none" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 156px; margin-left: 417px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                Project A
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="456" y="161" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    Project A
+                </text>
+            </switch>
+        </g>
+        <path d="M 419 331 L 419 257.37" fill="none" stroke="#e69f00" stroke-miterlimit="10" stroke-dasharray="3 3" pointer-events="stroke"/>
+        <path d="M 419 252.12 L 422.5 259.12 L 419 257.37 L 415.5 259.12 Z" fill="#e69f00" stroke="#e69f00" stroke-miterlimit="10" pointer-events="all"/>
+        <path d="M 246 42.67 L 246 9.33 C 246 4.73 259.43 1 276 1 C 292.57 1 306 4.73 306 9.33 L 306 42.67 C 306 47.27 292.57 51 276 51 C 259.43 51 246 47.27 246 42.67 Z" fill="none" stroke="#0072b2" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
+        <path d="M 246 9.33 C 246 13.94 259.43 17.67 276 17.67 C 292.57 17.67 306 13.94 306 9.33" fill="none" stroke="#0072b2" stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 58px; height: 1px; padding-top: 30px; margin-left: 247px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 12px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                Cloud
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="276" y="33" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="12px" text-anchor="middle">
+                    Cloud
+                </text>
+            </switch>
+        </g>
+        <rect x="431" y="281" width="20" height="30" fill="none" stroke="none" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 18px; height: 1px; padding-top: 296px; margin-left: 432px;">
+                        <div data-drawio-colors="color: #E69F00; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(230, 159, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                ?
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="441" y="301" fill="#E69F00" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    ?
+                </text>
+            </switch>
+        </g>
+        <rect x="381.01" y="331" width="150" height="30" rx="4.5" ry="4.5" fill="none" stroke="rgb(0, 0, 0)" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 346px; margin-left: 382px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 15px; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                Global Cache
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="456" y="351" fill="rgb(0, 0, 0)" font-family="Montserrat" font-size="15px" text-anchor="middle">
+                    Global Cache
+                </text>
+            </switch>
+        </g>
+    </g>
+    <switch>
+        <g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/>
+        <a transform="translate(0,-5)" xlink:href="https://www.diagrams.net/doc/faq/svg-export-text-problems" target="_blank">
+            <text text-anchor="middle" font-size="10px" x="50%" y="100%">
+                Viewer does not support full SVG 1.1
+            </text>
+        </a>
+    </switch>
+</svg>

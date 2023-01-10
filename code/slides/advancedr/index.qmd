@@ -124,7 +124,7 @@ It works in Windows, Mac, Linux (of course, in a Docker environment)
 
 ## Remember...
 
-::: {.center-y}
+<br>
 
 >If the first line of your R script is
 >`setwd("C:\Users\jenny\path\that\only\I\have")`
@@ -133,7 +133,6 @@ It works in Windows, Mac, Linux (of course, in a Docker environment)
 >
 >--@bryan_zen_2018
 
-:::
 
 ## `renv` Is Smarter than Us
 
@@ -1454,7 +1453,33 @@ It works in Windows, Mac, Linux (of course, in a Docker environment)
 
 But Dropbox might ruin...
 
+## (Advanced) How `renv` Works in Background
+
+![](img/renv_backgroud.drawio.svg){fig-align="center"}
+
+
 ## (Advanced) `renv` with Cloud Storage
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](img/renv_cloud.drawio.svg){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+
+**Problem**
+
+- `renv.lock` is necessary and sufficient
+- `renv` folder should not be shared (broken symbolic link)
+- Need to sync-ignore (e.g. [Dropbox](https://help.dropbox.com/sync/ignored-files))
+- Packages in `renv` are _git-ignored_ by default
+
+:::
+
+::::
 
 ## (Advanced) Docker
 
@@ -1476,14 +1501,14 @@ Problems `renv` can solve are only packages. They may come from differences in
 - If you work on Docker, others can _perfectly_ replicate your environment
 
 
-## Handson 1
+## Handson
 
 <br>
 
 1. Clone (or download) the [course repositiory](https://github.com/nicetak/workshop-r-2022)
 1. Open the course project (`workshop-r-2022.Rproj`)
 1. Run `renv::restore()` in R console
-1. Confirm you can render sample notebooks without any problem
+1. Confirm you can run any file in `code/`
 
 <br>
 
@@ -1500,7 +1525,7 @@ Please make sure if you are using the latest `r version$version.string`.
 
 ::: {.callout-note}
 
-## Fundamental Theorem of Readability (@boswell_art_2011)
+## Fundamental Theorem of Readability [@boswell_art_2011]
 
 Code should be written to minimize the time it would take for someone else to understand it.
 
@@ -2495,7 +2520,7 @@ library(patchwork)
 #### Colors & Fonts
 
 - **Color Palette**: `RColorBrewer`, Okabe-Ito, `ggsci`
-- **Fonts**: Google Fonts. Especially, _condensed_ fonts.
+- **Fonts**: Google Fonts with `showtext`. Especially, _condensed_ fonts.
 - **Ready-made Themes**: `hrbrthemes`, `ggpubr`
 
 #### Further Readings (Online Books)
