@@ -4,10 +4,12 @@
 
 ### "An Introduction to tidyverse"
 [HTML](https://kazuyanagimoto.com/workshop-r-2022/code/slides/tidyverse/),
+[PDF](https://kazuyanagimoto.com/workshop-r-2022/code/slides/tidyverse/index.pdf),
 [qmd](https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/tidyverse/index.qmd)
 
 ### "An Advanced Introduction to R"
 [HTML](https://kazuyanagimoto.com/workshop-r-2022/code/slides/advancedr/),
+[PDF](https://kazuyanagimoto.com/workshop-r-2022/code/slides/advancedr/index.pdf),
 [qmd](https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/index.qmd)
 
 

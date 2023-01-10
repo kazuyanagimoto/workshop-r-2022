@@ -67,7 +67,7 @@
     "href": "code/slides/advancedr/index.html#advanced-renv-with-cloud-storage",
     "title": "",
     "section": "(Advanced) renv with Cloud Storage",
-    "text": "(Advanced) renv with Cloud Storage"
+    "text": "(Advanced) renv with Cloud Storage\n\n\n\n\n\n\n\n\n\nProblem\n\nrenv.lock is necessary and sufficient\nrenv folder should not be shared (broken symbolic link)\nNeed to sync-ignore (e.g. Dropbox)\nPackages in renv are git-ignored by default"
   },
   {
     "objectID": "code/slides/advancedr/index.html#advanced-docker",
@@ -88,7 +88,7 @@
     "href": "code/slides/advancedr/index.html#fundamental-theorem-of-readability",
     "title": "",
     "section": "Fundamental Theorem of Readability",
-    "text": "Fundamental Theorem of Readability\n\n\n\n\n\n\n\nFundamental Theorem of Readability (Boswell and Foucher (2011))\n\n\nCode should be written to minimize the time it would take for someone else to understand it.\n\n\n\n\n\n\\[\n\\text{Code} := \\arg\\min_{c \\in \\mathcal{C}}\\mathbb{E}_i[R_{i}(c)]\n\\]\nwhere\n\n\\(\\mathcal{C}\\): Set of codes that work\n\\(i\\): A potential reader including yourself at a different time point\n\\(R_{i}(c)\\): Time taken by person \\(i\\) to understand code \\(c\\)"
+    "text": "Fundamental Theorem of Readability\n\n\n\n\n\n\n\nFundamental Theorem of Readability (Boswell and Foucher 2011)\n\n\nCode should be written to minimize the time it would take for someone else to understand it.\n\n\n\n\n\n\\[\n\\text{Code} := \\arg\\min_{c \\in \\mathcal{C}}\\mathbb{E}_i[R_{i}(c)]\n\\]\nwhere\n\n\\(\\mathcal{C}\\): Set of codes that work\n\\(i\\): A potential reader including yourself at a different time point\n\\(R_{i}(c)\\): Time taken by person \\(i\\) to understand code \\(c\\)"
   },
   {
     "objectID": "code/slides/advancedr/index.html#naming",
@@ -312,7 +312,7 @@
     "href": "code/slides/advancedr/index.html#takeaway",
     "title": "",
     "section": "Takeaway",
-    "text": "Takeaway\nMaximize Data-ink Ratio\n\nOmit all the unnecessary elements in a plot\n\nColors & Fonts\n\nColor Palette: RColorBrewer, Okabe-Ito, ggsci\nFonts: Google Fonts. Especially, condensed fonts.\nReady-made Themes: hrbrthemes, ggpubr\n\nFurther Readings (Online Books)\n\n“Data Visualization: A Practical Introduction” Healy (2018)\n“Fundamentals of Data Visualization” Wilke (2019)"
+    "text": "Takeaway\nMaximize Data-ink Ratio\n\nOmit all the unnecessary elements in a plot\n\nColors & Fonts\n\nColor Palette: RColorBrewer, Okabe-Ito, ggsci\nFonts: Google Fonts with showtext. Especially, condensed fonts.\nReady-made Themes: hrbrthemes, ggpubr\n\nFurther Readings (Online Books)\n\n“Data Visualization: A Practical Introduction” Healy (2018)\n“Fundamentals of Data Visualization” Wilke (2019)"
   },
   {
     "objectID": "code/slides/advancedr/index.html#kableextra-example",
@@ -775,5 +775,19 @@
     "title": "Handson for tidyverse",
     "section": "ggplot2",
     "text": "ggplot2\n\n\n\n\n\n\nQ5 geom_point()\n\n\n\nPlot a scatter plot of male hours of unpaid work and fertility rate. To make it better, try\n\nFit a linear line\nChange the coordinates\nPick another theme\n\n\n\n\n# Your Codes Here\n\n\n\n\n\n\n\nQ6 (Extra) ggrepel::geom_text_repel()\n\n\n\nPut country labels on data points. It is known that ggrepel::geom_text_repel() works better than the original geom_text().\n\n\n\n# Your Codes Here"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#advanced-how-renv-works-in-background",
+    "href": "code/slides/advancedr/index.html#advanced-how-renv-works-in-background",
+    "title": "",
+    "section": "(Advanced) How renv Works in Background",
+    "text": "(Advanced) How renv Works in Background"
+  },
+  {
+    "objectID": "code/slides/advancedr/index.html#handson",
+    "href": "code/slides/advancedr/index.html#handson",
+    "title": "",
+    "section": "Handson",
+    "text": "Handson\n\n\nClone (or download) the course repositiory\nOpen the course project (workshop-r-2022.Rproj)\nRun renv::restore() in R console\nConfirm you can run any file in code/\n\n\n\n\n\n\n\n\nWarning\n\n\nPlease make sure if you are using the latest R version 4.2.2 (2022-10-31)."
   }
 ]

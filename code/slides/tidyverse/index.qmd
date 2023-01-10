@@ -541,13 +541,13 @@ penguins |>
 
 :::: {.columns}
 
-::: {.column width="80%"}
+::: {.column width="85%"}
 
 `geom_*()` functions specify the type of plots (density, bar, scatter,...)
 
 :::
 
-::: {.column width="20%"}
+::: {.column width="15%"}
 
 ![](img/ggplot_layers/layer-3.drawio.svg){fig-align="center"}
 :::
@@ -571,11 +571,11 @@ penguins |>
 
 :::: {.columns}
 
-::: {.column width="80%"}
+::: {.column width="85%"}
 
 :::
 
-::: {.column width="20%"}
+::: {.column width="15%"}
 
 ![](img/ggplot_layers/layer-4.drawio.svg){fig-align="center"}
 :::
@@ -600,12 +600,12 @@ penguins |>
 
 :::: {.columns}
 
-::: {.column width="80%"}
+::: {.column width="85%"}
 
 
 :::
 
-::: {.column width="20%"}
+::: {.column width="15%"}
 
 ![](img/ggplot_layers/layer-5.drawio.svg){fig-align="center"}
 :::
@@ -633,7 +633,7 @@ penguins |>
 
 :::: {.columns}
 
-::: {.column width="80%"}
+::: {.column width="85%"}
 
 - `coord_cartesan()` is a zoom-in and zoom-out function
 - It is more recommended than `scale_*_continuous()`, which removes points if they are out of `xlim` (`ylim`)
@@ -641,7 +641,7 @@ penguins |>
 
 :::
 
-::: {.column width="20%"}
+::: {.column width="15%"}
 
 ![](img/ggplot_layers/layer-6.drawio.svg){fig-align="center"}
 :::
@@ -667,7 +667,7 @@ penguins |>
 
 :::: {.columns}
 
-::: {.column width="80%"}
+::: {.column width="85%"}
 
 You can configure all the elements in a plot.
 For more detail, read [documents](https://ggplot2.tidyverse.org/reference/theme.html)
@@ -675,7 +675,7 @@ For more detail, read [documents](https://ggplot2.tidyverse.org/reference/theme.
 
 :::
 
-::: {.column width="20%"}
+::: {.column width="15%"}
 
 ![](img/ggplot_layers/layers.drawio.svg){fig-align="center"}
 
