@@ -25,8 +25,8 @@ models <- list(
 )
 
 cm  <-  c(
-    "type_personpassenger" = "Passenger",
-    "type_personpedestrian" = "Pedestrian",
+    "type_personPassenger" = "Passenger",
+    "type_personPedestrian" = "Pedestrian",
     "positive_alcoholTRUE" = "Positive Alcohol"
 )
 
