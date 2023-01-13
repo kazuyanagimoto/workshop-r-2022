@@ -2,6 +2,7 @@ library(here)
 library(tidyverse)
 library(fixest)
 library(modelsummary)
+library(kableExtra)
 
 data <- arrow::read_parquet(here("data/cleaned/accident_bike.parquet")) |>
   mutate(is_died = injury8 == "Died within 24 hours",
@@ -25,8 +26,8 @@ models <- list(
 )
 
 cm  <-  c(
-    "type_personpassenger" = "Passenger",
-    "type_personpedestrian" = "Pedestrian",
+    "type_personPassenger" = "Passenger",
+    "type_personPedestrian" = "Pedestrian",
     "positive_alcoholTRUE" = "Positive Alcohol"
 )
 

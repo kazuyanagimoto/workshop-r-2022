@@ -2669,8 +2669,8 @@ gm <- tibble(
 )
 
 cm  <-  c(
-    "type_personpassenger" = "Passenger",
-    "type_personpedestrian" = "Pedestrian",
+    "type_personPassenger" = "Passenger",
+    "type_personPedestrian" = "Pedestrian",
     "positive_alcoholTRUE" = "Positive Alcohol"
 )
 
@@ -2690,8 +2690,8 @@ modelsummary(models)
 ::: {.column width="60%"}
 ```{.r code-line-numbers="1-5,8"}
 cm  <-  c(
-    "type_personpassenger" = "Passenger",
-    "type_personpedestrian" = "Pedestrian",
+    "type_personPassenger" = "Passenger",
+    "type_personPedestrian" = "Pedestrian",
     "positive_alcoholTRUE" = "Positive Alcohol"
 )
 
@@ -2724,8 +2724,8 @@ modelsummary(models,
 ::: {.column width="60%"}
 ```{.r code-line-numbers="7-11,15"}
 cm  <-  c(
-    "type_personpassenger" = "Passenger",
-    "type_personpedestrian" = "Pedestrian",
+    "type_personPassenger" = "Passenger",
+    "type_personPedestrian" = "Pedestrian",
     "positive_alcoholTRUE" = "Positive Alcohol"
 )
 
@@ -2767,8 +2767,8 @@ modelsummary(models,
 ```{.r code-line-numbers="14,17"}
 code-line-numbers="7,16"
 cm  <-  c(
-    "type_personpassenger" = "Passenger",
-    "type_personpedestrian" = "Pedestrian",
+    "type_personPassenger" = "Passenger",
+    "type_personPedestrian" = "Pedestrian",
     "positive_alcoholTRUE" = "Positive Alcohol"
 )
 
@@ -2811,8 +2811,8 @@ modelsummary(models,
 ::: {.column width="60%"}
 ```{.r code-line-numbers="14,19,20"}
 cm  <-  c(
-    "type_personpassenger" = "Passenger",
-    "type_personpedestrian" = "Pedestrian",
+    "type_personPassenger" = "Passenger",
+    "type_personPedestrian" = "Pedestrian",
     "positive_alcoholTRUE" = "Positive Alcohol"
 )
 
