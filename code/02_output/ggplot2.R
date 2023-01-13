@@ -3,7 +3,10 @@ library(tidyverse)
 library(showtext)
 library(patchwork)
 
-font_add_google("Roboto Condensed", "Roboto Condensed Light 300")
+font_base <- "Roboto Condensed"
+font_light <- "Roboto Condensed Light 300"
+
+font_add_google(font_base, font_light)
 showtext_auto()
 
 accident_bike <- arrow::read_parquet(here("data/cleaned/accident_bike.parquet")) |>
@@ -22,9 +25,9 @@ accident_bike |>
         panel.grid.major.y = element_blank(),
         legend.position = c(0.9, 0.2),
         plot.title = element_text(size = 15, family = font_base, face = "bold"),
-        axis.text.x = element_text(size = 10, family = "Roboto Condensed Light 300"),
-        axis.text.y = element_text(size = 12, family = "Roboto Condensed"),
-        legend.text = element_text(size = 10, family = "Roboto Condensed Light 300"),
+        axis.text.x = element_text(size = 10, family = font_light),
+        axis.text.y = element_text(size = 12, family = font_base),
+        legend.text = element_text(size = 10, family = font_light),
         plot.title.position = "plot") +
   guides(fill = guide_legend(reverse = TRUE))
 
@@ -60,9 +63,9 @@ p_custom <- accident_bike |>
         panel.grid.major.y = element_blank(),
         legend.position = c(0.9, 0.2),
         plot.title = element_text(size = 15, family = font_base, face = "bold"),
-        axis.text.x = element_text(size = 10, family = "Roboto Condensed Light 300"),
-        axis.text.y = element_text(size = 12, family = "Roboto Condensed"),
-        legend.text = element_text(size = 10, family = "Roboto Condensed Light 300"),
+        axis.text.x = element_text(size = 10, family = font_light),
+        axis.text.y = element_text(size = 12, family = font_base),
+        legend.text = element_text(size = 10, family = font_light),
         plot.title.position = "plot") +
   guides(fill = guide_legend(reverse = TRUE))
 
@@ -105,4 +108,4 @@ p_ggpubr <- accident_bike |>
 # Export
 (p_default + p_custom) / (p_hrbrthemes + p_ggpubr)
 
-ggsave(here("output/img/comp_plots.pdf"))
+ggsave(here("output/img/comp_plots.pdf"), width = 10, height = 10)
