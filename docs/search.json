@@ -46,7 +46,7 @@
     "href": "code/slides/advancedr/index.html#always-use-here-for-paths",
     "title": "",
     "section": "Always Use here for Paths",
-    "text": "Always Use here for Paths\n\nThe function here::here() treats the proejct directory as the root directory.\n\nhere::here()\n\n[1] \"C:/Users/kazuharu/Documents/GitHub/workshop-r-2022\"\n\n\n\nYou should always specify the path by here::here()\n\ndata <- readr::read_csv(\n  here::here(\"data/tiny.csv\")\n)\n\n\nIt works in Windows, Mac, Linux (of course, in a Docker environment)"
+    "text": "Always Use here for Paths\n\nThe function here::here() treats the proejct directory as the root directory.\n\nhere::here()\n\n[1] \"/home/rstudio/workshop-r-2022\"\n\n\n\nYou should always specify the path by here::here()\n\ndata <- readr::read_csv(\n  here::here(\"data/tiny.csv\")\n)\n\n\nIt works in Windows, Mac, Linux (of course, in a Docker environment)"
   },
   {
     "objectID": "code/slides/advancedr/index.html#remember",
@@ -788,6 +788,6 @@
     "href": "code/slides/advancedr/index.html#handson",
     "title": "",
     "section": "Handson",
-    "text": "Handson\n\n\nClone (or download) the course repositiory\nOpen the course project (workshop-r-2022.Rproj)\nRun renv::restore() in R console\nConfirm you can run any file in code/\n\n\n\n\n\n\n\n\nWarning\n\n\nPlease make sure if you are using the latest R version 4.2.2 (2022-10-31 ucrt)."
+    "text": "Handson\n\n\nClone (or download) the course repositiory\nOpen the course project (workshop-r-2022.Rproj)\nRun renv::restore() in R console\nConfirm you can run any file in code/\n\n\n\n\n\n\n\n\nWarning\n\n\nPlease make sure if you are using the latest R version 4.2.2 (2022-10-31)."
   }
 ]
