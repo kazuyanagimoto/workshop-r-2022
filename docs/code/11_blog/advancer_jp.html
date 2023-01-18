@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kazuharu Yanagimoto">
+<meta name="dcterms.date" content="2023-01-15">
+
+<title>Rで論文を書く実践的なテクニック集</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="twitter:title" content="Rで論文を書く実践的なテクニック集">
+<meta name="twitter:description" content="Q. なぜあなたのRコードは私のPC上で動かないのですか?">
+<meta name="twitter:image" content="https://source.unsplash.com/5QgIuuBxKwM">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Rで論文を書く実践的なテクニック集</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">Quarto</div>
+    <div class="quarto-category">Japanese</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kazuharu Yanagimoto </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 15, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="プロジェクトベースワークフロー" class="level2">
+<h2 class="anchored" data-anchor-id="プロジェクトベースワークフロー">プロジェクトベースワークフロー</h2>
+<p>Q. なぜあなたのRコードは私のPC上で動かないのですか?</p>
+<p><del>A. パスかパッケージのバージョンに問題があるからです</del></p>
+<p>A. あなたが<strong>R project</strong>のもとで<code>here</code>や<code>renv</code>を使っていないせいです</p>
+<section id="r-プロジェクト" class="level3">
+<h3 class="anchored" data-anchor-id="r-プロジェクト">R プロジェクト</h3>
+<p>ところでみなさんはこのボタンを押したことがあるでしょうか?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/rproject.png?raw=true" height="300" class="figure-img"></p>
+</figure>
+</div>
+<p>このボタンはRプロジェクトを作るボタンです. 私は常にプロジェクトのフォルダを (つまりGitのレポジトリ単位) Rプロジェクトにしています. では, なぜRプロジェクトを使うとよいのでしょうか. 理由は明快で, パスマネージャーの<code>here</code>とパッケージマネージャーの<code>renv</code>が使えるようになるからです.</p>
+<div class="columns">
+<div class="column">
+<p><strong>Path</strong> Manager <a href="https://here.r-lib.org/">here</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/here.png" height="200" class="figure-img"></p>
+</figure>
+</div>
+</div><div class="column">
+<p><strong>Package</strong> Manager <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rstudio.github.io/renv/logo.svg" height="200" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tips-常にherehereでパスを指定する." class="level3">
+<h3 class="anchored" data-anchor-id="tips-常にherehereでパスを指定する.">Tips: 常に<code>here::here()</code>でパスを指定する.</h3>
+<p><code>here::here()</code> 関数はRプロジェクトのルート (つまり <code>*.Rproj</code> が置かれている場所) をルートディレクトリとして扱います.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-2_adee55f8362a856c9b6f72e9862428ea">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/home/rstudio/workshop-r-2022"</code></pre>
+</div>
+</div>
+<p>常に <code>here::here()</code> を使ってルートからの相対パスを指定するようにしましょう.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tiny.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>このようにパスを指定していれば, Windows, Mac, Linux (もちろんDocker内でも) にかかわらずパスが正しく変換されます.</p>
+<blockquote class="blockquote">
+<p>If the first line of your R script is <code>setwd("C:\Users\jenny\path\that\only\I\have")</code></p>
+<p>I* will come into your office and SET YOUR COMPUTER ON FIRE 🔥.</p>
+<p>–<span class="citation" data-cites="bryan_zen_2018">Bryan (<a href="#ref-bryan_zen_2018" role="doc-biblioref">2018</a>)</span></p>
+</blockquote>
+</section>
+<section id="tips-renv-は私たちよりかしこい" class="level3">
+<h3 class="anchored" data-anchor-id="tips-renv-は私たちよりかしこい">Tips: <code>renv</code> は私たちよりかしこい</h3>
+<ul>
+<li>Rプロジェクトを作った直後に<code>renv::init()</code>を実行します. <code>renv/</code>フォルダと <code>renv.lock</code> ファイルが作られます.</li>
+<li>作業を進めつつ頃合いをみて, <code>renv::snapshot()</code> を実行すると, その時に使用されているパッケージ情報が<code>renv.lock</code>ファイルに自動的に記録されます</li>
+<li>共著者やコラボレーターは<code>renv::restore()</code>を実行することで<code>renv.lock</code>の情報からパッケージをすべてインストールできます</li>
+</ul>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>renv.lock</strong></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">"Formula":</span> <span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"Formula"</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"1.2-4"</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"cc8c8c4d61346cde1ca60030ff9c241f"</span><span class="fu">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="er">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>しかし, Dropbox<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>などのクラウドストレージと<code>renv</code>は相性が悪いです. 興味がある方は以下の<code>renv</code>がどのように動くかをお読みください.</p>
+</section>
+<section id="renvが裏でどのように動いているか" class="level3">
+<h3 class="anchored" data-anchor-id="renvが裏でどのように動いているか"><code>renv</code>が裏でどのように動いているか</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/renv_backgroud.drawio.svg?raw=true" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p><code>renv</code>は各Rのバージョンごと, 各パッケージのバージョンごとにグローバルキャッシュを持っています. プロジェクト内で利用するパッケージは<code>renv/</code>フォルダ内に収められていますが, 実体はシンボリックリンクが張られたグローバルキャッシュにあります. これは, 各プロジェクトごとにパッケージがインストールされるのを防いでおり, ストレージを圧迫しない仕組みになっています.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/renv_cloud.drawio.svg?raw=true" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>しかし, このプロジェクトフォルダがクラウドストレージで共有されていると, シンボリックリンクが切れてしまいます. また仮にシンボリックリンクが切れていなくても, WindowsとMacでは利用されているRのバイナリが違うため, そもそもライブラリを共有してはいけません. <code>renv.lock</code> ファイルのみが共有されるべきです.</p>
+<p>これらを解決するには特定のファイルやフォルダを共有されないようにクラウドストレージ側で設定しないといけません. (e.g.&nbsp;<a href="https://help.dropbox.com/sync/ignored-files">Dropbox</a>) しかし, そもそも<code>renv/</code>下のパッケージは自動で <em>git-ignored</em> されているので, GitHubを使っていればなんの問題もありません.</p>
+</section>
+<section id="発展-docker" class="level3">
+<h3 class="anchored" data-anchor-id="発展-docker">(発展) Docker</h3>
+<p>万能に見える<code>renv</code>ですが, これが扱えるのはパッケージのバージョンのみです. もし問題が以下の原因であった場合は解決できません.</p>
+<ul>
+<li><strong>Rのバージョン</strong> ⇒ 常に最新のバージョンを使う. Dockerを使う</li>
+<li><strong>R以外の依存関係</strong> (地理データ関連など) ⇒ Dockerを使う</li>
+<li><strong>OS</strong> (Windowsバイナリ特有のバグなど) ⇒ Dockerを使う</li>
+</ul>
+<p>これらの問題はDockerを使うことで解決できます.</p>
+<p><strong>Docker</strong></p>
+<ul>
+<li>バーチャルマシン. OS (Linux), ソフトウェア (Rや他のソフト), やパッケージの情報を設計図 (Dockerfile) に書いてビルドします</li>
+<li>常にDocker上で作業していれば, そのDockerfileを共有するだけで, 相手は全く同一の作業環境を構築することができます</li>
+</ul>
+</section>
+</section>
+<section id="戦略的なデータクリーニング" class="level2">
+<h2 class="anchored" data-anchor-id="戦略的なデータクリーニング">戦略的なデータクリーニング</h2>
+<p>私はデータクリーニングで行うべきこととして以下の４つのことが挙げられると思っています.</p>
+<ol type="1">
+<li>Tidyなデータフレームの作成</li>
+<li>命名</li>
+<li>型変換</li>
+<li>保存</li>
+</ol>
+<p>Tidyなデータフレームとは<code>tidyverse</code>の開発者であるHadley Wickham氏によって 提唱されているデータ分析で用いるべき理想的なデータフレームの形式をいいます.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Tidy Data</strong> (<span class="citation" data-cites="wickham_tidy_2014">Wickham (<a href="#ref-wickham_tidy_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="wickham_r_2017">Wickham and Grolemund (<a href="#ref-wickham_r_2017" role="doc-biblioref">2017</a>)</span>)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>各変数は列をなす</li>
+<li>各標本は行をなす</li>
+<li>各値はセルである</li>
+</ol>
+</div>
+</div>
+<p><code>tidyverse</code>パッケージ群はTidyなデータフレームを作るためのライブラリ (<code>dplyr</code>や<code>tidyr</code>), またはTidyなデータを前提とするライブラリです (<code>ggplot2</code>など).</p>
+<p>この部分は<code>tidyverse</code>の基礎として, 多くの書籍や講座で解説されている部分ですので省略します. 実際のワークショップでは, <a href="https://kazuyanagimoto.com/workshop-r-2022/code/slides/tidyverse/">An Introduction to <code>tidyverse</code></a> と題して簡単な説明を行いました. 興味がある方はリンクからスライドをご覧になってください.</p>
+<p>以下では, 残りの３つについて解説を行います.</p>
+<section id="命名" class="level3">
+<h3 class="anchored" data-anchor-id="命名">命名</h3>
+<p>コードというものは読まれることを前提として書かなければいけません. 共著者はもちろん, 未来の自分もまた何度もコードを読みます. 特に論文の場合はどんな処理を行ったかを正確に記述するためにコードを読み直す作業が必ずあります. ここで名著『リーダブル・コード』から以下を引きましょう.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+読みやすさの基本的定理 <span class="citation" data-cites="boswell_art_2011">(<a href="#ref-boswell_art_2011" role="doc-biblioref">Boswell and Foucher 2011</a>)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>コードは他の人が最短時間で理解できるように書かなければいけない.</p>
+</div>
+</div>
+<p>この本の内容に従うと, データテーブルの列名は情報量が多く （カラフルな） 曖昧性なく命名しなくてはなりません.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-3_c9839bb48f2be57c3c646af55aaab201">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">🙆 Good</th>
+<th style="text-align: left;">🙅 Bad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ブール</td>
+<td style="text-align: left;">is_female, has_kids</td>
+<td style="text-align: left;">female, no_kids</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">カテゴリ</td>
+<td style="text-align: left;">industry8, emp3</td>
+<td style="text-align: left;">industry, emp_status</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ビン</td>
+<td style="text-align: left;">age_bin5, wage_bin10</td>
+<td style="text-align: left;">age, wage</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>ブール変数</strong></p>
+<p>ブール変数の場合は, <code>is_*</code>, <code>has_*</code>, <code>should_*</code> などの変数名で真偽の2値であることが示せます. また, <code>female</code>などの命名は慣例的に女性であることのダミー変数などとして用いられていますが, 曖昧性がないとは言えません. 次の型変換の節でも話しますが, “Yes”/“No”という文字列である可能性も含んでいます. そもそも文字列の”Yes”/“No”は, 分析上1ステップ増えてしまうので存在すべきではないですが, ブール変数ならそうと分かる命名にする必要があります.</p>
+<p>また, <code>no_kids</code>というような否定で始まる命名もよくありません. 頭の中で真偽値を反転させる作業が必要になるので, 理解を少しだけ遅らせます. 変数名は否定が含まれないように命名し, 必要に応じて条件の中で<code>if (!has_kids)</code>のように反転すべきです.</p>
+<p><strong>カテゴリ変数</strong></p>
+<p>私は変数名のあとにカテゴリの数を付属させます. これによって,</p>
+<ul>
+<li>カテゴリ変数であること</li>
+<li>そのカテゴリの数</li>
+</ul>
+<p>を同時に伝えることができます. また, 産業分類などでは大分類, 中分類, 小分類などがあるので, それらの定義もざっくり把握できます.</p>
+<p><strong>連続値のビン</strong></p>
+<p>年齢や所得などの連続値を等間隔で区切りたいときがあります (ビン). その場合はそのビンの間隔を付属して伝えます.</p>
+<p>これら以外の命名の変数は基本的に連続値か, 中身が明らかなもの (<code>gender</code>, <code>country</code>など) になります.</p>
+<section id="一括でリネーム" class="level4">
+<h4 class="anchored" data-anchor-id="一括でリネーム">一括でリネーム</h4>
+<p>上記の変数名に変換するとして, 小さいデータセットの場合は <code>dplyr::rename()</code>を使えば問題ありませんが, 変数が20を超えると少し面倒です. また, 英語以外の変数名の場合, 変数名を英語に変換する必要を感じることが多いでしょう.</p>
+<p>こういう場合私はCSVの対応表を用意します. 例えば, このマドリードの自転車事故のデータセットは変数名がスペイン語です.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-4_b3b9bcf6af35703bc0f219a719d882b9">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/raw/accident_bike/txt/year=2022/file.txt"</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-5_e6d9c5be8f2b7cfd370d359a9fef8b51">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 42,547
+Columns: 5
+$ num_expediente &lt;dbl&gt; 2.022e+04, 2.022e+04, 2.022e+05, 2.022e+05, 2.022e+05, …
+$ fecha          &lt;chr&gt; "01/01/2022", "01/01/2022", "01/01/2022", "01/01/2022",…
+$ hora           &lt;time&gt; 01:30:00, 01:30:00, 00:30:00, 00:30:00, 00:30:00, 01:5…
+$ localizacion   &lt;chr&gt; "AVDA. ALBUFERA, 19", "AVDA. ALBUFERA, 19", "PLAZA. CAN…
+$ numero         &lt;chr&gt; "19", "19", "2", "2", "2", "53", "53", "728", "728", "+…</code></pre>
+</div>
+</div>
+<p>そこで, 以下のようなCSVファイルを用意します. 基本的に命名は上記で説明した規則に従っています.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-6_72b7e3fa069ba00eb249a7aede31e934">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>code <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/translate/accident_bike.csv"</span>),</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-7_7e7c1a09cea05fb2008496971ca2ddd2">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">spanish</th>
+<th style="text-align: left;">english</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">num_expediente</td>
+<td style="text-align: left;">id_1922</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fecha</td>
+<td style="text-align: left;">date</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hora</td>
+<td style="text-align: left;">hms</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">localizacion</td>
+<td style="text-align: left;">street</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numero</td>
+<td style="text-align: left;">num_street</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cod_distrito</td>
+<td style="text-align: left;">code_district</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>そして, 以下のように<code>dplyr::rename_at()</code> 関数で一括で変換します.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-8_bc29bfec4007731b8e265ab7697008fa">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_at</span>(<span class="fu">vars</span>(code<span class="sc">$</span>spanish), <span class="sc">~</span>code<span class="sc">$</span>english)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-9_63a2ba146d4096f9b2a6d0b9f8252831">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 42,547
+Columns: 5
+$ id_1922    &lt;dbl&gt; 2.022e+04, 2.022e+04, 2.022e+05, 2.022e+05, 2.022e+05, 2.02…
+$ date       &lt;chr&gt; "01/01/2022", "01/01/2022", "01/01/2022", "01/01/2022", "01…
+$ hms        &lt;time&gt; 01:30:00, 01:30:00, 00:30:00, 00:30:00, 00:30:00, 01:50:00…
+$ street     &lt;chr&gt; "AVDA. ALBUFERA, 19", "AVDA. ALBUFERA, 19", "PLAZA. CANOVAS…
+$ num_street &lt;chr&gt; "19", "19", "2", "2", "2", "53", "53", "728", "728", "+0050…</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="型変換" class="level3">
+<h3 class="anchored" data-anchor-id="型変換">型変換</h3>
+<p>データクリーニングのステップで正確な型を付けておくとデータ分析のステップがかなり楽になります. <code>readr::read_csv()</code>などでデータを読み込めば大体の型付けは完了しますが, 以下の３つの問題は明示的に解決しなければなりません.</p>
+<ul>
+<li>日付 &amp; 時刻</li>
+<li>カテゴリ変数とその順番</li>
+<li>欠損値</li>
+</ul>
+<section id="日付-時刻" class="level4">
+<h4 class="anchored" data-anchor-id="日付-時刻">日付 &amp; 時刻</h4>
+<p><code>lubridate</code>は強力な日付パーサーを提供しています.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-10_40f0ef78fb5117582343231a2bb1f5e9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">"2021/08/31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2021-08-31"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">mdy</span>(<span class="st">"Sep. 10, 19"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2019-09-10"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">dmy_hm</span>(<span class="st">"02/04/1999 16:00"</span>, <span class="at">tz=</span><span class="st">"America/New_York"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1999-04-02 16:00:00 EST"</code></pre>
+</div>
+</div>
+<p>日付型に変換してしまえば, 時系列のプロットなどでかなり楽をすることができます. 必ず日付型に変換しましょう.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-11_9a912eb24752d5e39efa45482328df67">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> lubridate<span class="sc">::</span><span class="fu">dmy_hms</span>(<span class="fu">str_c</span>(date, hms), <span class="at">tz =</span> <span class="st">"Europe/Madrid"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, hms, time) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  date       hms    time               
+  &lt;chr&gt;      &lt;time&gt; &lt;dttm&gt;             
+1 01/01/2022 01:30  2022-01-01 01:30:00
+2 01/01/2022 01:30  2022-01-01 01:30:00
+3 01/01/2022 00:30  2022-01-01 00:30:00
+4 01/01/2022 00:30  2022-01-01 00:30:00
+5 01/01/2022 00:30  2022-01-01 00:30:00
+6 01/01/2022 01:50  2022-01-01 01:50:00</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="カテゴリ変数" class="level3">
+<h3 class="anchored" data-anchor-id="カテゴリ変数">カテゴリ変数</h3>
+<p>カテゴリ変数の場合は<code>dplyr::recode_factor()</code>が便利です.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-12_45e966f24f8d638ea2dececd0d8fe9ab">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_person =</span> <span class="fu">recode_factor</span>(type_person,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Conductor"</span> <span class="ot">=</span> <span class="st">"Driver"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Pasajero"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Peatón"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NULL"</span><span class="ot">=</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(type_person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> type_person     n    percent
+      Driver 34567 0.81244271
+   Passenger  6503 0.15284274
+  Pedestrian  1477 0.03471455</code></pre>
+</div>
+</div>
+<p><code>recode_factor()</code> は以下の4つを同時に行えるという点で強みがあります.</p>
+<ol type="1">
+<li>Factor型として変数を定義する</li>
+<li>Factor型の順番を決める (recodeの順番がfactorの順番になる)</li>
+<li>図表中のラベルとして適切な名前に変換 （翻訳も含む）</li>
+<li>特定の値を<code>NA</code>として変換</li>
+</ol>
+</section>
+<section id="欠損値処理" class="level3">
+<h3 class="anchored" data-anchor-id="欠損値処理">欠損値処理</h3>
+<p>一部のデータセットで欠損値は文字列 （ないし外れ値） として記録されています.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-13_8e33661781b61ce8125b500d55a52d00">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(renamed<span class="sc">$</span>weather) <span class="co"># "Se desconoce" は「分からない」という意味です</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Despejado"      "NULL"           "Se desconoce"   "Lluvia débil"  
+[5] "Nublado"        "LLuvia intensa" "Granizando"     "Nevando"       </code></pre>
+</div>
+</div>
+<p>これらを解決する方法はいくつかあります.</p>
+<p><strong>方法1: ロードする時に<code>NA</code>を定義する</strong></p>
+<p>以下の例では, <code>NULL</code>や<code>Se descnoce</code>を欠損値として指定してデータを読み込んでいます.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-14_4d489de161bec10ccda32751e41bd06b">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sol1 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/raw/accident_bike/txt/year=2019/file.txt"</span>),</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"NA"</span>, <span class="st">"NULL"</span>, <span class="st">"Se desconoce"</span>, <span class="st">"Desconocido"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rename</span>(<span class="at">weather =</span> <span class="st">"estado_meteorológico"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(sol1<span class="sc">$</span>weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Despejado"      NA               "Lluvia débil"   "Nublado"       
+[5] "LLuvia intensa" "Granizando"     "Nevando"       </code></pre>
+</div>
+</div>
+<p>しかし, この方法は連続値の中の外れ値 (99, 9999) などでは, 他の変数中で実際の値として使われていた場合を考えると使うことができません.</p>
+<p><strong>方法2: <code>na_if()</code></strong></p>
+<p><code>na_if()</code>を使えば, 基本的にどのような場合でも対応できます.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-15_2a8546f9a027ac1bfd542545f4b6284b">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather_old =</span> weather,<span class="co"># Presentation Purpose</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">na_if</span>(weather, <span class="st">"Se desconoce"</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">na_if</span>(weather, <span class="st">"NULL"</span>),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weather_old, weather) <span class="sc">|&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  weather_old weather  
+  &lt;chr&gt;       &lt;chr&gt;    
+1 Despejado   Despejado
+2 Despejado   Despejado
+3 NULL        &lt;NA&gt;     
+4 NULL        &lt;NA&gt;     
+5 NULL        &lt;NA&gt;     
+6 Despejado   Despejado</code></pre>
+</div>
+</div>
+<p>しかし, 複数の値を同時に欠損値に変換できないため, 少し不便です.</p>
+<p><strong>方法3: <code>NULL</code>としてリコード</strong></p>
+<p>前小節でも書きましたが, <code>recode_factor()</code> のついでに欠損値として処理してしまうのが効率がいいです. カテゴリ変数にしか使えませんが, よく使う方法です.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-16_925f83253b45ccc258901959245c6a4b">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather_spanish =</span> weather,<span class="co"># Presentation Purpose</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">recode_factor</span>(weather,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Despejado"</span> <span class="ot">=</span> <span class="st">"sunny"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nublado"</span> <span class="ot">=</span> <span class="st">"cloud"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Lluvia débil"</span> <span class="ot">=</span> <span class="st">"soft rain"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Lluvia intensa"</span> <span class="ot">=</span> <span class="st">"hard rain"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"LLuvia intensa"</span> <span class="ot">=</span> <span class="st">"hard rain"</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nevando"</span> <span class="ot">=</span> <span class="st">"snow"</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Granizando"</span> <span class="ot">=</span> <span class="st">"hail"</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Se desconoce"</span> <span class="ot">=</span> <span class="cn">NULL</span>,</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NULL"</span> <span class="ot">=</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weather_spanish, weather) <span class="sc">|&gt;</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  weather_spanish weather
+  &lt;chr&gt;           &lt;fct&gt;  
+1 Despejado       sunny  
+2 Despejado       sunny  
+3 NULL            &lt;NA&gt;   
+4 NULL            &lt;NA&gt;   
+5 NULL            &lt;NA&gt;   
+6 Despejado       sunny  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="保存形式-parquet" class="level2">
+<h2 class="anchored" data-anchor-id="保存形式-parquet">保存形式: Parquet</h2>
+<p>2023年1月現在, データフレームの最良な保存形式はparquet形式だと思います.</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-17_1e3e8b6cf3be153dc77e4c4ec41e26ec">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">速度</th>
+<th style="text-align: left;">サイズ</th>
+<th style="text-align: left;">型保存</th>
+<th style="text-align: left;">多言語対応</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">csv, tsv</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">All</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rds, RData</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">❌</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">parquet</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">Python, Julia, MATLAB, Stata,…</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>詳細やベンチマークなどは瓜生真也さんの<a href="https://speakerdeck.com/s_uryu/introduction-to-r-arrow">Rによる大規模データの処理</a> のスライドなどを参考にされるとよいと思います.</p>
+<section id="arrowread_parquet" class="level3">
+<h3 class="anchored" data-anchor-id="arrowread_parquet"><code>arrow::read_parquet()</code></h3>
+<p><code>arrow::read_parquet()</code> は通常のデータフレームとしてだけでなく, 列情報のみを読み込むことが可能です.</p>
+<p>データフレームとして</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-18_d2d8fb9794ba3fd06003642c632f1a2a">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>df <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">here</span>(<span class="st">"data/cleaned/accident_bike.parquet"</span>),</span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="at">as_data_frame =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-4"><a href="#cb28-4"></a></span>
+<span id="cb28-5"><a href="#cb28-5"></a>df <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 23
+  id_1922     date  hms   street num_s…¹ code_…² distr…³ type_…⁴ weather type_…⁵
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;fct&gt;   &lt;chr&gt;  
+1 2018S017842 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Motoci…
+2 2018S017842 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Turismo
+3 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Furgon…
+4 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+5 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+6 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+# … with 13 more variables: type_person &lt;fct&gt;, age_c &lt;fct&gt;, gender &lt;fct&gt;,
+#   code_injury8 &lt;chr&gt;, injury8 &lt;fct&gt;, coord_x &lt;chr&gt;, coord_y &lt;chr&gt;,
+#   positive_alcohol &lt;lgl&gt;, positive_drug &lt;lgl&gt;, year &lt;int&gt;, time &lt;dttm&gt;,
+#   is_died &lt;lgl&gt;, is_hospitalized &lt;lgl&gt;, and abbreviated variable names
+#   ¹​num_street, ²​code_district, ³​district, ⁴​type_accident, ⁵​type_vehicle</code></pre>
+</div>
+</div>
+<p>列情報のみ</p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-19_b83be0366d7e65dc9ccdaba2327d2e33">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>info <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">here</span>(<span class="st">"data/cleaned/accident_bike.parquet"</span>),</span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="at">as_data_frame =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb30-4"><a href="#cb30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5"></a>info[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Table
+168574 rows x 6 columns
+$id_1922 &lt;string&gt;
+$date &lt;string&gt;
+$hms &lt;string&gt;
+$street &lt;string&gt;
+$num_street &lt;string&gt;
+$code_district &lt;int32&gt;</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="release-parquet-on-memory" class="level2">
+<h2 class="anchored" data-anchor-id="release-parquet-on-memory">Release Parquet on Memory</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-20_f9c135ebbf4d3fa9da84d89c6afc2e12">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>info <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 168,574 × 23
+   id_1922    date  hms   street num_s…¹ code_…² distr…³ type_…⁴ weather type_…⁵
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;fct&gt;   &lt;chr&gt;  
+ 1 2018S0178… 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Motoci…
+ 2 2018S0178… 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Turismo
+ 3 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Furgon…
+ 4 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 5 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 6 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 7 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 8 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 9 2019S0000… 01/0… 3:50… CALL.… 65           10 Latina  Choque… sunny   Furgon…
+10 2019S0000… 01/0… 3:50… CALL.… 65           10 Latina  Choque… sunny   Turismo
+# … with 168,564 more rows, 13 more variables: type_person &lt;fct&gt;, age_c &lt;fct&gt;,
+#   gender &lt;fct&gt;, code_injury8 &lt;chr&gt;, injury8 &lt;fct&gt;, coord_x &lt;chr&gt;,
+#   coord_y &lt;chr&gt;, positive_alcohol &lt;lgl&gt;, positive_drug &lt;lgl&gt;, year &lt;int&gt;,
+#   time &lt;dttm&gt;, is_died &lt;lgl&gt;, is_hospitalized &lt;lgl&gt;, and abbreviated variable
+#   names ¹​num_street, ²​code_district, ³​district, ⁴​type_accident, ⁵​type_vehicle</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-21_65bad54b42f27bf6acf6974d2890ba72">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>info <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(is_hospitalized) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(time, gender, age_c, positive_alcohol) <span class="sc">|&gt;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8,724 × 4
+   time                gender age_c positive_alcohol
+   &lt;dttm&gt;              &lt;fct&gt;  &lt;fct&gt; &lt;lgl&gt;           
+ 1 2019-01-01 03:50:00 Men    21-24 FALSE           
+ 2 2019-01-01 08:05:00 Women  60-64 FALSE           
+ 3 2019-01-01 22:15:00 Men    35-39 FALSE           
+ 4 2019-01-01 12:29:00 Men    55-59 FALSE           
+ 5 2019-01-02 15:00:00 Men    60-64 FALSE           
+ 6 2019-01-02 15:00:00 Women  50-54 FALSE           
+ 7 2019-01-02 20:45:00 Men    70-74 FALSE           
+ 8 2019-01-03 00:42:00 Men    35-39 FALSE           
+ 9 2019-01-03 10:30:00 Men    15-17 FALSE           
+10 2019-01-03 13:25:00 Men    30-34 FALSE           
+# … with 8,714 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><code>dplyr::collect()</code> releases the loaded parquet data on memory</li>
+<li>You can load them after <code>select()</code> or <code>filter()</code></li>
+<li>Also, <code>group_by()</code> and <code>summarize()</code> are available</li>
+<li>Quite useful for <strong>large datasets</strong></li>
+</ul>
+</section>
+<section id="parquet-with-partitioned-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="parquet-with-partitioned-dataset">Parquet with Partitioned Dataset</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<pre class="shell"><code>data/raw/accident_bike/parquet/
+├── year=2019
+│   └── part-0.parquet
+├── year=2020
+│   └── part-0.parquet
+├── year=2021
+│   └── part-0.parquet
+└── year=2022
+    └── part-0.parquet</code></pre>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-22_142182c185c7a61f35dc0d75b32060bd">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">here</span>(<span class="st">"data/raw/accident_bike/parquet"</span>))</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FileSystemDataset with 4 Parquet files
+num_expediente: string
+fecha: string
+hora: string
+localizacion: string
+numero: string
+cod_distrito: int32
+distrito: string
+tipo_accidente: string
+estado_meteorológico: string
+tipo_vehiculo: string
+tipo_persona: string
+rango_edad: string
+sexo: string
+cod_lesividad: string
+lesividad: string
+coordenada_x_utm: string
+coordenada_y_utm: string
+positiva_alcohol: string
+positiva_droga: string
+year: int32</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Given this structure, <code>arrow::open_dataset()</code> loads them as one parquet file</li>
+<li>A Partitioning variable (<code>year</code>) becomes a new variable</li>
+<li>For more instructions, you can refer to <span class="citation" data-cites="mock_outrageously_2022">Mock (<a href="#ref-mock_outrageously_2022" role="doc-biblioref">2022</a>)</span></li>
+</ul>
+</section>
+<section id="cleaning-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-workflow">Cleaning Workflow</h2>
+<section id="naming" class="level4">
+<h4 class="anchored" data-anchor-id="naming">1. Naming</h4>
+<ul>
+<li>Put <strong>informative</strong> and <strong>non-misleading</strong> names</li>
+<li>If necessary, translate the variable names</li>
+<li>You can use a correspondence table and rename variables at once</li>
+</ul>
+</section>
+<section id="determine-types" class="level4">
+<h4 class="anchored" data-anchor-id="determine-types">2. Determine Types</h4>
+<ul>
+<li><em>Date</em>: <code>lubridate</code> parsing functions</li>
+<li><em>Categorical</em>: <code>recode_factor()</code></li>
+<li><em>NA-values</em>: <code>na_if()</code> and <code>recode_factor()</code></li>
+</ul>
+</section>
+<section id="export" class="level4">
+<h4 class="anchored" data-anchor-id="export">3. Export</h4>
+<ul>
+<li>Parquet format is better than any other data format</li>
+<li>Parquet makes it easy to handle large datasets</li>
+</ul>
+</section>
+</section>
+<section id="tips-in-plots" class="level1" data-background-color="#1C5253" data-visibility="uncounted">
+<h1 data-background-color="#1C5253" data-visibility="uncounted">Tips in Plots</h1>
+<section id="data-ink-ratio" class="level2">
+<h2 class="anchored" data-anchor-id="data-ink-ratio">Data-ink Ratio</h2>
+<p><br></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Data-ink Ratio Principle <span class="citation" data-cites="tufte_visual_2001">(<a href="#ref-tufte_visual_2001" role="doc-biblioref">Tufte 2001</a>)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Maximize the data-ink ratio in a plot:</p>
+<p><span class="math display">\[
+\text{Data-ink ratio} := \frac{\text{Data-ink}}{\text{Total ink used to print in the graphic}}
+\]</span></p>
+</div>
+</div>
+<div class="incremental">
+<p><br></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Collolary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Omit all the proportions of a graphic that can be erased without losing information</p>
+</div>
+</div>
+</div>
+</section>
+<section id="maximize-data-ink-ratio" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="maximize-data-ink-ratio">Maximize Data-ink Ratio</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> type_person, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-23_e3f2dc11b093568f6209b0e1c316758f">
+<div class="cell-output-display">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="maximize-data-ink-ratio-1" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="maximize-data-ink-ratio-1">Maximize Data-ink Ratio</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> type_person, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb40-7"><a href="#cb40-7"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-24_1dff3d6ed3df3c71164b9b80c263b270">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Omit axis label. The title of the plot can tell them</li>
+<li>Omit legend label. The label “gender” does not add any information</li>
+<li>Omit background grids</li>
+</ul>
+</section>
+<section id="more-readability-order-bar-plot" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="more-readability-order-bar-plot">More Readability: Order Bar Plot</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(type_person),</span>
+<span id="cb41-3"><a href="#cb41-3"></a>         <span class="at">fill =</span> <span class="fu">fct_rev</span>(gender))) <span class="sc">+</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb41-6"><a href="#cb41-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb41-7"><a href="#cb41-7"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb41-8"><a href="#cb41-8"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb41-9"><a href="#cb41-9"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb41-10"><a href="#cb41-10"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb41-11"><a href="#cb41-11"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-25_21927c21d7d0fe3fa7244e69990f167a">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Coord flipped. Reorder the factor variables</li>
+<li>Put legends inside the plot to make the plot bigger</li>
+</ul>
+</section>
+<section id="more-readability-increase-font-size" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="more-readability-increase-font-size">More Readability: Increase Font Size</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(type_person),</span>
+<span id="cb42-3"><a href="#cb42-3"></a>         <span class="at">fill =</span> <span class="fu">fct_rev</span>(gender))) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb42-8"><a href="#cb42-8"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-9"><a href="#cb42-9"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-10"><a href="#cb42-10"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>),</span>
+<span id="cb42-11"><a href="#cb42-11"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb42-12"><a href="#cb42-12"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),</span>
+<span id="cb42-13"><a href="#cb42-13"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb42-14"><a href="#cb42-14"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-26_dd56fc5849bc47b2336382894b9a3a61">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="r-color-brewers-palettes" class="level2">
+<h2 class="anchored" data-anchor-id="r-color-brewers-palettes">R Color Brewer’s Palettes</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://r-graph-gallery.com/38-rcolorbrewers-palettes_files/figure-html/thecode-1.png" height="700" class="figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="r-color-brewers-palettes-1" class="level2">
+<h2 class="anchored" data-anchor-id="r-color-brewers-palettes-1">R Color Brewer’s Palettes</h2>
+<p><br></p>
+<div class="cell" data-output-location="column" data-hash="advancer_jp_cache/html/unnamed-chunk-27_4ac8ee4d1dae3f40bbaf54e483eda333">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(type_person),</span>
+<span id="cb43-3"><a href="#cb43-3"></a>         <span class="at">fill =</span> <span class="fu">fct_rev</span>(gender))) <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="#cb43-7"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb43-8"><a href="#cb43-8"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb43-9"><a href="#cb43-9"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb43-10"><a href="#cb43-10"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb43-11"><a href="#cb43-11"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>),</span>
+<span id="cb43-12"><a href="#cb43-12"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb43-13"><a href="#cb43-13"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),</span>
+<span id="cb43-14"><a href="#cb43-14"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb43-15"><a href="#cb43-15"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="color-safe-pallette-okabe-ito-palette" class="level2">
+<h2 class="anchored" data-anchor-id="color-safe-pallette-okabe-ito-palette">Color-Safe Pallette: Okabe-Ito Palette</h2>
+<p><br></p>
+<div class="cell" data-output-location="column" data-hash="advancer_jp_cache/html/unnamed-chunk-28_7a5dd7f152b2eb553181d6885a39c108">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(type_person),</span>
+<span id="cb44-3"><a href="#cb44-3"></a>         <span class="at">fill =</span> <span class="fu">fct_rev</span>(gender))) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb44-5"><a href="#cb44-5"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb44-7"><a href="#cb44-7"></a>  see<span class="sc">::</span><span class="fu">scale_fill_okabeito</span>() <span class="sc">+</span></span>
+<span id="cb44-8"><a href="#cb44-8"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb44-9"><a href="#cb44-9"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb44-10"><a href="#cb44-10"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb44-11"><a href="#cb44-11"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>),</span>
+<span id="cb44-12"><a href="#cb44-12"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb44-13"><a href="#cb44-13"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),</span>
+<span id="cb44-14"><a href="#cb44-14"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb44-15"><a href="#cb44-15"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="custom-palette" class="level2">
+<h2 class="anchored" data-anchor-id="custom-palette">Custom Palette</h2>
+<p><br></p>
+<div class="cell" data-output-location="column" data-hash="advancer_jp_cache/html/unnamed-chunk-29_a63c26fc09e8eb1c88d4d996e956a4fc">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(type_person),</span>
+<span id="cb45-3"><a href="#cb45-3"></a>         <span class="at">fill =</span> <span class="fu">fct_rev</span>(gender))) <span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#E7B800"</span>, <span class="st">"#00AFBB"</span>)) <span class="sc">+</span></span>
+<span id="cb45-8"><a href="#cb45-8"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb45-10"><a href="#cb45-10"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb45-11"><a href="#cb45-11"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>),</span>
+<span id="cb45-12"><a href="#cb45-12"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb45-13"><a href="#cb45-13"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),</span>
+<span id="cb45-14"><a href="#cb45-14"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb45-15"><a href="#cb45-15"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fonts" class="level2">
+<h2 class="anchored" data-anchor-id="fonts">Fonts</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<section id="goolge-fonts" class="level4">
+<h4 class="anchored" data-anchor-id="goolge-fonts"><a href="https://fonts.google.com/">Goolge Fonts</a></h4>
+<ul>
+<li>You can download well-designed free fonts</li>
+<li>My recommendation: <strong>Condensed</strong> fonts</li>
+</ul>
+<div class="small">
+<p>Roboto Condensed, Fira Sans Condensed, IBM Plex Sans Condensed,…</p>
+</div>
+<p><br></p>
+</section>
+<div class="fragment">
+<section id="showtext" class="level4">
+<h4 class="anchored" data-anchor-id="showtext"><a href="https://cran.rstudio.com/web/packages/showtext/vignettes/introduction.html">showtext</a></h4>
+<ul>
+<li>Your collaborators need to download the fonts</li>
+<li><code>font_add_google()</code> and <code>showtext_auto()</code> automatically solve the problem</li>
+</ul>
+</section>
+</div>
+</div><div class="column" style="width:40%;">
+<p><br></p>
+<p><img src="img/google_fonts.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="roboto-condensed" class="level2">
+<h2 class="anchored" data-anchor-id="roboto-condensed">Roboto Condensed</h2>
+<p><br></p>
+<div class="cell" data-output-location="column" data-hash="advancer_jp_cache/html/unnamed-chunk-30_cd2e2ef840e448a45aacd49a942d6245">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb46-2"><a href="#cb46-2"></a>font_base  <span class="ot">&lt;-</span> <span class="st">"Roboto Condensed"</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a>font_light <span class="ot">&lt;-</span> <span class="st">"Roboto Condensed Light 300"</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a><span class="fu">font_add_google</span>(font_base, font_light)</span>
+<span id="cb46-5"><a href="#cb46-5"></a><span class="fu">showtext_auto</span>()</span>
+<span id="cb46-6"><a href="#cb46-6"></a></span>
+<span id="cb46-7"><a href="#cb46-7"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb46-8"><a href="#cb46-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(type_person), <span class="at">fill =</span> <span class="fu">fct_rev</span>(gender))) <span class="sc">+</span></span>
+<span id="cb46-9"><a href="#cb46-9"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb46-10"><a href="#cb46-10"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb46-11"><a href="#cb46-11"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb46-12"><a href="#cb46-12"></a>  see<span class="sc">::</span><span class="fu">scale_fill_okabeito</span>() <span class="sc">+</span></span>
+<span id="cb46-13"><a href="#cb46-13"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb46-14"><a href="#cb46-14"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb46-15"><a href="#cb46-15"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb46-16"><a href="#cb46-16"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>),</span>
+<span id="cb46-17"><a href="#cb46-17"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">family =</span> font_light),</span>
+<span id="cb46-18"><a href="#cb46-18"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>, <span class="at">family =</span> font_base),</span>
+<span id="cb46-19"><a href="#cb46-19"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">family =</span> font_light)) <span class="sc">+</span></span>
+<span id="cb46-20"><a href="#cb46-20"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="global-options" class="level2">
+<h2 class="anchored" data-anchor-id="global-options">Global Options</h2>
+<p><br></p>
+<p>Don’t worry. You can set the default theme before plotting. (e.g. <span class="citation" data-cites="scherer_ggplot_2021">Scherer (<a href="#ref-scherer_ggplot_2021" role="doc-biblioref">2021</a>)</span>)</p>
+<p><br></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>, <span class="at">base_family =</span> <span class="st">"Roboto Condensed"</span>))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_update</span>(</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey92"</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.ticks.length =</span> <span class="fu">unit</span>(.<span class="dv">5</span>, <span class="st">"lines"</span>),</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"grey30"</span>),</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"grey30"</span>),</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">15</span>))</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>Alternatively, create a custom theme and color palette (e.g. <span class="citation" data-cites="heiss_who_2021">Heiss (<a href="#ref-heiss_who_2021" role="doc-biblioref">2021</a>)</span>)</p>
+</section>
+<section id="third-party-themes-hrbrthemes" class="level2">
+<h2 class="anchored" data-anchor-id="third-party-themes-hrbrthemes">Third-party Themes: <code>hrbrthemes</code></h2>
+<p><br></p>
+<div class="cell" data-output-location="column" data-hash="advancer_jp_cache/html/unnamed-chunk-31_27443fdfd4c36075a801b7c9b904bb6f">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(type_person),</span>
+<span id="cb48-3"><a href="#cb48-3"></a>         <span class="at">fill =</span> <span class="fu">fct_rev</span>(gender))) <span class="sc">+</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="#cb48-5"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb48-6"><a href="#cb48-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="#cb48-7"></a>  hrbrthemes<span class="sc">::</span><span class="fu">scale_fill_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb48-8"><a href="#cb48-8"></a>  hrbrthemes<span class="sc">::</span><span class="fu">theme_ipsum_rc</span>() <span class="sc">+</span></span>
+<span id="cb48-9"><a href="#cb48-9"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb48-10"><a href="#cb48-10"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb48-11"><a href="#cb48-11"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>),</span>
+<span id="cb48-12"><a href="#cb48-12"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb48-13"><a href="#cb48-13"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),</span>
+<span id="cb48-14"><a href="#cb48-14"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb48-15"><a href="#cb48-15"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="third-party-themes-ggpubr-ggsci-plaette" class="level2">
+<h2 class="anchored" data-anchor-id="third-party-themes-ggpubr-ggsci-plaette">Third-party Themes:: <code>ggpubr</code> &amp; ggsci Plaette</h2>
+<p><br></p>
+<div class="cell" data-output-location="column" data-hash="advancer_jp_cache/html/unnamed-chunk-32_02859cd907961ff30434060936c37d2f">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>p <span class="ot">&lt;-</span> accident_bike <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(type_person),</span>
+<span id="cb49-3"><a href="#cb49-3"></a>         <span class="at">fill =</span> <span class="fu">fct_rev</span>(gender))) <span class="sc">+</span></span>
+<span id="cb49-4"><a href="#cb49-4"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb49-5"><a href="#cb49-5"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb49-6"><a href="#cb49-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb49-7"><a href="#cb49-7"></a>  ggpubr<span class="sc">::</span><span class="fu">theme_pubr</span>() <span class="sc">+</span></span>
+<span id="cb49-8"><a href="#cb49-8"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-9"><a href="#cb49-9"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-10"><a href="#cb49-10"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>),</span>
+<span id="cb49-11"><a href="#cb49-11"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb49-12"><a href="#cb49-12"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),</span>
+<span id="cb49-13"><a href="#cb49-13"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb49-14"><a href="#cb49-14"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb49-15"><a href="#cb49-15"></a></span>
+<span id="cb49-16"><a href="#cb49-16"></a>ggpubr<span class="sc">::</span><span class="fu">set_palette</span>(p, <span class="st">"jco"</span>) <span class="co"># choose one of ggsci palette</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Number of Persons Hospitalized</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="patchwork" class="level2">
+<h2 class="anchored" data-anchor-id="patchwork">Patchwork</h2>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-33_9d83de97abee28d66348dccf16d1c218">
+
+</div>
+<div class="cell" data-layout-align="center" data-hash="advancer_jp_cache/html/unnamed-chunk-34_949afc62b74160b2d2caea5a969666a4">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>(p_default <span class="sc">+</span> p_custom) <span class="sc">/</span> (p_hrbrthemes <span class="sc">+</span> p_ggpubr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="advancer_jp_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
+<section id="maximize-data-ink-ratio-2" class="level4">
+<h4 class="anchored" data-anchor-id="maximize-data-ink-ratio-2">Maximize Data-ink Ratio</h4>
+<ul>
+<li>Omit all the unnecessary elements in a plot</li>
+</ul>
+</section>
+<section id="colors-fonts" class="level4">
+<h4 class="anchored" data-anchor-id="colors-fonts">Colors &amp; Fonts</h4>
+<ul>
+<li><strong>Color Palette</strong>: <code>RColorBrewer</code>, Okabe-Ito, <code>ggsci</code></li>
+<li><strong>Fonts</strong>: Google Fonts with <code>showtext</code>. Especially, <em>condensed</em> fonts.</li>
+<li><strong>Ready-made Themes</strong>: <code>hrbrthemes</code>, <code>ggpubr</code></li>
+</ul>
+</section>
+<section id="further-readings-online-books" class="level4">
+<h4 class="anchored" data-anchor-id="further-readings-online-books">Further Readings (Online Books)</h4>
+<ul>
+<li>“Data Visualization: A Practical Introduction” <strong><span class="citation" data-cites="healy_data_2018">Healy (<a href="#ref-healy_data_2018" role="doc-biblioref">2018</a>)</span></strong></li>
+<li>“Fundamentals of Data Visualization” <strong><span class="citation" data-cites="wilke_fundamentals_2019">Wilke (<a href="#ref-wilke_fundamentals_2019" role="doc-biblioref">2019</a>)</span></strong></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="automated-table-creation" class="level1" data-background-color="#1C5253" data-visibility="uncounted">
+<h1 data-background-color="#1C5253" data-visibility="uncounted">Automated Table Creation</h1>
+<section id="kableextra-example" class="level2">
+<h2 class="anchored" data-anchor-id="kableextra-example"><code>kableExtra</code>: Example</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-35_325136da25f850ec8f3a5de790a6950c">
+
+</div>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-36_d145ec3f190ba70e47819b39f7e5a74d">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+# Groups:   weather [6]
+  weather   n_Men_2019 n_Men_2…¹ n_Men…² n_Men…³ n_Wom…⁴ n_Wom…⁵ n_Wom…⁶ n_Wom…⁷
+  &lt;fct&gt;          &lt;int&gt;     &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;
+1 sunny          24399     14969   19208   19420   11971    6958    9417    9298
+2 cloud           1159      1190    1325    1633     555     554     630     774
+3 soft rain       2126      1198    1281    1408    1068     542     605     716
+4 hard rain        386       202     386     352     222      96     210     179
+5 snow               2         2     124       5      NA      NA      38       1
+6 hail              11         5       6       4       3       3       1       2
+# … with abbreviated variable names ¹​n_Men_2020, ²​n_Men_2021, ³​n_Men_2022,
+#   ⁴​n_Women_2019, ⁵​n_Women_2020, ⁶​n_Women_2021, ⁷​n_Women_2022</code></pre>
+</div>
+</div>
+<div class="fragment" data-fragment-index="1">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-37_f8f24fb1363b8da8aee54fc3dbf13092">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">''</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>ktb <span class="ot">&lt;-</span> tab <span class="sc">|&gt;</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">format =</span> <span class="st">"latex"</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">" "</span>, <span class="dv">2019</span><span class="sc">:</span><span class="dv">2022</span>, <span class="dv">2019</span><span class="sc">:</span><span class="dv">2022</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span>, <span class="st">"Men"</span> <span class="ot">=</span> <span class="dv">4</span>, <span class="st">"Women"</span> <span class="ot">=</span> <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pack_rows</span>(<span class="at">index =</span> <span class="fu">c</span>(<span class="st">"Good"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Bad"</span> <span class="ot">=</span> <span class="dv">4</span>))</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>ktb <span class="sc">|&gt;</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_kable</span>(<span class="fu">here</span>(<span class="st">"output/tex/kableextra/tb_accident_bike.tex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p><img src="img/kableextra.png" class="img-fluid"></p>
+<div class="fragment" data-fragment-index="2">
+<div class="small">
+<ul>
+<li><code>booktabs = TRUE</code> for <code>booktabs</code> package in LaTeX</li>
+<li>You can specify the column names by <code>col.names</code></li>
+<li>You can pack columns and rows by <code>add_header_above()</code> and <code>pack_rows()</code></li>
+<li><code>save_kable()</code> saves in a tex file if the file name ends with “.tex”</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="kableextra" class="level2">
+<h2 class="anchored" data-anchor-id="kableextra"><code>kableExtra</code></h2>
+<p><strong>Dataframe (<code>tibble</code>) to Table</strong></p>
+<ul>
+<li>Create a tibble table by <code>dplyr::group_by</code> &amp; <code>dpyr::summarize</code> and <code>janitor::tabyl()</code></li>
+<li>For regression tables, you can use <code>modelsummary</code> (next slide)</li>
+</ul>
+<p><strong>Pack Columns and Rows</strong></p>
+<ul>
+<li>As far as I know, Python, Julia, and Stata do not allow us to pack them easily</li>
+</ul>
+<p><strong>More Complicated Tables</strong></p>
+<ul>
+<li>You can refer to Hao Zhu’s <a href="https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf">document</a></li>
+<li>If a table contains a mathematical expression, use <code>escape=FALSE</code>. See a discussion in <a href="https://stackoverflow.com/questions/59776466/kableextra-math-symbols">stacoverflow</a></li>
+</ul>
+</section>
+<section id="modelsummary" class="level2">
+<h2 class="anchored" data-anchor-id="modelsummary"><code>modelsummary</code></h2>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-38_be43fbc782665aef6b3d6c5bda06587b">
+
+</div>
+<p>Given the following regression results,</p>
+<p><br></p>
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-39_ebae80f56267c7489ebf6750b56b789a">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest) <span class="co"># for faster regression with fixed effect</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(1)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_hospitalized <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(2)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_hospitalized <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender <span class="sc">+</span> type_vehicle,</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(3)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_hospitalized <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender <span class="sc">+</span> type_vehicle <span class="sc">+</span> weather,</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(4)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_died <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender,</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(5)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_died <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender <span class="sc">+</span> type_vehicle,</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(6)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_died <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender <span class="sc">+</span> type_vehicle <span class="sc">+</span> weather,</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data)</span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="modelsummary-init" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="modelsummary-init"><code>modelsummary</code>: Init</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="sourceCode" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.3em">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-40_0ef79eb465c43438e4cdbddada294dca">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> (1) </th>
+   <th style="text-align:center;"> (2) </th>
+   <th style="text-align:center;"> (3) </th>
+   <th style="text-align:center;"> (4) </th>
+   <th style="text-align:center;"> (5) </th>
+   <th style="text-align:center;"> (6) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> type_personPassenger </td>
+   <td style="text-align:center;"> 0.049 </td>
+   <td style="text-align:center;"> 0.530 </td>
+   <td style="text-align:center;"> 0.507 </td>
+   <td style="text-align:center;"> −1.781 </td>
+   <td style="text-align:center;"> −1.575 </td>
+   <td style="text-align:center;"> −1.565 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.104) </td>
+   <td style="text-align:center;"> (0.071) </td>
+   <td style="text-align:center;"> (0.070) </td>
+   <td style="text-align:center;"> (0.759) </td>
+   <td style="text-align:center;"> (0.783) </td>
+   <td style="text-align:center;"> (0.784) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> type_personPedestrian </td>
+   <td style="text-align:center;"> 2.124 </td>
+   <td style="text-align:center;"> 2.402 </td>
+   <td style="text-align:center;"> 2.323 </td>
+   <td style="text-align:center;"> 2.280 </td>
+   <td style="text-align:center;"> 2.418 </td>
+   <td style="text-align:center;"> 2.422 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.115) </td>
+   <td style="text-align:center;"> (0.066) </td>
+   <td style="text-align:center;"> (0.064) </td>
+   <td style="text-align:center;"> (0.301) </td>
+   <td style="text-align:center;"> (0.287) </td>
+   <td style="text-align:center;"> (0.285) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> positive_alcoholTRUE </td>
+   <td style="text-align:center;"> −0.077 </td>
+   <td style="text-align:center;"> 0.310 </td>
+   <td style="text-align:center;"> 0.353 </td>
+   <td style="text-align:center;"> −13.710 </td>
+   <td style="text-align:center;"> −13.455 </td>
+   <td style="text-align:center;"> −13.492 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.088) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.095) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.093) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.053) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.064) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.063) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 149918 </td>
+   <td style="text-align:center;"> 149831 </td>
+   <td style="text-align:center;"> 134006 </td>
+   <td style="text-align:center;"> 90852 </td>
+   <td style="text-align:center;"> 89300 </td>
+   <td style="text-align:center;"> 86330 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.055 </td>
+   <td style="text-align:center;"> 0.171 </td>
+   <td style="text-align:center;"> 0.165 </td>
+   <td style="text-align:center;"> 0.107 </td>
+   <td style="text-align:center;"> 0.145 </td>
+   <td style="text-align:center;"> 0.148 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.170 </td>
+   <td style="text-align:center;"> 0.163 </td>
+   <td style="text-align:center;"> 0.086 </td>
+   <td style="text-align:center;"> 0.113 </td>
+   <td style="text-align:center;"> 0.112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Within </td>
+   <td style="text-align:center;"> 0.047 </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.052 </td>
+   <td style="text-align:center;"> 0.073 </td>
+   <td style="text-align:center;"> 0.076 </td>
+   <td style="text-align:center;"> 0.076 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Within Adj. </td>
+   <td style="text-align:center;"> 0.047 </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.052 </td>
+   <td style="text-align:center;"> 0.070 </td>
+   <td style="text-align:center;"> 0.072 </td>
+   <td style="text-align:center;"> 0.073 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 62871.0 </td>
+   <td style="text-align:center;"> 55210.6 </td>
+   <td style="text-align:center;"> 53565.4 </td>
+   <td style="text-align:center;"> 1601.9 </td>
+   <td style="text-align:center;"> 1552.2 </td>
+   <td style="text-align:center;"> 1534.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 63079.3 </td>
+   <td style="text-align:center;"> 55696.5 </td>
+   <td style="text-align:center;"> 54085.1 </td>
+   <td style="text-align:center;"> 1780.8 </td>
+   <td style="text-align:center;"> 1824.8 </td>
+   <td style="text-align:center;"> 1834.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.23 </td>
+   <td style="text-align:center;"> 0.22 </td>
+   <td style="text-align:center;"> 0.23 </td>
+   <td style="text-align:center;"> 0.04 </td>
+   <td style="text-align:center;"> 0.04 </td>
+   <td style="text-align:center;"> 0.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Std.Errors </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: age_c </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: gender </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: type_vehicle </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: weather </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelsummary-modify-coefficients" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="modelsummary-modify-coefficients"><code>modelsummary</code>: Modify Coefficients</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="sourceCode" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>cm  <span class="ot">&lt;-</span>  <span class="fu">c</span>(</span>
+<span id="cb56-2"><a href="#cb56-2"></a>    <span class="st">"type_personPassenger"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
+<span id="cb56-3"><a href="#cb56-3"></a>    <span class="st">"type_personPedestrian"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
+<span id="cb56-4"><a href="#cb56-4"></a>    <span class="st">"positive_alcoholTRUE"</span> <span class="ot">=</span> <span class="st">"Positive Alcohol"</span></span>
+<span id="cb56-5"><a href="#cb56-5"></a>)</span>
+<span id="cb56-6"><a href="#cb56-6"></a></span>
+<span id="cb56-7"><a href="#cb56-7"></a><span class="fu">modelsummary</span>(models,</span>
+<span id="cb56-8"><a href="#cb56-8"></a>  <span class="at">coef_map =</span> cm</span>
+<span id="cb56-9"><a href="#cb56-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.3em">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-41_bc5923da519367df316a9a9886e3aecf">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> (1) </th>
+   <th style="text-align:center;"> (2) </th>
+   <th style="text-align:center;"> (3) </th>
+   <th style="text-align:center;"> (4) </th>
+   <th style="text-align:center;"> (5) </th>
+   <th style="text-align:center;"> (6) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Passenger </td>
+   <td style="text-align:center;"> 0.049 </td>
+   <td style="text-align:center;"> 0.530 </td>
+   <td style="text-align:center;"> 0.507 </td>
+   <td style="text-align:center;"> −1.781 </td>
+   <td style="text-align:center;"> −1.575 </td>
+   <td style="text-align:center;"> −1.565 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.104) </td>
+   <td style="text-align:center;"> (0.071) </td>
+   <td style="text-align:center;"> (0.070) </td>
+   <td style="text-align:center;"> (0.759) </td>
+   <td style="text-align:center;"> (0.783) </td>
+   <td style="text-align:center;"> (0.784) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pedestrian </td>
+   <td style="text-align:center;"> 2.124 </td>
+   <td style="text-align:center;"> 2.402 </td>
+   <td style="text-align:center;"> 2.323 </td>
+   <td style="text-align:center;"> 2.280 </td>
+   <td style="text-align:center;"> 2.418 </td>
+   <td style="text-align:center;"> 2.422 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.115) </td>
+   <td style="text-align:center;"> (0.066) </td>
+   <td style="text-align:center;"> (0.064) </td>
+   <td style="text-align:center;"> (0.301) </td>
+   <td style="text-align:center;"> (0.287) </td>
+   <td style="text-align:center;"> (0.285) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Positive Alcohol </td>
+   <td style="text-align:center;"> −0.077 </td>
+   <td style="text-align:center;"> 0.310 </td>
+   <td style="text-align:center;"> 0.353 </td>
+   <td style="text-align:center;"> −13.710 </td>
+   <td style="text-align:center;"> −13.455 </td>
+   <td style="text-align:center;"> −13.492 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.088) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.095) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.093) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.053) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.064) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.063) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 149918 </td>
+   <td style="text-align:center;"> 149831 </td>
+   <td style="text-align:center;"> 134006 </td>
+   <td style="text-align:center;"> 90852 </td>
+   <td style="text-align:center;"> 89300 </td>
+   <td style="text-align:center;"> 86330 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.055 </td>
+   <td style="text-align:center;"> 0.171 </td>
+   <td style="text-align:center;"> 0.165 </td>
+   <td style="text-align:center;"> 0.107 </td>
+   <td style="text-align:center;"> 0.145 </td>
+   <td style="text-align:center;"> 0.148 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.170 </td>
+   <td style="text-align:center;"> 0.163 </td>
+   <td style="text-align:center;"> 0.086 </td>
+   <td style="text-align:center;"> 0.113 </td>
+   <td style="text-align:center;"> 0.112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Within </td>
+   <td style="text-align:center;"> 0.047 </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.052 </td>
+   <td style="text-align:center;"> 0.073 </td>
+   <td style="text-align:center;"> 0.076 </td>
+   <td style="text-align:center;"> 0.076 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Within Adj. </td>
+   <td style="text-align:center;"> 0.047 </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.052 </td>
+   <td style="text-align:center;"> 0.070 </td>
+   <td style="text-align:center;"> 0.072 </td>
+   <td style="text-align:center;"> 0.073 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 62871.0 </td>
+   <td style="text-align:center;"> 55210.6 </td>
+   <td style="text-align:center;"> 53565.4 </td>
+   <td style="text-align:center;"> 1601.9 </td>
+   <td style="text-align:center;"> 1552.2 </td>
+   <td style="text-align:center;"> 1534.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 63079.3 </td>
+   <td style="text-align:center;"> 55696.5 </td>
+   <td style="text-align:center;"> 54085.1 </td>
+   <td style="text-align:center;"> 1780.8 </td>
+   <td style="text-align:center;"> 1824.8 </td>
+   <td style="text-align:center;"> 1834.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.23 </td>
+   <td style="text-align:center;"> 0.22 </td>
+   <td style="text-align:center;"> 0.23 </td>
+   <td style="text-align:center;"> 0.04 </td>
+   <td style="text-align:center;"> 0.04 </td>
+   <td style="text-align:center;"> 0.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Std.Errors </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: age_c </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: gender </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: type_vehicle </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: weather </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelsummary-modify-statitics" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="modelsummary-modify-statitics"><code>modelsummary</code>: Modify Statitics</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="sourceCode" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>cm  <span class="ot">&lt;-</span>  <span class="fu">c</span>(</span>
+<span id="cb57-2"><a href="#cb57-2"></a>    <span class="st">"type_personPassenger"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
+<span id="cb57-3"><a href="#cb57-3"></a>    <span class="st">"type_personPedestrian"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
+<span id="cb57-4"><a href="#cb57-4"></a>    <span class="st">"positive_alcoholTRUE"</span> <span class="ot">=</span> <span class="st">"Positive Alcohol"</span></span>
+<span id="cb57-5"><a href="#cb57-5"></a>)</span>
+<span id="cb57-6"><a href="#cb57-6"></a></span>
+<span id="cb57-7"><a href="#cb57-7"></a>gm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb57-8"><a href="#cb57-8"></a>    <span class="at">raw =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"FE: age_c"</span>, <span class="st">"FE: gender"</span>, <span class="st">"FE: type_vehicle"</span>, <span class="st">"FE: weather"</span>),</span>
+<span id="cb57-9"><a href="#cb57-9"></a>    <span class="at">clean =</span> <span class="fu">c</span>(<span class="st">"Observations"</span>, <span class="st">"FE: Age Group"</span>, <span class="st">"FE: Gender"</span>, <span class="st">"FE: Type of Vehicle"</span>, <span class="st">"FE: Weather"</span>),</span>
+<span id="cb57-10"><a href="#cb57-10"></a>    <span class="at">fmt =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb57-11"><a href="#cb57-11"></a>)</span>
+<span id="cb57-12"><a href="#cb57-12"></a></span>
+<span id="cb57-13"><a href="#cb57-13"></a><span class="fu">modelsummary</span>(models,</span>
+<span id="cb57-14"><a href="#cb57-14"></a>  <span class="at">coef_map =</span> cm,</span>
+<span id="cb57-15"><a href="#cb57-15"></a>  <span class="at">gof_map =</span> gm</span>
+<span id="cb57-16"><a href="#cb57-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.3em">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-42_a49dbc610bbdc37d884ad18c4e661fd3">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> (1) </th>
+   <th style="text-align:center;"> (2) </th>
+   <th style="text-align:center;"> (3) </th>
+   <th style="text-align:center;"> (4) </th>
+   <th style="text-align:center;"> (5) </th>
+   <th style="text-align:center;"> (6) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Passenger </td>
+   <td style="text-align:center;"> 0.049 </td>
+   <td style="text-align:center;"> 0.530 </td>
+   <td style="text-align:center;"> 0.507 </td>
+   <td style="text-align:center;"> −1.781 </td>
+   <td style="text-align:center;"> −1.575 </td>
+   <td style="text-align:center;"> −1.565 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.104) </td>
+   <td style="text-align:center;"> (0.071) </td>
+   <td style="text-align:center;"> (0.070) </td>
+   <td style="text-align:center;"> (0.759) </td>
+   <td style="text-align:center;"> (0.783) </td>
+   <td style="text-align:center;"> (0.784) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pedestrian </td>
+   <td style="text-align:center;"> 2.124 </td>
+   <td style="text-align:center;"> 2.402 </td>
+   <td style="text-align:center;"> 2.323 </td>
+   <td style="text-align:center;"> 2.280 </td>
+   <td style="text-align:center;"> 2.418 </td>
+   <td style="text-align:center;"> 2.422 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.115) </td>
+   <td style="text-align:center;"> (0.066) </td>
+   <td style="text-align:center;"> (0.064) </td>
+   <td style="text-align:center;"> (0.301) </td>
+   <td style="text-align:center;"> (0.287) </td>
+   <td style="text-align:center;"> (0.285) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Positive Alcohol </td>
+   <td style="text-align:center;"> −0.077 </td>
+   <td style="text-align:center;"> 0.310 </td>
+   <td style="text-align:center;"> 0.353 </td>
+   <td style="text-align:center;"> −13.710 </td>
+   <td style="text-align:center;"> −13.455 </td>
+   <td style="text-align:center;"> −13.492 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.088) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.095) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.093) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.053) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.064) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.063) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Observations </td>
+   <td style="text-align:center;"> 149918 </td>
+   <td style="text-align:center;"> 149831 </td>
+   <td style="text-align:center;"> 134006 </td>
+   <td style="text-align:center;"> 90852 </td>
+   <td style="text-align:center;"> 89300 </td>
+   <td style="text-align:center;"> 86330 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: Age Group </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: Gender </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: Type of Vehicle </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: Weather </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelsummary-stars-headers" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="modelsummary-stars-headers"><code>modelsummary</code>: Stars &amp; Headers</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="sourceCode" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>code<span class="sc">-</span>line<span class="sc">-</span>numbers<span class="ot">=</span><span class="st">"7,16"</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a>cm  <span class="ot">&lt;-</span>  <span class="fu">c</span>(</span>
+<span id="cb58-3"><a href="#cb58-3"></a>    <span class="st">"type_personPassenger"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
+<span id="cb58-4"><a href="#cb58-4"></a>    <span class="st">"type_personPedestrian"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
+<span id="cb58-5"><a href="#cb58-5"></a>    <span class="st">"positive_alcoholTRUE"</span> <span class="ot">=</span> <span class="st">"Positive Alcohol"</span></span>
+<span id="cb58-6"><a href="#cb58-6"></a>)</span>
+<span id="cb58-7"><a href="#cb58-7"></a></span>
+<span id="cb58-8"><a href="#cb58-8"></a>gm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb58-9"><a href="#cb58-9"></a>    <span class="at">raw =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"FE: age_c"</span>, <span class="st">"FE: gender"</span>, <span class="st">"FE: type_vehicle"</span>, <span class="st">"FE: weather"</span>),</span>
+<span id="cb58-10"><a href="#cb58-10"></a>    <span class="at">clean =</span> <span class="fu">c</span>(<span class="st">"Observations"</span>, <span class="st">"FE: Age Group"</span>, <span class="st">"FE: Gender"</span>, <span class="st">"FE: Type of Vehicle"</span>, <span class="st">"FE: Weather"</span>),</span>
+<span id="cb58-11"><a href="#cb58-11"></a>    <span class="at">fmt =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb58-12"><a href="#cb58-12"></a>)</span>
+<span id="cb58-13"><a href="#cb58-13"></a></span>
+<span id="cb58-14"><a href="#cb58-14"></a><span class="fu">modelsummary</span>(models,</span>
+<span id="cb58-15"><a href="#cb58-15"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"+"</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb58-16"><a href="#cb58-16"></a>  <span class="at">coef_map =</span> cm,</span>
+<span id="cb58-17"><a href="#cb58-17"></a>  <span class="at">gof_map =</span> gm) <span class="sc">|&gt;</span></span>
+<span id="cb58-18"><a href="#cb58-18"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span>, <span class="st">"Hospitalization"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"Died within 24 hours"</span> <span class="ot">=</span> <span class="dv">3</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.3em">
+<div class="cell" data-hash="advancer_jp_cache/html/unnamed-chunk-43_ecf7cf8f4cd7336aa6398875c5124a8b">
+<div class="cell-output-display">
+
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+ <thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Hospitalization</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Died within 24 hours</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> (1) </th>
+   <th style="text-align:center;"> (2) </th>
+   <th style="text-align:center;"> (3) </th>
+   <th style="text-align:center;"> (4) </th>
+   <th style="text-align:center;"> (5) </th>
+   <th style="text-align:center;"> (6) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Passenger </td>
+   <td style="text-align:center;"> 0.049 </td>
+   <td style="text-align:center;"> 0.530** </td>
+   <td style="text-align:center;"> 0.507** </td>
+   <td style="text-align:center;"> −1.781* </td>
+   <td style="text-align:center;"> −1.575+ </td>
+   <td style="text-align:center;"> −1.565+ </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.104) </td>
+   <td style="text-align:center;"> (0.071) </td>
+   <td style="text-align:center;"> (0.070) </td>
+   <td style="text-align:center;"> (0.759) </td>
+   <td style="text-align:center;"> (0.783) </td>
+   <td style="text-align:center;"> (0.784) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pedestrian </td>
+   <td style="text-align:center;"> 2.124** </td>
+   <td style="text-align:center;"> 2.402** </td>
+   <td style="text-align:center;"> 2.323** </td>
+   <td style="text-align:center;"> 2.280** </td>
+   <td style="text-align:center;"> 2.418** </td>
+   <td style="text-align:center;"> 2.422** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.115) </td>
+   <td style="text-align:center;"> (0.066) </td>
+   <td style="text-align:center;"> (0.064) </td>
+   <td style="text-align:center;"> (0.301) </td>
+   <td style="text-align:center;"> (0.287) </td>
+   <td style="text-align:center;"> (0.285) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Positive Alcohol </td>
+   <td style="text-align:center;"> −0.077 </td>
+   <td style="text-align:center;"> 0.310** </td>
+   <td style="text-align:center;"> 0.353** </td>
+   <td style="text-align:center;"> −13.710** </td>
+   <td style="text-align:center;"> −13.455** </td>
+   <td style="text-align:center;"> −13.492** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.088) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.095) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.093) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.053) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.064) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.063) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Observations </td>
+   <td style="text-align:center;"> 149918 </td>
+   <td style="text-align:center;"> 149831 </td>
+   <td style="text-align:center;"> 134006 </td>
+   <td style="text-align:center;"> 90852 </td>
+   <td style="text-align:center;"> 89300 </td>
+   <td style="text-align:center;"> 86330 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: Age Group </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: Gender </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: Type of Vehicle </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: Weather </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01</td></tr></tfoot>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelsummary-export-to-latex" class="level2" data-auto-animate="true">
+<h2 data-auto-animate="true" class="anchored" data-anchor-id="modelsummary-export-to-latex"><code>modelsummary</code>: Export to <span class="math inline">\(\LaTeX\)</span></h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="sourceCode" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>cm  <span class="ot">&lt;-</span>  <span class="fu">c</span>(</span>
+<span id="cb59-2"><a href="#cb59-2"></a>    <span class="st">"type_personPassenger"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
+<span id="cb59-3"><a href="#cb59-3"></a>    <span class="st">"type_personPedestrian"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
+<span id="cb59-4"><a href="#cb59-4"></a>    <span class="st">"positive_alcoholTRUE"</span> <span class="ot">=</span> <span class="st">"Positive Alcohol"</span></span>
+<span id="cb59-5"><a href="#cb59-5"></a>)</span>
+<span id="cb59-6"><a href="#cb59-6"></a></span>
+<span id="cb59-7"><a href="#cb59-7"></a>gm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb59-8"><a href="#cb59-8"></a>    <span class="at">raw =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"FE: age_c"</span>, <span class="st">"FE: gender"</span>, <span class="st">"FE: type_vehicle"</span>, <span class="st">"FE: weather"</span>),</span>
+<span id="cb59-9"><a href="#cb59-9"></a>    <span class="at">clean =</span> <span class="fu">c</span>(<span class="st">"Observations"</span>, <span class="st">"FE: Age Group"</span>, <span class="st">"FE: Gender"</span>, <span class="st">"FE: Type of Vehicle"</span>, <span class="st">"FE: Weather"</span>),</span>
+<span id="cb59-10"><a href="#cb59-10"></a>    <span class="at">fmt =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb59-11"><a href="#cb59-11"></a>)</span>
+<span id="cb59-12"><a href="#cb59-12"></a></span>
+<span id="cb59-13"><a href="#cb59-13"></a><span class="fu">modelsummary</span>(models,</span>
+<span id="cb59-14"><a href="#cb59-14"></a>  <span class="at">output =</span> <span class="st">"latex_tabular"</span>,</span>
+<span id="cb59-15"><a href="#cb59-15"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"+"</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb59-16"><a href="#cb59-16"></a>  <span class="at">coef_map =</span> cm,</span>
+<span id="cb59-17"><a href="#cb59-17"></a>  <span class="at">gof_map =</span> gm) <span class="sc">|&gt;</span></span>
+<span id="cb59-18"><a href="#cb59-18"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span>, <span class="st">"Hospitalization"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"Died within 24 hours"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb59-19"><a href="#cb59-19"></a>  <span class="fu">row_spec</span>(<span class="dv">7</span>, <span class="at">hline_after =</span> T) <span class="sc">|&gt;</span></span>
+<span id="cb59-20"><a href="#cb59-20"></a>  <span class="fu">save_kable</span>(<span class="fu">here</span>(<span class="st">"output/tex/modelsummary/reg_accident_bike.tex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:40%;">
+<p><img src="img/modelsummary.png" class="img-fluid"></p>
+</div>
+</div>
+<p><br></p>
+<p><code>output = "latex_tabular"</code> produces a tex file not containing <code>table</code> tag</p>
+</section>
+<section id="takeaway-1" class="level2">
+<h2 class="anchored" data-anchor-id="takeaway-1">Takeaway</h2>
+<p><br></p>
+<section id="kableextra-modelsummary" class="level4">
+<h4 class="anchored" data-anchor-id="kableextra-modelsummary"><code>kableExtra</code> &amp; <code>modelsummary</code></h4>
+<ul>
+<li>You can quickly export tibble (dataframe) as latex table by <code>kableExtra</code></li>
+<li><code>modelsummary</code> produces kableExtra object from regression results</li>
+<li>You can see the latex table in <code>output/tex/</code> and the compiled results in <code>code/thesis/</code></li>
+</ul>
+<p><br></p>
+</section>
+<section id="further-readings" class="level4">
+<h4 class="anchored" data-anchor-id="further-readings">Further Readings</h4>
+<ul>
+<li>Official Document <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html">modelsummary</a> and <span class="citation" data-cites="zhu_create_2021">Zhu (<a href="#ref-zhu_create_2021" role="doc-biblioref">2021</a>)</span></li>
+<li><a href="https://gt.rstudio.com/articles/intro-creating-gt-tables.html">gt</a> is a great alternative to <code>kableExtra</code>. I use <code>gt</code> tables in my slides</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="quarto" class="level1" data-background-color="#1C5253" data-visibility="uncounted">
+
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Quarto</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-boswell_art_2011" class="csl-entry" role="doc-biblioentry">
+Boswell, Dustin, and Trevor Foucher. 2011. <em>The Art of Readable Code</em>. 1st ed. Theory in Practice. Sebastopol, Calif: O’Reilly.
+</div>
+<div id="ref-bryan_zen_2018" class="csl-entry" role="doc-biblioentry">
+Bryan, Jenny. 2018. <span>“Zen <span>And</span> <span>The</span> <span class="nocase">aRt</span> <span>Of</span> <span>Workflow</span> <span>Maintenance</span>.”</span> Part of 47 JAIIO. <a href="https://github.com/jennybc/zen-art-workflow">https://github.com/jennybc/zen-art-workflow</a>.
+</div>
+<div id="ref-healy_data_2018" class="csl-entry" role="doc-biblioentry">
+Healy, Kieran. 2018. <em>Data <span>Visualization</span>: <span>A</span> <span>Practical</span> <span>Introduction</span></em>. 1st edition. Princeton, NJ: Princeton University Press. <a href="https://socviz.co/">https://socviz.co/</a>.
+</div>
+<div id="ref-heiss_who_2021" class="csl-entry" role="doc-biblioentry">
+Heiss, Andrew. 2021. <span>“Who <span>Cares</span> <span>About</span> <span>Crackdowns</span>? <span>Exploring</span> the <span>Role</span> of <span>Trust</span> in <span>Individual</span> <span>Philanthropy</span>.”</span> <a href="https://github.com/andrewheiss/who-cares-about-crackdown/blob/ad6312957de927674a5da2437a2f993e52f53d88/R/graphics.R">https://github.com/andrewheiss/who-cares-about-crackdown/blob/ad6312957de927674a5da2437a2f993e52f53d88/R/graphics.R</a>.
+</div>
+<div id="ref-mock_outrageously_2022" class="csl-entry" role="doc-biblioentry">
+Mock, Tom. 2022. <span>“Outrageously Efficient Exploratory Data Analysis with <span>Apache</span> <span>Arrow</span> and Dplyr.”</span> Voltron Data. <a href="https://jthomasmock.github.io/arrow-dplyr/">https://jthomasmock.github.io/arrow-dplyr/</a>.
+</div>
+<div id="ref-scherer_ggplot_2021" class="csl-entry" role="doc-biblioentry">
+Scherer, C’edric. 2021. <span>“Ggplot <span>Wizardry</span>: <span>My</span> Favorite Tricks and Secrets for Beautiful Plots in <span>R</span>.”</span> Online. <a href="https://www.cedricscherer.com/slides/useR-2021_ggplot-wizardry-extended.pdf">https://www.cedricscherer.com/slides/useR-2021_ggplot-wizardry-extended.pdf</a>.
+</div>
+<div id="ref-tufte_visual_2001" class="csl-entry" role="doc-biblioentry">
+Tufte, Edward R. 2001. <em>The <span>Visual</span> <span>Display</span> of <span>Quantitative</span> <span>Information</span></em>. Cheshire, Conn.
+</div>
+<div id="ref-wickham_tidy_2014" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley. 2014. <span>“Tidy <span>Data</span>.”</span> <em>Journal of Statistical Software</em> 59 (10): 1–23. <a href="https://doi.org/10.18637/jss.v059.i10">https://doi.org/10.18637/jss.v059.i10</a>.
+</div>
+<div id="ref-wickham_r_2017" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for <span>Data</span> <span>Science</span>: <span>Import</span>, <span>Tidy</span>, <span>Transform</span>, <span>Visualize</span>, and <span>Model</span> <span>Data</span></em>. 1st edition. Sebastopol, CA: O’Reilly Media. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.
+</div>
+<div id="ref-wilke_fundamentals_2019" class="csl-entry" role="doc-biblioentry">
+Wilke, Claus O. 2019. <em>Fundamentals of <span>Data</span> <span>Visualization</span>: <span>A</span> <span>Primer</span> on <span>Making</span> <span>Informative</span> and <span>Compelling</span> <span>Figures</span></em>. Sebastopol, CA. <a href="https://clauswilke.com/dataviz/">https://clauswilke.com/dataviz/</a>.
+</div>
+<div id="ref-zhu_create_2021" class="csl-entry" role="doc-biblioentry">
+Zhu, Hao. 2021. <span>“Create <span>Awesome</span> <span>LaTeX</span> <span>Table</span> with Knitr::kable and <span class="nocase">kableExtra</span>,”</span> February. <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_pdf.pdf">https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_pdf.pdf</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>経済学者はエンジニア並みにコードを書くのにgitやGitHubを使わない人が一定数います. また, やたらDropboxが人気であるという特徴もあります.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
