@@ -1,0 +1,184 @@
+---
+title: "Rで論文を書く実践的なテクニック集 (テーブル編)"
+date: '`r format(Sys.time(), "%B %d, %Y")`'
+author: Kazuharu Yanagimoto
+draft: true
+categories: [R, Quarto, Japanese]
+image: https://source.unsplash.com/5QgIuuBxKwM
+twitter-card:
+  image: https://source.unsplash.com/5QgIuuBxKwM
+execute:
+  warning: false
+  message: false
+  cache: false
+fig-width: 5
+fig-height: 3
+format:
+  html:
+    keep-md: true
+---
+
+
+## `kableExtra`
+
+```{r}
+#| include: false
+library(here)
+library(tidyverse)
+```
+
+$\LaTeX$ 用の表作成は基本的に`kableExtra`を使えばよいです.
+例えば以下のようなデータフレームを持っているとします.
+
+```{r}
+#| echo: false
+data <- arrow::read_parquet(here("data/cleaned/accident_bike.parquet"))
+
+tab <- data |>
+  filter(!is.na(weather), !is.na(gender)) |>
+  group_by(year, gender, weather) |>
+  count() |>
+  pivot_wider(names_from = gender, values_from = n, names_prefix = "n_") |>
+  pivot_wider(names_from = year, values_from = starts_with("n_"))
+```
+
+```{r}
+tab
+```
+
+`kableExtra` なら簡単に`.tex`ファイルにできます.
+
+```{r}
+library(kableExtra)
+options(knitr.kable.NA = '')
+
+ktb <- tab |>
+  kbl(format = "latex", booktabs = TRUE,
+      col.names = c(" ", 2019:2022, 2019:2022)) |>
+  add_header_above(c(" ", "Men" = 4, "Women" = 4)) |>
+  pack_rows(index = c("Good" = 2, "Bad" = 4))
+
+ktb |>
+  save_kable(here("output/tex/kableextra/tb_accident_bike.tex"))
+```
+
+
+![](https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/kableextra.png?raw=true){fig-align="center" height=300}
+
+ポイントとしては
+
+- `booktabs = TRUE` は `booktabs` パッケージを使うので見た目がよくなります
+- 列名は`col.names`項で指定します
+- 行と列は`pack_rows()` と `add_header_above()` でまとめることができます
+- `kbl(format = "latex")` を指定すると `save_kable()` でtexファイルに出力できます
+- タイトルは論文用の本文用のtexファイルであとづけしています.
+
+より複雑な表については @zhu_create_2021 を読むことをおすすめします.
+ここまで複雑な $\LaTeX$ の表はPythonやJuliaだと簡単には作成できないのではないかと思います.
+
+## `modelsummary`
+
+回帰分析の表は`modelsummary` を使います. 以下のような回帰結果をリストでもっているとします.
+
+```{r}
+#| echo: false
+
+data <- arrow::read_parquet(here("data/cleaned/accident_bike.parquet")) |>
+  mutate(is_died = injury8 == "Died within 24 hours",
+         is_hospitalized = injury8 %in% c("Hospitalization after 24 hours",
+                                          "Hospitalization within 24 hours",
+                                          "Died within 24 hours"))
+                                          
+```
+
+```{r}
+library(fixest) # for faster regression with fixed effect
+
+models <- list(
+    "(1)" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender,
+                family = binomial(logit), data = data),
+    "(2)" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle,
+                family = binomial(logit), data = data),
+    "(3)" = feglm(is_hospitalized ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle + weather,
+                family = binomial(logit), data = data),
+    "(4)" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender,
+                family = binomial(logit), data = data),
+    "(5)" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle,
+                family = binomial(logit), data = data),
+    "(6)" = feglm(is_died ~ type_person + positive_alcohol + positive_drug | age_c + gender + type_vehicle + weather,
+                family = binomial(logit), data = data)
+)
+
+```
+
+計算を早くするために`fixest::feglm()` を使っていますが通常の`lm()` や `glm()` で問題ありません.
+
+`modelsummary()`のデフォルトの設定で以下のようなテーブルを作ることができます.
+
+```{.r}
+library(modelsummary)
+modelsummary(models)
+```
+
+
+::: {style="font-size: 0.3em"}
+
+```{r}
+#| echo: false
+library(modelsummary)
+modelsummary(models)
+```
+
+:::
+
+論文に使える形にするために以下のように調整します.
+
+
+```{r}
+cm  <-  c(
+    "type_personPassenger" = "Passenger",
+    "type_personPedestrian" = "Pedestrian",
+    "positive_alcoholTRUE" = "Positive Alcohol"
+)
+
+gm <- tibble(
+    raw = c("nobs", "FE: age_c", "FE: gender",
+            "FE: type_vehicle", "FE: weather"),
+    clean = c("Observations", "FE: Age Group", "FE: Gender",
+              "FE: Type of Vehicle", "FE: Weather"),
+    fmt = c(0, 0, 0, 0, 0)
+)
+
+modelsummary(models,
+  output = "latex_tabular",
+  stars = c("+" = .1, "*" = .05, "**" = .01),
+  coef_map = cm,
+  gof_map = gm) |>
+  add_header_above(
+    c(" ", "Hospitalization" = 3, "Died within 24 hours" = 3)) |>
+  row_spec(7, hline_after = T) |>
+  save_kable(here("output/tex/modelsummary/reg_accident_bike.tex"))
+```
+
+![](https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/modelsummary.png?raw=true){fig-align="center" height="300"}
+
+調整した項目は以下です
+
+- `coef_map = cm` で係数のラベルを変更
+- `gof_map = gm` で統計量を選択&ラベル付け
+- 出力が `kableExtra` 形式なので `add_header_above()` や `row_spec()` で見た目を調整
+- タイトルとノートは本文用texファイルで記述
+- `output = "latex_tabular"` を使うことで `table` タグなしのtexファイルが出力できる
+
+## テーブル編まとめ
+
+**`kableExtra` & `modelsummary`**
+
+- `kableExtra` でtibble (データフレーム) から簡単にtexのテーブルを作成できる
+- `modelsummary` で回帰結果から `kableExtra` のテーブルを出力できる
+- 出力されたtexファイルとそれをコンパイルする本文のtexファイルはレポジトリ内の`output/tex/`と`code/thesis/`から確認できます
+
+**より詳しく**
+
+- 公式ドキュメント[modelsummary](https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html) と @zhu_create_2021
+- [gt](https://gt.rstudio.com/articles/intro-creating-gt-tables.html)は `kableExtra` に替わりうる強力なテーブル作成パッケージです (が数式に対応していないので, 論文用には使っていません. スライドではよく使います.)

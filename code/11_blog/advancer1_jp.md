@@ -1,6 +1,6 @@
 ---
-title: "Rで論文を書く実践的なテクニック集 (前編)"
-date: 2023-01-15
+title: "Rで論文を書く実践的なテクニック集 (プロジェクト・クリーニング編)"
+date: 'January 22, 2023'
 author: Kazuharu Yanagimoto
 draft: true
 categories: [R, Quarto, Japanese]
@@ -457,8 +457,7 @@ renamed |>
 :::
 
 
-詳細やベンチマークなどは瓜生真也さんの @uryu_r_2022
-などを参考にされるとよいと思います.
+詳細やベンチマークなどは @uryu_r_2022 などを参考にされるとよいと思います.
 
 `arrow::read_parquet()` は通常のデータフレームとしてだけでなく, 列情報のみを読み込むことが可能です.
 

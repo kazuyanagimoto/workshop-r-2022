@@ -1,6 +1,6 @@
 ---
-title: "Rで論文を書く実践的なテクニック集 (前編)"
-date: 2023-01-15
+title: "Rで論文を書く実践的なテクニック集 (プロジェクト・クリーニング編)"
+date: '`r format(Sys.time(), "%B %d, %Y")`'
 author: Kazuharu Yanagimoto
 draft: true
 categories: [R, Quarto, Japanese]
