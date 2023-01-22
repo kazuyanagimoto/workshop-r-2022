@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kazuharu Yanagimoto">
+<meta name="dcterms.date" content="2023-01-22">
+
+<title>Rで論文を書く実践的なテクニック集 (プロジェクト・クリーニング編)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<meta name="twitter:title" content="Rで論文を書く実践的なテクニック集 (プロジェクト・クリーニング編)">
+<meta name="twitter:description" content="Q. なぜあなたのRコードは私のPC上で動かないのですか?">
+<meta name="twitter:image" content="https://source.unsplash.com/5QgIuuBxKwM">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Rで論文を書く実践的なテクニック集 (プロジェクト・クリーニング編)</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">Quarto</div>
+    <div class="quarto-category">Japanese</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kazuharu Yanagimoto </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 22, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="プロジェクトベースワークフロー" class="level2">
+<h2 class="anchored" data-anchor-id="プロジェクトベースワークフロー">プロジェクトベースワークフロー</h2>
+<p>Q. なぜあなたのRコードは私のPC上で動かないのですか?</p>
+<p><del>A. パスかパッケージのバージョンに問題があるからです</del></p>
+<p>A. あなたが<strong>R project</strong>のもとで<code>here</code>や<code>renv</code>を使っていないせいです.</p>
+<section id="r-プロジェクト" class="level3">
+<h3 class="anchored" data-anchor-id="r-プロジェクト">R プロジェクト</h3>
+<p>ところでみなさんはこのボタンを押したことがあるでしょうか?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/rproject.png?raw=true" height="300" class="figure-img"></p>
+</figure>
+</div>
+<p>このボタンはRプロジェクトを作るボタンです. 私は常にプロジェクトのフォルダを (つまりGitのレポジトリ単位) Rプロジェクトにしています. では, なぜRプロジェクトを使うとよいのでしょうか. 理由は明快で, パスマネージャーの<code>here</code>とパッケージマネージャーの<code>renv</code>が使えるようになるからです.</p>
+<div class="columns">
+<div class="column">
+<p><strong>Path</strong> Manager <a href="https://here.r-lib.org/">here</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/here.png" height="200" class="figure-img"></p>
+</figure>
+</div>
+</div><div class="column">
+<p><strong>Package</strong> Manager <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rstudio.github.io/renv/logo.svg" height="200" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tips-常にherehereでパスを指定する." class="level3">
+<h3 class="anchored" data-anchor-id="tips-常にherehereでパスを指定する.">Tips: 常に<code>here::here()</code>でパスを指定する.</h3>
+<p><code>here::here()</code> 関数はRプロジェクトのルート (つまり <code>*.Rproj</code> が置かれている場所) をルートディレクトリとして扱います.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>常に <code>here::here()</code> を使ってルートからの相対パスを指定するようにしましょう.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tiny.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>このようにパスを指定していれば, Windows, Mac, Linux (もちろんDocker内でも) にかかわらずパスが正しく変換されます.</p>
+<blockquote class="blockquote">
+<p>If the first line of your R script is <code>setwd("C:\Users\jenny\path\that\only\I\have")</code></p>
+<p>I* will come into your office and SET YOUR COMPUTER ON FIRE 🔥.</p>
+<p>–<span class="citation" data-cites="bryan_zen_2018">Bryan (<a href="#ref-bryan_zen_2018" role="doc-biblioref">2018</a>)</span></p>
+</blockquote>
+</section>
+<section id="tips-renv-は私たちよりかしこい" class="level3">
+<h3 class="anchored" data-anchor-id="tips-renv-は私たちよりかしこい">Tips: <code>renv</code> は私たちよりかしこい</h3>
+<ul>
+<li>Rプロジェクトを作った直後に<code>renv::init()</code>を実行します. <code>renv/</code>フォルダと <code>renv.lock</code> ファイルが作られます.</li>
+<li>作業を進めつつ頃合いをみて, <code>renv::snapshot()</code> を実行すると, その時に使用されているパッケージ情報が<code>renv.lock</code>ファイルに自動的に記録されます</li>
+<li>共著者やコラボレーターは<code>renv::restore()</code>を実行することで<code>renv.lock</code>の情報からパッケージをすべてインストールできます</li>
+</ul>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>renv.lock</strong></pre>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">"Formula":</span> <span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"Formula"</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"1.2-4"</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"cc8c8c4d61346cde1ca60030ff9c241f"</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="er">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>しかし, Dropbox<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>などのクラウドストレージと<code>renv</code>は相性が悪いです. 興味がある方は以下の<code>renv</code>がどのように動くかをお読みください.</p>
+</section>
+<section id="renvが裏でどのように動いているか" class="level3">
+<h3 class="anchored" data-anchor-id="renvが裏でどのように動いているか"><code>renv</code>が裏でどのように動いているか</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/renv_backgroud.drawio.svg?raw=true" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p><code>renv</code>は各Rのバージョンごと, 各パッケージのバージョンごとにグローバルキャッシュを持っています. プロジェクト内で利用するパッケージは<code>renv/</code>フォルダ内に収められていますが, 実体はシンボリックリンクが張られたグローバルキャッシュにあります. これは, 各プロジェクトごとにパッケージがインストールされるのを防いでおり, ストレージを圧迫しない仕組みになっています.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/renv_cloud.drawio.svg?raw=true" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>しかし, このプロジェクトフォルダがクラウドストレージで共有されていると, シンボリックリンクが切れてしまいます. また仮にシンボリックリンクが切れていなくても, WindowsとMacでは利用されているRのバイナリが違うため, そもそもライブラリを共有してはいけません. <code>renv.lock</code> ファイルのみが共有されるべきです.</p>
+<p>これらを解決するには特定のファイルやフォルダを共有されないようにクラウドストレージ側で設定しないといけません. (e.g.&nbsp;<a href="https://help.dropbox.com/sync/ignored-files">Dropbox</a>) しかし, そもそも<code>renv/</code>下のパッケージは自動で <em>git-ignored</em> されているので, GitHubを使っていればなんの問題もありません.</p>
+</section>
+<section id="発展-docker" class="level3">
+<h3 class="anchored" data-anchor-id="発展-docker">(発展) Docker</h3>
+<p>万能に見える<code>renv</code>ですが, これが扱えるのはパッケージのバージョンのみです. もし問題が以下の原因であった場合は解決できません.</p>
+<ul>
+<li><strong>Rのバージョン</strong> ⇒ 常に最新のバージョンを使う. Dockerを使う</li>
+<li><strong>R以外の依存関係</strong> (地理データ関連など) ⇒ Dockerを使う</li>
+<li><strong>OS</strong> (Windowsバイナリ特有のバグなど) ⇒ Dockerを使う</li>
+</ul>
+<p>これらの問題はDockerを使うことで解決できます.</p>
+<p><strong>Docker</strong></p>
+<ul>
+<li>バーチャルマシン. OS (Linux), ソフトウェア (Rや他のソフト), やパッケージの情報を設計図 (Dockerfile) に書いてビルドします</li>
+<li>常にDocker上で作業していれば, そのDockerfileを共有するだけで, 相手は全く同一の作業環境を構築することができます</li>
+</ul>
+</section>
+</section>
+<section id="戦略的なデータクリーニング" class="level2">
+<h2 class="anchored" data-anchor-id="戦略的なデータクリーニング">戦略的なデータクリーニング</h2>
+<p>私はデータクリーニングで行うべきこととして以下の４つのことが挙げられると思っています.</p>
+<ol type="1">
+<li>Tidyなデータフレームの作成</li>
+<li>命名</li>
+<li>型変換</li>
+<li>保存</li>
+</ol>
+<p>Tidyなデータフレームとは<code>tidyverse</code>の開発者であるHadley Wickham氏によって 提唱されているデータ分析で用いるべき理想的なデータフレームの形式をいいます.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<strong>Tidy Data</strong> (<span class="citation" data-cites="wickham_tidy_2014">Wickham (<a href="#ref-wickham_tidy_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="wickham_r_2017">Wickham and Grolemund (<a href="#ref-wickham_r_2017" role="doc-biblioref">2017</a>)</span>)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>各変数は列をなす</li>
+<li>各標本は行をなす</li>
+<li>各値はセルである</li>
+</ol>
+</div>
+</div>
+<p><code>tidyverse</code>パッケージ群はTidyなデータフレームを作るためのライブラリ (<code>dplyr</code>や<code>tidyr</code>), またはTidyなデータを前提とするライブラリです (<code>ggplot2</code>など).</p>
+<p>この部分は<code>tidyverse</code>の基礎として, 多くの書籍や講座で解説されている部分ですので省略します. 実際のワークショップでは, <a href="https://kazuyanagimoto.com/workshop-r-2022/code/slides/tidyverse/">An Introduction to <code>tidyverse</code></a> と題して簡単な説明を行いました. 興味がある方はリンクからスライドをご覧になってください.</p>
+<p>以下では, 残りの３つについて解説を行います.</p>
+<section id="命名" class="level3">
+<h3 class="anchored" data-anchor-id="命名">命名</h3>
+<p>コードというものは読まれることを前提として書かなければいけません. 共著者はもちろん, 未来の自分もまた何度もコードを読みます. 特に論文の場合はどんな処理を行ったかを正確に記述するためにコードを読み直す作業が必ずあります. ここで名著『リーダブル・コード』から以下を引きましょう.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+読みやすさの基本的定理 <span class="citation" data-cites="boswell_art_2011">(<a href="#ref-boswell_art_2011" role="doc-biblioref">Boswell and Foucher 2011</a>)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>コードは他の人が最短時間で理解できるように書かなければいけない.</p>
+</div>
+</div>
+<p>この本の内容に従うと, データテーブルの列名は情報量が多く （カラフルな） 曖昧性なく命名しなくてはなりません.</p>
+<div class="cell">
+
+</div>
+<p><strong>ブール変数</strong></p>
+<p>ブール変数の場合は, <code>is_*</code>, <code>has_*</code>, <code>should_*</code> などの変数名で真偽の2値であることが示せます. また, <code>female</code>などの命名は慣例的に女性であることのダミー変数などとして用いられていますが, 曖昧性がないとは言えません. 次の型変換の節でも話しますが, “Yes”/“No”という文字列である可能性も含んでいます. そもそも文字列の”Yes”/“No”は, 分析上1ステップ増えてしまうので存在すべきではないですが, ブール変数ならそうと分かる命名にする必要があります.</p>
+<p>また, <code>no_kids</code>というような否定で始まる命名もよくありません. 頭の中で真偽値を反転させる作業が必要になるので, 理解を少しだけ遅らせます. 変数名は否定が含まれないように命名し, 必要に応じて条件の中で<code>if (!has_kids)</code>のように反転すべきです.</p>
+<p><strong>カテゴリ変数</strong></p>
+<p>私は変数名のあとにカテゴリの数を付属させます. これによって,</p>
+<ul>
+<li>カテゴリ変数であること</li>
+<li>そのカテゴリの数</li>
+</ul>
+<p>を同時に伝えることができます. また, 産業分類などでは大分類, 中分類, 小分類などがあるので, それらの定義もざっくり把握できます.</p>
+<p><strong>連続値のビン</strong></p>
+<p>年齢や所得などの連続値を等間隔で区切りたいときがあります (ビン). その場合はそのビンの間隔を付属して伝えます.</p>
+<p>これら以外の命名の変数は基本的に連続値か, 中身が明らかなもの (gender, countryなど) になります.</p>
+<section id="一括でリネーム" class="level4">
+<h4 class="anchored" data-anchor-id="一括でリネーム">一括でリネーム</h4>
+<p>上記の変数名に変換するとして, 小さいデータセットの場合は <code>dplyr::rename()</code>を使えば問題ありませんが, 変数が20を超えると少し面倒です. また, 英語以外の変数名の場合, 変数名を英語に変換する必要を感じることが多いでしょう.</p>
+<p>こういう場合私はCSVの対応表を用意します. 例えば, このマドリードの自転車事故のデータセットは変数名がスペイン語です.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/raw/accident_bike/txt/year=2022/file.txt"</span>),</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<p>そこで, 以下のようなCSVファイルを用意します. 基本的に命名は上記で説明した規則に従っています.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>code <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/translate/accident_bike.csv"</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<p>そして, 以下のように<code>dplyr::rename_at()</code> 関数で一括で変換します.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_at</span>(<span class="fu">vars</span>(code<span class="sc">$</span>spanish), <span class="sc">~</span>code<span class="sc">$</span>english)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+</section>
+</section>
+<section id="型変換" class="level3">
+<h3 class="anchored" data-anchor-id="型変換">型変換</h3>
+<p>データクリーニングのステップで正確な型を付けておくとデータ分析のステップがかなり楽になります. <code>readr::read_csv()</code>などでデータを読み込めば大体の型付けは完了しますが, 以下の３つの問題は明示的に解決しなければなりません.</p>
+<ul>
+<li>日付 &amp; 時刻</li>
+<li>カテゴリ変数とその順番</li>
+<li>欠損値</li>
+</ul>
+<section id="日付-時刻" class="level4">
+<h4 class="anchored" data-anchor-id="日付-時刻">日付 &amp; 時刻</h4>
+<p><code>lubridate</code>は強力な日付パーサーを提供しています.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">"2021/08/31"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">mdy</span>(<span class="st">"Sep. 10, 19"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">dmy_hm</span>(<span class="st">"02/04/1999 16:00"</span>, <span class="at">tz=</span><span class="st">"America/New_York"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>日付型に変換してしまえば, 時系列のプロットなどでかなり楽をすることができます. 必ず日付型に変換しましょう.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> lubridate<span class="sc">::</span><span class="fu">dmy_hms</span>(<span class="fu">str_c</span>(date, hms), <span class="at">tz =</span> <span class="st">"Europe/Madrid"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, hms, time) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="カテゴリ変数" class="level3">
+<h3 class="anchored" data-anchor-id="カテゴリ変数">カテゴリ変数</h3>
+<p>カテゴリ変数の場合は<code>dplyr::recode_factor()</code>が便利です.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_person =</span> <span class="fu">recode_factor</span>(type_person,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Conductor"</span> <span class="ot">=</span> <span class="st">"Driver"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Pasajero"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Peatón"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NULL"</span><span class="ot">=</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(type_person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>recode_factor()</code> は以下の4つを同時に行えるという点で強みがあります.</p>
+<ol type="1">
+<li>Factor型として変数を定義する</li>
+<li>Factor型の順番を決める (recodeの順番がfactorの順番になる)</li>
+<li>図表中のラベルとして適切な名前に変換 （翻訳も含む）</li>
+<li>特定の値を<code>NA</code>として変換</li>
+</ol>
+</section>
+<section id="欠損値処理" class="level3">
+<h3 class="anchored" data-anchor-id="欠損値処理">欠損値処理</h3>
+<p>一部のデータセットで欠損値は文字列 （ないし外れ値） として記録されています.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(renamed<span class="sc">$</span>weather) <span class="co"># "Se desconoce" は「分からない」という意味です</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>これらを解決する方法はいくつかあります.</p>
+<p><strong>方法1: ロードする時に<code>NA</code>を定義する</strong></p>
+<p>以下の例では, <code>NULL</code>や<code>Se descnoce</code>を欠損値として指定してデータを読み込んでいます.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sol1 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/raw/accident_bike/txt/year=2019/file.txt"</span>),</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"NA"</span>, <span class="st">"NULL"</span>, <span class="st">"Se desconoce"</span>, <span class="st">"Desconocido"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rename</span>(<span class="at">weather =</span> <span class="st">"estado_meteorológico"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(sol1<span class="sc">$</span>weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>しかし, この方法は連続値の中の外れ値 (99, 9999) などでは, 他の変数中で実際の値として使われていた場合を考えると使うことができません.</p>
+<p><strong>方法2: <code>na_if()</code></strong></p>
+<p><code>na_if()</code>を使えば, 基本的にどのような場合でも対応できます.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather_old =</span> weather,<span class="co"># Presentation Purpose</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">na_if</span>(weather, <span class="st">"Se desconoce"</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">na_if</span>(weather, <span class="st">"NULL"</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weather_old, weather) <span class="sc">|&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>しかし, 複数の値を同時に欠損値に変換できないため, 少し不便です.</p>
+<p><strong>方法3: <code>NULL</code>としてリコード</strong></p>
+<p>前小節でも書きましたが, <code>recode_factor()</code> のついでに欠損値として処理してしまうのが効率がいいです. カテゴリ変数にしか使えませんが, よく使う方法です.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather_spanish =</span> weather,<span class="co"># Presentation Purpose</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">recode_factor</span>(weather,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Despejado"</span> <span class="ot">=</span> <span class="st">"sunny"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nublado"</span> <span class="ot">=</span> <span class="st">"cloud"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Lluvia débil"</span> <span class="ot">=</span> <span class="st">"soft rain"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Lluvia intensa"</span> <span class="ot">=</span> <span class="st">"hard rain"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"LLuvia intensa"</span> <span class="ot">=</span> <span class="st">"hard rain"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nevando"</span> <span class="ot">=</span> <span class="st">"snow"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Granizando"</span> <span class="ot">=</span> <span class="st">"hail"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Se desconoce"</span> <span class="ot">=</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NULL"</span> <span class="ot">=</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weather_spanish, weather) <span class="sc">|&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="保存形式-parquet" class="level2">
+<h2 class="anchored" data-anchor-id="保存形式-parquet">保存形式: Parquet</h2>
+<p>2023年1月現在, データフレームの最良な保存形式はparquet形式だと思います.</p>
+<div class="cell">
+
+</div>
+<p>詳細やベンチマークなどは <span class="citation" data-cites="uryu_r_2022">Uryu (<a href="#ref-uryu_r_2022" role="doc-biblioref">2022</a>)</span> などを参考にされるとよいと思います.</p>
+<p><code>arrow::read_parquet()</code> は通常のデータフレームとしてだけでなく, 列情報のみを読み込むことが可能です.</p>
+<p>データフレームとして</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>df <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">here</span>(<span class="st">"data/cleaned/accident_bike.parquet"</span>),</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="at">as_data_frame =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>df <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>列情報のみ</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>info <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">here</span>(<span class="st">"data/cleaned/accident_bike.parquet"</span>),</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="at">as_data_frame =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a>info[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>dplyr::collect()</code> を使うとデータフレームとしてメモリに読み込まれます.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>info <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>この方法が便利なのは<code>select()</code>, <code>filter()</code>, <code>group_by()</code>, <code>summarize()</code> などの関数が使える点です. これによって, 大きなデータセット全体をメモリに読み込むことなく, 必要なデータのみ読み込むというデータベースのようなことが簡易的に行なえます.</p>
+<section id="パーティショニング" class="level3">
+<h3 class="anchored" data-anchor-id="パーティショニング">パーティショニング</h3>
+<p>仮にデータセットが年ごとにフォルダで分かれた構造を持っていたとしています.</p>
+<pre class="shell"><code>data/raw/accident_bike/parquet/
+├── year=2019
+│   └── part-0.parquet
+├── year=2020
+│   └── part-0.parquet
+├── year=2021
+│   └── part-0.parquet
+└── year=2022
+    └── part-0.parquet</code></pre>
+<p>このようなデータを<code>arrow::open_dataset()</code>関数は1つのparquetデータのように扱うことができます.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">here</span>(<span class="st">"data/raw/accident_bike/parquet"</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>この場合, フォルダを分けていた年次が<code>year</code>として新しい変数に加わります. 実はCSVファイルや他のフォルダ名でも可能なのですが, 詳細は上の瓜生さんのスライドか <span class="citation" data-cites="mock_outrageously_2022">Mock (<a href="#ref-mock_outrageously_2022" role="doc-biblioref">2022</a>)</span> などを参考にされるとよいと思います.</p>
+</section>
+<section id="前処理まとめ" class="level3">
+<h3 class="anchored" data-anchor-id="前処理まとめ">前処理まとめ</h3>
+<p>Tidyなデータを作った後,</p>
+<p><strong>1. 命名</strong></p>
+<ul>
+<li>（変数の型の） 情報量が多く, 誤解のない命名を行う. 必要に応じて翻訳もする</li>
+<li>変数が多い場合は別ファイルで対応表をつくるとよい</li>
+</ul>
+<p><strong>2. 型変換</strong></p>
+<ul>
+<li><em>日付</em>: <code>lubridate()</code></li>
+<li><em>カテゴリ変数</em>: <code>recode_factor()</code></li>
+<li><em>欠損値</em>: 読み込み時の<code>na</code>オプション, <code>na_if()</code>, そして<code>recode_factor()</code></li>
+</ul>
+<p><strong>3. 保存</strong></p>
+<ul>
+<li>Parquet形式が2023年1月現在の最適解</li>
+<li>Parquet形式は大きなデータセットを扱う際に更に便利になる</li>
+</ul>
+
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-boswell_art_2011" class="csl-entry" role="doc-biblioentry">
+Boswell, Dustin, and Trevor Foucher. 2011. <em>The Art of Readable Code</em>. 1st ed. Theory in Practice. Sebastopol, Calif: O’Reilly.
+</div>
+<div id="ref-bryan_zen_2018" class="csl-entry" role="doc-biblioentry">
+Bryan, Jenny. 2018. <span>“Zen <span>And</span> <span>The</span> <span class="nocase">aRt</span> <span>Of</span> <span>Workflow</span> <span>Maintenance</span>.”</span> Part of 47 JAIIO. <a href="https://github.com/jennybc/zen-art-workflow">https://github.com/jennybc/zen-art-workflow</a>.
+</div>
+<div id="ref-mock_outrageously_2022" class="csl-entry" role="doc-biblioentry">
+Mock, Tom. 2022. <span>“Outrageously Efficient Exploratory Data Analysis with <span>Apache</span> <span>Arrow</span> and Dplyr.”</span> Voltron Data. <a href="https://jthomasmock.github.io/arrow-dplyr/">https://jthomasmock.github.io/arrow-dplyr/</a>.
+</div>
+<div id="ref-uryu_r_2022" class="csl-entry" role="doc-biblioentry">
+Uryu, Shinya. 2022. <span>“Rによる大規模データの処理.”</span> <a href="https://speakerdeck.com/s_uryu/introduction-to-r-arrow">https://speakerdeck.com/s_uryu/introduction-to-r-arrow</a>.
+</div>
+<div id="ref-wickham_tidy_2014" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley. 2014. <span>“Tidy <span>Data</span>.”</span> <em>Journal of Statistical Software</em> 59 (10): 1–23. <a href="https://doi.org/10.18637/jss.v059.i10">https://doi.org/10.18637/jss.v059.i10</a>.
+</div>
+<div id="ref-wickham_r_2017" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for <span>Data</span> <span>Science</span>: <span>Import</span>, <span>Tidy</span>, <span>Transform</span>, <span>Visualize</span>, and <span>Model</span> <span>Data</span></em>. 1st edition. Sebastopol, CA: O’Reilly Media. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>経済学者はエンジニア並みにコードを書くのにgitやGitHubを使わない人が一定数います. また, やたらDropboxが人気であるという特徴もあります.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

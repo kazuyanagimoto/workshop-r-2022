@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kazuharu Yanagimoto">
+<meta name="dcterms.date" content="2023-01-22">
+
+<title>Rで論文を書く実践的なテクニック集 (テーブル編)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<meta name="twitter:title" content="Rで論文を書く実践的なテクニック集 (テーブル編)">
+<meta name="twitter:description" content="\(\LaTeX\) 用の表作成は基本的にkableExtraを使えばよいです. 例えば以下のようなデータフレームを持っているとします.">
+<meta name="twitter:image" content="https://source.unsplash.com/5QgIuuBxKwM">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="fullcontent">\usepackage{booktabs}
+\usepackage{siunitx}
+
+  \newcolumntype{d}{S[
+    input-open-uncertainty=,
+    input-close-uncertainty=,
+    parse-numbers = false,
+    table-align-text-pre=false,
+    table-align-text-post=false
+  ]}
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+
+
+
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Rで論文を書く実践的なテクニック集 (テーブル編)</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">Quarto</div>
+    <div class="quarto-category">Japanese</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kazuharu Yanagimoto </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 22, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="kableextra" class="level2">
+<h2 class="anchored" data-anchor-id="kableextra"><code>kableExtra</code></h2>
+<p><span class="math inline">\(\LaTeX\)</span> 用の表作成は基本的に<code>kableExtra</code>を使えばよいです. 例えば以下のようなデータフレームを持っているとします.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+# Groups:   weather [6]
+  weather   n_Men_2019 n_Men_2…¹ n_Men…² n_Men…³ n_Wom…⁴ n_Wom…⁵ n_Wom…⁶ n_Wom…⁷
+  &lt;fct&gt;          &lt;int&gt;     &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;
+1 sunny          24399     14969   19208   19420   11971    6958    9417    9298
+2 cloud           1159      1190    1325    1633     555     554     630     774
+3 soft rain       2126      1198    1281    1408    1068     542     605     716
+4 hard rain        386       202     386     352     222      96     210     179
+5 snow               2         2     124       5      NA      NA      38       1
+6 hail              11         5       6       4       3       3       1       2
+# … with abbreviated variable names ¹​n_Men_2020, ²​n_Men_2021, ³​n_Men_2022,
+#   ⁴​n_Women_2019, ⁵​n_Women_2020, ⁶​n_Women_2021, ⁷​n_Women_2022</code></pre>
+</div>
+</div>
+<p><code>kableExtra</code> なら簡単に<code>.tex</code>ファイルにできます.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">''</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ktb <span class="ot">&lt;-</span> tab <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">format =</span> <span class="st">"latex"</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">" "</span>, <span class="dv">2019</span><span class="sc">:</span><span class="dv">2022</span>, <span class="dv">2019</span><span class="sc">:</span><span class="dv">2022</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span>, <span class="st">"Men"</span> <span class="ot">=</span> <span class="dv">4</span>, <span class="st">"Women"</span> <span class="ot">=</span> <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pack_rows</span>(<span class="at">index =</span> <span class="fu">c</span>(<span class="st">"Good"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Bad"</span> <span class="ot">=</span> <span class="dv">4</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ktb <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_kable</span>(<span class="fu">here</span>(<span class="st">"output/tex/kableextra/tb_accident_bike.tex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/kableextra.png?raw=true" height="300" class="figure-img"></p>
+</figure>
+</div>
+<p>ポイントとしては</p>
+<ul>
+<li><code>booktabs = TRUE</code> は <code>booktabs</code> パッケージを使うので見た目がよくなります</li>
+<li>列名は<code>col.names</code>項で指定します</li>
+<li>行と列は<code>pack_rows()</code> と <code>add_header_above()</code> でまとめることができます</li>
+<li><code>kbl(format = "latex")</code> を指定すると <code>save_kable()</code> でtexファイルに出力できます</li>
+<li>タイトルは論文用の本文用のtexファイルであとづけしています.</li>
+</ul>
+<p>より複雑な表については <span class="citation" data-cites="zhu_create_2021">Zhu (<a href="#ref-zhu_create_2021" role="doc-biblioref">2021</a>)</span> を読むことをおすすめします. ここまで複雑な <span class="math inline">\(\LaTeX\)</span> の表はPythonやJuliaだと簡単には作成できないのではないかと思います.</p>
+</section>
+<section id="modelsummary" class="level2">
+<h2 class="anchored" data-anchor-id="modelsummary"><code>modelsummary</code></h2>
+<p>回帰分析の表は<code>modelsummary</code> を使います. 以下のような回帰結果をリストでもっているとします.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest) <span class="co"># for faster regression with fixed effect</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(1)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_hospitalized <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(2)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_hospitalized <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender <span class="sc">+</span> type_vehicle,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(3)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_hospitalized <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender <span class="sc">+</span> type_vehicle <span class="sc">+</span> weather,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(4)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_died <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(5)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_died <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender <span class="sc">+</span> type_vehicle,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(6)"</span> <span class="ot">=</span> <span class="fu">feglm</span>(is_died <span class="sc">~</span> type_person <span class="sc">+</span> positive_alcohol <span class="sc">+</span> positive_drug <span class="sc">|</span> age_c <span class="sc">+</span> gender <span class="sc">+</span> type_vehicle <span class="sc">+</span> weather,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(logit), <span class="at">data =</span> data)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>計算を早くするために<code>fixest::feglm()</code> を使っていますが通常の<code>lm()</code> や <code>glm()</code> で問題ありません.</p>
+<p><code>modelsummary()</code>のデフォルトの設定で以下のようなテーブルを作ることができます.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div style="font-size: 0.3em">
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> (1) </th>
+   <th style="text-align:center;"> (2) </th>
+   <th style="text-align:center;"> (3) </th>
+   <th style="text-align:center;"> (4) </th>
+   <th style="text-align:center;"> (5) </th>
+   <th style="text-align:center;"> (6) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> type_personPassenger </td>
+   <td style="text-align:center;"> 0.049 </td>
+   <td style="text-align:center;"> 0.530 </td>
+   <td style="text-align:center;"> 0.507 </td>
+   <td style="text-align:center;"> −1.781 </td>
+   <td style="text-align:center;"> −1.575 </td>
+   <td style="text-align:center;"> −1.565 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.104) </td>
+   <td style="text-align:center;"> (0.071) </td>
+   <td style="text-align:center;"> (0.070) </td>
+   <td style="text-align:center;"> (0.759) </td>
+   <td style="text-align:center;"> (0.783) </td>
+   <td style="text-align:center;"> (0.784) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> type_personPedestrian </td>
+   <td style="text-align:center;"> 2.124 </td>
+   <td style="text-align:center;"> 2.402 </td>
+   <td style="text-align:center;"> 2.323 </td>
+   <td style="text-align:center;"> 2.280 </td>
+   <td style="text-align:center;"> 2.418 </td>
+   <td style="text-align:center;"> 2.422 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.115) </td>
+   <td style="text-align:center;"> (0.066) </td>
+   <td style="text-align:center;"> (0.064) </td>
+   <td style="text-align:center;"> (0.301) </td>
+   <td style="text-align:center;"> (0.287) </td>
+   <td style="text-align:center;"> (0.285) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> positive_alcoholTRUE </td>
+   <td style="text-align:center;"> −0.077 </td>
+   <td style="text-align:center;"> 0.310 </td>
+   <td style="text-align:center;"> 0.353 </td>
+   <td style="text-align:center;"> −13.710 </td>
+   <td style="text-align:center;"> −13.455 </td>
+   <td style="text-align:center;"> −13.492 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.088) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.095) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.093) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.053) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.064) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.063) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 149918 </td>
+   <td style="text-align:center;"> 149831 </td>
+   <td style="text-align:center;"> 134006 </td>
+   <td style="text-align:center;"> 90852 </td>
+   <td style="text-align:center;"> 89300 </td>
+   <td style="text-align:center;"> 86330 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.055 </td>
+   <td style="text-align:center;"> 0.171 </td>
+   <td style="text-align:center;"> 0.165 </td>
+   <td style="text-align:center;"> 0.107 </td>
+   <td style="text-align:center;"> 0.145 </td>
+   <td style="text-align:center;"> 0.148 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.170 </td>
+   <td style="text-align:center;"> 0.163 </td>
+   <td style="text-align:center;"> 0.086 </td>
+   <td style="text-align:center;"> 0.113 </td>
+   <td style="text-align:center;"> 0.112 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Within </td>
+   <td style="text-align:center;"> 0.047 </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.052 </td>
+   <td style="text-align:center;"> 0.073 </td>
+   <td style="text-align:center;"> 0.076 </td>
+   <td style="text-align:center;"> 0.076 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Within Adj. </td>
+   <td style="text-align:center;"> 0.047 </td>
+   <td style="text-align:center;"> 0.054 </td>
+   <td style="text-align:center;"> 0.052 </td>
+   <td style="text-align:center;"> 0.070 </td>
+   <td style="text-align:center;"> 0.072 </td>
+   <td style="text-align:center;"> 0.073 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 62871.0 </td>
+   <td style="text-align:center;"> 55210.6 </td>
+   <td style="text-align:center;"> 53565.4 </td>
+   <td style="text-align:center;"> 1601.9 </td>
+   <td style="text-align:center;"> 1552.2 </td>
+   <td style="text-align:center;"> 1534.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 63079.3 </td>
+   <td style="text-align:center;"> 55696.5 </td>
+   <td style="text-align:center;"> 54085.1 </td>
+   <td style="text-align:center;"> 1780.8 </td>
+   <td style="text-align:center;"> 1824.8 </td>
+   <td style="text-align:center;"> 1834.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.23 </td>
+   <td style="text-align:center;"> 0.22 </td>
+   <td style="text-align:center;"> 0.23 </td>
+   <td style="text-align:center;"> 0.04 </td>
+   <td style="text-align:center;"> 0.04 </td>
+   <td style="text-align:center;"> 0.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Std.Errors </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+   <td style="text-align:center;"> by: age_c </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: age_c </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: gender </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: type_vehicle </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FE: weather </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> X </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>論文に使える形にするために以下のように調整します.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cm  <span class="ot">&lt;-</span>  <span class="fu">c</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"type_personPassenger"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"type_personPedestrian"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"positive_alcoholTRUE"</span> <span class="ot">=</span> <span class="st">"Positive Alcohol"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>gm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">raw =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"FE: age_c"</span>, <span class="st">"FE: gender"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"FE: type_vehicle"</span>, <span class="st">"FE: weather"</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">clean =</span> <span class="fu">c</span>(<span class="st">"Observations"</span>, <span class="st">"FE: Age Group"</span>, <span class="st">"FE: Gender"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>              <span class="st">"FE: Type of Vehicle"</span>, <span class="st">"FE: Weather"</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fmt =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"latex_tabular"</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"+"</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_map =</span> cm,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> gm) <span class="sc">|&gt;</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">" "</span>, <span class="st">"Hospitalization"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"Died within 24 hours"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">7</span>, <span class="at">hline_after =</span> T) <span class="sc">|&gt;</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_kable</span>(<span class="fu">here</span>(<span class="st">"output/tex/modelsummary/reg_accident_bike.tex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/kazuyanagimoto/workshop-r-2022/blob/main/code/slides/advancedr/img/modelsummary.png?raw=true" height="300" class="figure-img"></p>
+</figure>
+</div>
+<p>調整した項目は以下です</p>
+<ul>
+<li><code>coef_map = cm</code> で係数のラベルを変更</li>
+<li><code>gof_map = gm</code> で統計量を選択&amp;ラベル付け</li>
+<li>出力が <code>kableExtra</code> 形式なので <code>add_header_above()</code> や <code>row_spec()</code> で見た目を調整</li>
+<li>タイトルとノートは本文用texファイルで記述</li>
+<li><code>output = "latex_tabular"</code> を使うことで <code>table</code> タグなしのtexファイルが出力できる</li>
+</ul>
+</section>
+<section id="テーブル編まとめ" class="level2">
+<h2 class="anchored" data-anchor-id="テーブル編まとめ">テーブル編まとめ</h2>
+<p><strong><code>kableExtra</code> &amp; <code>modelsummary</code></strong></p>
+<ul>
+<li><code>kableExtra</code> でtibble (データフレーム) から簡単にtexのテーブルを作成できる</li>
+<li><code>modelsummary</code> で回帰結果から <code>kableExtra</code> のテーブルを出力できる</li>
+<li>出力されたtexファイルとそれをコンパイルする本文のtexファイルはレポジトリ内の<code>output/tex/</code>と<code>code/thesis/</code>から確認できます</li>
+</ul>
+<p><strong>より詳しく</strong></p>
+<ul>
+<li>公式ドキュメント<a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html">modelsummary</a> と <span class="citation" data-cites="zhu_create_2021">Zhu (<a href="#ref-zhu_create_2021" role="doc-biblioref">2021</a>)</span></li>
+<li><a href="https://gt.rstudio.com/articles/intro-creating-gt-tables.html">gt</a>は <code>kableExtra</code> に替わりうる強力なテーブル作成パッケージです (が数式に対応していないので, 論文用には使っていません. スライドではよく使います.)</li>
+</ul>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-zhu_create_2021" class="csl-entry" role="doc-biblioentry">
+Zhu, Hao. 2021. <span>“Create <span>Awesome</span> <span>LaTeX</span> <span>Table</span> with Knitr::kable and <span class="nocase">kableExtra</span>,”</span> February. <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_pdf.pdf">https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_pdf.pdf</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
