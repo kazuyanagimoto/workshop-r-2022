@@ -8,7 +8,6 @@ image: https://source.unsplash.com/5QgIuuBxKwM
 twitter-card:
   image: https://source.unsplash.com/5QgIuuBxKwM
 execute:
-  eval: false
   warning: false
   message: false
   cache: false
@@ -71,6 +70,12 @@ A. あなたが**R project**のもとで`here`や`renv`を使っていないせ�
 ```{.r .cell-code}
 here::here()
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+[1] "/home/rstudio/workshop-r-2022"
+```
+:::
 :::
 
 
@@ -199,7 +204,13 @@ Tidyなデータフレームとは`tidyverse`の開発者であるHadley Wickham
 
 
 ::: {.cell}
-
+::: {.cell-output-display}
+|         |🙆 Good              |🙅 Bad               |
+|:--------|:--------------------|:--------------------|
+|ブール   |is_female, has_kids  |female, no_kids      |
+|カテゴリ |industry8, emp3      |industry, emp_status |
+|ビン     |age_bin5, wage_bin10 |age, wage            |
+:::
 :::
 
 
@@ -254,7 +265,17 @@ raw <- read_delim(here("data/raw/accident_bike/txt/year=2022/file.txt"),
 :::
 
 ::: {.cell}
-
+::: {.cell-output .cell-output-stdout}
+```
+Rows: 42,547
+Columns: 5
+$ num_expediente <dbl> 2.022e+04, 2.022e+04, 2.022e+05, 2.022e+05, 2.022e+05, …
+$ fecha          <chr> "01/01/2022", "01/01/2022", "01/01/2022", "01/01/2022",…
+$ hora           <time> 01:30:00, 01:30:00, 00:30:00, 00:30:00, 00:30:00, 01:5…
+$ localizacion   <chr> "AVDA. ALBUFERA, 19", "AVDA. ALBUFERA, 19", "PLAZA. CAN…
+$ numero         <chr> "19", "19", "2", "2", "2", "53", "53", "728", "728", "+…
+```
+:::
 :::
 
 
@@ -272,7 +293,16 @@ code <- read_csv(here("data/translate/accident_bike.csv"),
 :::
 
 ::: {.cell}
-
+::: {.cell-output-display}
+|spanish        |english       |
+|:--------------|:-------------|
+|num_expediente |id_1922       |
+|fecha          |date          |
+|hora           |hms           |
+|localizacion   |street        |
+|numero         |num_street    |
+|cod_distrito   |code_district |
+:::
 :::
 
 
@@ -288,7 +318,17 @@ renamed <- raw |>
 :::
 
 ::: {.cell}
-
+::: {.cell-output .cell-output-stdout}
+```
+Rows: 42,547
+Columns: 5
+$ id_1922    <dbl> 2.022e+04, 2.022e+04, 2.022e+05, 2.022e+05, 2.022e+05, 2.02…
+$ date       <chr> "01/01/2022", "01/01/2022", "01/01/2022", "01/01/2022", "01…
+$ hms        <time> 01:30:00, 01:30:00, 00:30:00, 00:30:00, 00:30:00, 01:50:00…
+$ street     <chr> "AVDA. ALBUFERA, 19", "AVDA. ALBUFERA, 19", "PLAZA. CANOVAS…
+$ num_street <chr> "19", "19", "2", "2", "2", "53", "53", "728", "728", "+0050…
+```
+:::
 :::
 
 
@@ -311,9 +351,33 @@ renamed <- raw |>
 
 ```{.r .cell-code}
 lubridate::ymd("2021/08/31")
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+[1] "2021-08-31"
+```
+:::
+
+```{.r .cell-code}
 lubridate::mdy("Sep. 10, 19")
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+[1] "2019-09-10"
+```
+:::
+
+```{.r .cell-code}
 lubridate::dmy_hm("02/04/1999 16:00", tz="America/New_York")
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+[1] "1999-04-02 16:00:00 EST"
+```
+:::
 :::
 
 
@@ -329,6 +393,20 @@ renamed |>
   select(date, hms, time) |>
   head()
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+# A tibble: 6 × 3
+  date       hms    time               
+  <chr>      <time> <dttm>             
+1 01/01/2022 01:30  2022-01-01 01:30:00
+2 01/01/2022 01:30  2022-01-01 01:30:00
+3 01/01/2022 00:30  2022-01-01 00:30:00
+4 01/01/2022 00:30  2022-01-01 00:30:00
+5 01/01/2022 00:30  2022-01-01 00:30:00
+6 01/01/2022 01:50  2022-01-01 01:50:00
+```
+:::
 :::
 
 
@@ -350,6 +428,15 @@ renamed |>
         "NULL"= NULL)) |>
   janitor::tabyl(type_person)
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+ type_person     n    percent
+      Driver 34567 0.81244271
+   Passenger  6503 0.15284274
+  Pedestrian  1477 0.03471455
+```
+:::
 :::
 
 
@@ -370,6 +457,13 @@ renamed |>
 ```{.r .cell-code}
 unique(renamed$weather) # "Se desconoce" は「分からない」という意味です
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+[1] "Despejado"      "NULL"           "Se desconoce"   "Lluvia débil"  
+[5] "Nublado"        "LLuvia intensa" "Granizando"     "Nevando"       
+```
+:::
 :::
 
 
@@ -390,6 +484,13 @@ sol1 <- read_delim(here("data/raw/accident_bike/txt/year=2019/file.txt"),
 
 unique(sol1$weather)
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+[1] "Despejado"      NA               "Lluvia débil"   "Nublado"       
+[5] "LLuvia intensa" "Granizando"     "Nevando"       
+```
+:::
 :::
 
 
@@ -413,6 +514,20 @@ renamed |>
   select(weather_old, weather) |>
   head()
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+# A tibble: 6 × 2
+  weather_old weather  
+  <chr>       <chr>    
+1 Despejado   Despejado
+2 Despejado   Despejado
+3 NULL        <NA>     
+4 NULL        <NA>     
+5 NULL        <NA>     
+6 Despejado   Despejado
+```
+:::
 :::
 
 
@@ -443,6 +558,20 @@ renamed |>
   select(weather_spanish, weather) |>
   head()
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+# A tibble: 6 × 2
+  weather_spanish weather
+  <chr>           <fct>  
+1 Despejado       sunny  
+2 Despejado       sunny  
+3 NULL            <NA>   
+4 NULL            <NA>   
+5 NULL            <NA>   
+6 Despejado       sunny  
+```
+:::
 :::
 
 
@@ -453,7 +582,13 @@ renamed |>
 
 
 ::: {.cell}
-
+::: {.cell-output-display}
+|           |速度 |サイズ |型保存 |多言語対応                       |
+|:----------|:----|:------|:------|:--------------------------------|
+|csv, tsv   |❌   |❌     |❌     |All                              |
+|rds, RData |❌   |✔️      |✔️      |❌                               |
+|parquet    |✔️    |✔️      |✔️      |Python, Julia, MATLAB, Stata,... |
+:::
 :::
 
 
@@ -472,6 +607,25 @@ df <- arrow::read_parquet(
 
 df |> head()
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+# A tibble: 6 × 23
+  id_1922     date  hms   street num_s…¹ code_…² distr…³ type_…⁴ weather type_…⁵
+  <chr>       <chr> <chr> <chr>  <chr>     <int> <chr>   <chr>   <fct>   <chr>  
+1 2018S017842 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Motoci…
+2 2018S017842 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Turismo
+3 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Furgon…
+4 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Turismo
+5 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Turismo
+6 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Turismo
+# … with 13 more variables: type_person <fct>, age_c <fct>, gender <fct>,
+#   code_injury8 <chr>, injury8 <fct>, coord_x <chr>, coord_y <chr>,
+#   positive_alcohol <lgl>, positive_drug <lgl>, year <int>, time <dttm>,
+#   is_died <lgl>, is_hospitalized <lgl>, and abbreviated variable names
+#   ¹​num_street, ²​code_district, ³​district, ⁴​type_accident, ⁵​type_vehicle
+```
+:::
 :::
 
 
@@ -486,6 +640,19 @@ info <- arrow::read_parquet(
 
 info[1:6]
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+Table
+168574 rows x 6 columns
+$id_1922 <string>
+$date <string>
+$hms <string>
+$street <string>
+$num_street <string>
+$code_district <int32>
+```
+:::
 :::
 
 
@@ -499,6 +666,29 @@ info[1:6]
 info |>
   collect()
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+# A tibble: 168,574 × 23
+   id_1922    date  hms   street num_s…¹ code_…² distr…³ type_…⁴ weather type_…⁵
+   <chr>      <chr> <chr> <chr>  <chr>     <int> <chr>   <chr>   <fct>   <chr>  
+ 1 2018S0178… 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Motoci…
+ 2 2018S0178… 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Turismo
+ 3 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Furgon…
+ 4 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Turismo
+ 5 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Turismo
+ 6 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Turismo
+ 7 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Turismo
+ 8 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance <NA>    Turismo
+ 9 2019S0000… 01/0… 3:50… CALL.… 65           10 Latina  Choque… sunny   Furgon…
+10 2019S0000… 01/0… 3:50… CALL.… 65           10 Latina  Choque… sunny   Turismo
+# … with 168,564 more rows, 13 more variables: type_person <fct>, age_c <fct>,
+#   gender <fct>, code_injury8 <chr>, injury8 <fct>, coord_x <chr>,
+#   coord_y <chr>, positive_alcohol <lgl>, positive_drug <lgl>, year <int>,
+#   time <dttm>, is_died <lgl>, is_hospitalized <lgl>, and abbreviated variable
+#   names ¹​num_street, ²​code_district, ³​district, ⁴​type_accident, ⁵​type_vehicle
+```
+:::
 :::
 
 
@@ -534,6 +724,32 @@ info <- open_dataset(
           here("data/raw/accident_bike/parquet"))
 info
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+FileSystemDataset with 4 Parquet files
+num_expediente: string
+fecha: string
+hora: string
+localizacion: string
+numero: string
+cod_distrito: int32
+distrito: string
+tipo_accidente: string
+estado_meteorológico: string
+tipo_vehiculo: string
+tipo_persona: string
+rango_edad: string
+sexo: string
+cod_lesividad: string
+lesividad: string
+coordenada_x_utm: string
+coordenada_y_utm: string
+positiva_alcohol: string
+positiva_droga: string
+year: int32
+```
+:::
 :::
 
 

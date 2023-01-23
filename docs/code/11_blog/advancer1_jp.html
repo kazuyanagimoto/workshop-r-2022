@@ -231,11 +231,14 @@ div.csl-indent {
 <p><code>here::here()</code> 関数はRプロジェクトのルート (つまり <code>*.Rproj</code> が置かれている場所) をルートディレクトリとして扱います.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/home/rstudio/workshop-r-2022"</code></pre>
+</div>
 </div>
 <p>常に <code>here::here()</code> を使ってルートからの相対パスを指定するようにしましょう.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tiny.csv"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tiny.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>このようにパスを指定していれば, Windows, Mac, Linux (もちろんDocker内でも) にかかわらずパスが正しく変換されます.</p>
 <blockquote class="blockquote">
 <p>If the first line of your R script is <code>setwd("C:\Users\jenny\path\that\only\I\have")</code></p>
@@ -254,14 +257,14 @@ div.csl-indent {
 <div class="code-with-filename-file">
 <pre><strong>renv.lock</strong></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">"Formula":</span> <span class="fu">{</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"Formula"</span><span class="fu">,</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"1.2-4"</span><span class="fu">,</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"cc8c8c4d61346cde1ca60030ff9c241f"</span><span class="fu">,</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[]</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="er">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">"Formula":</span> <span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"Formula"</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"1.2-4"</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"cc8c8c4d61346cde1ca60030ff9c241f"</span><span class="fu">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="er">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>しかし, Dropbox<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>などのクラウドストレージと<code>renv</code>は相性が悪いです. 興味がある方は以下の<code>renv</code>がどのように動くかをお読みください.</p>
 </section>
@@ -345,7 +348,34 @@ div.csl-indent {
 </div>
 <p>この本の内容に従うと, データテーブルの列名は情報量が多く （カラフルな） 曖昧性なく命名しなくてはなりません.</p>
 <div class="cell">
-
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">🙆 Good</th>
+<th style="text-align: left;">🙅 Bad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ブール</td>
+<td style="text-align: left;">is_female, has_kids</td>
+<td style="text-align: left;">female, no_kids</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">カテゴリ</td>
+<td style="text-align: left;">industry8, emp3</td>
+<td style="text-align: left;">industry, emp_status</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ビン</td>
+<td style="text-align: left;">age_bin5, wage_bin10</td>
+<td style="text-align: left;">age, wage</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <p><strong>ブール変数</strong></p>
 <p>ブール変数の場合は, <code>is_*</code>, <code>has_*</code>, <code>should_*</code> などの変数名で真偽の2値であることが示せます. また, <code>female</code>などの命名は慣例的に女性であることのダミー変数などとして用いられていますが, 曖昧性がないとは言えません. 次の型変換の節でも話しますが, “Yes”/“No”という文字列である可能性も含んでいます. そもそも文字列の”Yes”/“No”は, 分析上1ステップ増えてしまうので存在すべきではないですが, ブール変数ならそうと分かる命名にする必要があります.</p>
@@ -365,27 +395,78 @@ div.csl-indent {
 <p>上記の変数名に変換するとして, 小さいデータセットの場合は <code>dplyr::rename()</code>を使えば問題ありませんが, 変数が20を超えると少し面倒です. また, 英語以外の変数名の場合, 変数名を英語に変換する必要を感じることが多いでしょう.</p>
 <p>こういう場合私はCSVの対応表を用意します. 例えば, このマドリードの自転車事故のデータセットは変数名がスペイン語です.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/raw/accident_bike/txt/year=2022/file.txt"</span>),</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/raw/accident_bike/txt/year=2022/file.txt"</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 42,547
+Columns: 5
+$ num_expediente &lt;dbl&gt; 2.022e+04, 2.022e+04, 2.022e+05, 2.022e+05, 2.022e+05, …
+$ fecha          &lt;chr&gt; "01/01/2022", "01/01/2022", "01/01/2022", "01/01/2022",…
+$ hora           &lt;time&gt; 01:30:00, 01:30:00, 00:30:00, 00:30:00, 00:30:00, 01:5…
+$ localizacion   &lt;chr&gt; "AVDA. ALBUFERA, 19", "AVDA. ALBUFERA, 19", "PLAZA. CAN…
+$ numero         &lt;chr&gt; "19", "19", "2", "2", "2", "53", "53", "728", "728", "+…</code></pre>
+</div>
 </div>
 <p>そこで, 以下のようなCSVファイルを用意します. 基本的に命名は上記で説明した規則に従っています.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>code <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/translate/accident_bike.csv"</span>),</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>code <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/translate/accident_bike.csv"</span>),</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">spanish</th>
+<th style="text-align: left;">english</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">num_expediente</td>
+<td style="text-align: left;">id_1922</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fecha</td>
+<td style="text-align: left;">date</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hora</td>
+<td style="text-align: left;">hms</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">localizacion</td>
+<td style="text-align: left;">street</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numero</td>
+<td style="text-align: left;">num_street</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cod_distrito</td>
+<td style="text-align: left;">code_district</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <p>そして, 以下のように<code>dplyr::rename_at()</code> 関数で一括で変換します.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_at</span>(<span class="fu">vars</span>(code<span class="sc">$</span>spanish), <span class="sc">~</span>code<span class="sc">$</span>english)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_at</span>(<span class="fu">vars</span>(code<span class="sc">$</span>spanish), <span class="sc">~</span>code<span class="sc">$</span>english)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 42,547
+Columns: 5
+$ id_1922    &lt;dbl&gt; 2.022e+04, 2.022e+04, 2.022e+05, 2.022e+05, 2.022e+05, 2.02…
+$ date       &lt;chr&gt; "01/01/2022", "01/01/2022", "01/01/2022", "01/01/2022", "01…
+$ hms        &lt;time&gt; 01:30:00, 01:30:00, 00:30:00, 00:30:00, 00:30:00, 01:50:00…
+$ street     &lt;chr&gt; "AVDA. ALBUFERA, 19", "AVDA. ALBUFERA, 19", "PLAZA. CANOVAS…
+$ num_street &lt;chr&gt; "19", "19", "2", "2", "2", "53", "53", "728", "728", "+0050…</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -401,16 +482,36 @@ div.csl-indent {
 <h4 class="anchored" data-anchor-id="日付-時刻">日付 &amp; 時刻</h4>
 <p><code>lubridate</code>は強力な日付パーサーを提供しています.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">"2021/08/31"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">mdy</span>(<span class="st">"Sep. 10, 19"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">dmy_hm</span>(<span class="st">"02/04/1999 16:00"</span>, <span class="at">tz=</span><span class="st">"America/New_York"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="st">"2021/08/31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2021-08-31"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">mdy</span>(<span class="st">"Sep. 10, 19"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2019-09-10"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">dmy_hm</span>(<span class="st">"02/04/1999 16:00"</span>, <span class="at">tz=</span><span class="st">"America/New_York"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1999-04-02 16:00:00 EST"</code></pre>
+</div>
 </div>
 <p>日付型に変換してしまえば, 時系列のプロットなどでかなり楽をすることができます. 必ず日付型に変換しましょう.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> lubridate<span class="sc">::</span><span class="fu">dmy_hms</span>(<span class="fu">str_c</span>(date, hms), <span class="at">tz =</span> <span class="st">"Europe/Madrid"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, hms, time) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> lubridate<span class="sc">::</span><span class="fu">dmy_hms</span>(<span class="fu">str_c</span>(date, hms), <span class="at">tz =</span> <span class="st">"Europe/Madrid"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, hms, time) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  date       hms    time               
+  &lt;chr&gt;      &lt;time&gt; &lt;dttm&gt;             
+1 01/01/2022 01:30  2022-01-01 01:30:00
+2 01/01/2022 01:30  2022-01-01 01:30:00
+3 01/01/2022 00:30  2022-01-01 00:30:00
+4 01/01/2022 00:30  2022-01-01 00:30:00
+5 01/01/2022 00:30  2022-01-01 00:30:00
+6 01/01/2022 01:50  2022-01-01 01:50:00</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -418,14 +519,20 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="カテゴリ変数">カテゴリ変数</h3>
 <p>カテゴリ変数の場合は<code>dplyr::recode_factor()</code>が便利です.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_person =</span> <span class="fu">recode_factor</span>(type_person,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Conductor"</span> <span class="ot">=</span> <span class="st">"Driver"</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Pasajero"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Peatón"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NULL"</span><span class="ot">=</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(type_person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_person =</span> <span class="fu">recode_factor</span>(type_person,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Conductor"</span> <span class="ot">=</span> <span class="st">"Driver"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Pasajero"</span> <span class="ot">=</span> <span class="st">"Passenger"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Peatón"</span> <span class="ot">=</span> <span class="st">"Pedestrian"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NULL"</span><span class="ot">=</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(type_person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> type_person     n    percent
+      Driver 34567 0.81244271
+   Passenger  6503 0.15284274
+  Pedestrian  1477 0.03471455</code></pre>
+</div>
 </div>
 <p><code>recode_factor()</code> は以下の4つを同時に行えるという点で強みがあります.</p>
 <ol type="1">
@@ -439,51 +546,81 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="欠損値処理">欠損値処理</h3>
 <p>一部のデータセットで欠損値は文字列 （ないし外れ値） として記録されています.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(renamed<span class="sc">$</span>weather) <span class="co"># "Se desconoce" は「分からない」という意味です</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(renamed<span class="sc">$</span>weather) <span class="co"># "Se desconoce" は「分からない」という意味です</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Despejado"      "NULL"           "Se desconoce"   "Lluvia débil"  
+[5] "Nublado"        "LLuvia intensa" "Granizando"     "Nevando"       </code></pre>
+</div>
 </div>
 <p>これらを解決する方法はいくつかあります.</p>
 <p><strong>方法1: ロードする時に<code>NA</code>を定義する</strong></p>
 <p>以下の例では, <code>NULL</code>や<code>Se descnoce</code>を欠損値として指定してデータを読み込んでいます.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sol1 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/raw/accident_bike/txt/year=2019/file.txt"</span>),</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"NA"</span>, <span class="st">"NULL"</span>, <span class="st">"Se desconoce"</span>, <span class="st">"Desconocido"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rename</span>(<span class="at">weather =</span> <span class="st">"estado_meteorológico"</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(sol1<span class="sc">$</span>weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sol1 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/raw/accident_bike/txt/year=2019/file.txt"</span>),</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"NA"</span>, <span class="st">"NULL"</span>, <span class="st">"Se desconoce"</span>, <span class="st">"Desconocido"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rename</span>(<span class="at">weather =</span> <span class="st">"estado_meteorológico"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(sol1<span class="sc">$</span>weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Despejado"      NA               "Lluvia débil"   "Nublado"       
+[5] "LLuvia intensa" "Granizando"     "Nevando"       </code></pre>
+</div>
 </div>
 <p>しかし, この方法は連続値の中の外れ値 (99, 9999) などでは, 他の変数中で実際の値として使われていた場合を考えると使うことができません.</p>
 <p><strong>方法2: <code>na_if()</code></strong></p>
 <p><code>na_if()</code>を使えば, 基本的にどのような場合でも対応できます.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather_old =</span> weather,<span class="co"># Presentation Purpose</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">na_if</span>(weather, <span class="st">"Se desconoce"</span>),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">na_if</span>(weather, <span class="st">"NULL"</span>),</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weather_old, weather) <span class="sc">|&gt;</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather_old =</span> weather,<span class="co"># Presentation Purpose</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">na_if</span>(weather, <span class="st">"Se desconoce"</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">na_if</span>(weather, <span class="st">"NULL"</span>),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weather_old, weather) <span class="sc">|&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  weather_old weather  
+  &lt;chr&gt;       &lt;chr&gt;    
+1 Despejado   Despejado
+2 Despejado   Despejado
+3 NULL        &lt;NA&gt;     
+4 NULL        &lt;NA&gt;     
+5 NULL        &lt;NA&gt;     
+6 Despejado   Despejado</code></pre>
+</div>
 </div>
 <p>しかし, 複数の値を同時に欠損値に変換できないため, 少し不便です.</p>
 <p><strong>方法3: <code>NULL</code>としてリコード</strong></p>
 <p>前小節でも書きましたが, <code>recode_factor()</code> のついでに欠損値として処理してしまうのが効率がいいです. カテゴリ変数にしか使えませんが, よく使う方法です.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather_spanish =</span> weather,<span class="co"># Presentation Purpose</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">recode_factor</span>(weather,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Despejado"</span> <span class="ot">=</span> <span class="st">"sunny"</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nublado"</span> <span class="ot">=</span> <span class="st">"cloud"</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Lluvia débil"</span> <span class="ot">=</span> <span class="st">"soft rain"</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Lluvia intensa"</span> <span class="ot">=</span> <span class="st">"hard rain"</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"LLuvia intensa"</span> <span class="ot">=</span> <span class="st">"hard rain"</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nevando"</span> <span class="ot">=</span> <span class="st">"snow"</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Granizando"</span> <span class="ot">=</span> <span class="st">"hail"</span>,</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Se desconoce"</span> <span class="ot">=</span> <span class="cn">NULL</span>,</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NULL"</span> <span class="ot">=</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weather_spanish, weather) <span class="sc">|&gt;</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>renamed <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather_spanish =</span> weather,<span class="co"># Presentation Purpose</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weather =</span> <span class="fu">recode_factor</span>(weather,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Despejado"</span> <span class="ot">=</span> <span class="st">"sunny"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nublado"</span> <span class="ot">=</span> <span class="st">"cloud"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Lluvia débil"</span> <span class="ot">=</span> <span class="st">"soft rain"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Lluvia intensa"</span> <span class="ot">=</span> <span class="st">"hard rain"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"LLuvia intensa"</span> <span class="ot">=</span> <span class="st">"hard rain"</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nevando"</span> <span class="ot">=</span> <span class="st">"snow"</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Granizando"</span> <span class="ot">=</span> <span class="st">"hail"</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Se desconoce"</span> <span class="ot">=</span> <span class="cn">NULL</span>,</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NULL"</span> <span class="ot">=</span> <span class="cn">NULL</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weather_spanish, weather) <span class="sc">|&gt;</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  weather_spanish weather
+  &lt;chr&gt;           &lt;fct&gt;  
+1 Despejado       sunny  
+2 Despejado       sunny  
+3 NULL            &lt;NA&gt;   
+4 NULL            &lt;NA&gt;   
+5 NULL            &lt;NA&gt;   
+6 Despejado       sunny  </code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -491,30 +628,111 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="保存形式-parquet">保存形式: Parquet</h2>
 <p>2023年1月現在, データフレームの最良な保存形式はparquet形式だと思います.</p>
 <div class="cell">
-
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">速度</th>
+<th style="text-align: left;">サイズ</th>
+<th style="text-align: left;">型保存</th>
+<th style="text-align: left;">多言語対応</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">csv, tsv</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">All</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rds, RData</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">❌</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">parquet</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">✔️</td>
+<td style="text-align: left;">Python, Julia, MATLAB, Stata,…</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <p>詳細やベンチマークなどは <span class="citation" data-cites="uryu_r_2022">Uryu (<a href="#ref-uryu_r_2022" role="doc-biblioref">2022</a>)</span> などを参考にされるとよいと思います.</p>
 <p><code>arrow::read_parquet()</code> は通常のデータフレームとしてだけでなく, 列情報のみを読み込むことが可能です.</p>
 <p>データフレームとして</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>df <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
-<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">here</span>(<span class="st">"data/cleaned/accident_bike.parquet"</span>),</span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="at">as_data_frame =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-4"><a href="#cb14-4"></a></span>
-<span id="cb14-5"><a href="#cb14-5"></a>df <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>df <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">here</span>(<span class="st">"data/cleaned/accident_bike.parquet"</span>),</span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="at">as_data_frame =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-4"><a href="#cb28-4"></a></span>
+<span id="cb28-5"><a href="#cb28-5"></a>df <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 23
+  id_1922     date  hms   street num_s…¹ code_…² distr…³ type_…⁴ weather type_…⁵
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;fct&gt;   &lt;chr&gt;  
+1 2018S017842 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Motoci…
+2 2018S017842 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Turismo
+3 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Furgon…
+4 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+5 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+6 2019S000001 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+# … with 13 more variables: type_person &lt;fct&gt;, age_c &lt;fct&gt;, gender &lt;fct&gt;,
+#   code_injury8 &lt;chr&gt;, injury8 &lt;fct&gt;, coord_x &lt;chr&gt;, coord_y &lt;chr&gt;,
+#   positive_alcohol &lt;lgl&gt;, positive_drug &lt;lgl&gt;, year &lt;int&gt;, time &lt;dttm&gt;,
+#   is_died &lt;lgl&gt;, is_hospitalized &lt;lgl&gt;, and abbreviated variable names
+#   ¹​num_street, ²​code_district, ³​district, ⁴​type_accident, ⁵​type_vehicle</code></pre>
+</div>
 </div>
 <p>列情報のみ</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>info <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">here</span>(<span class="st">"data/cleaned/accident_bike.parquet"</span>),</span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="at">as_data_frame =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb15-4"><a href="#cb15-4"></a></span>
-<span id="cb15-5"><a href="#cb15-5"></a>info[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>info <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">here</span>(<span class="st">"data/cleaned/accident_bike.parquet"</span>),</span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="at">as_data_frame =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb30-4"><a href="#cb30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5"></a>info[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Table
+168574 rows x 6 columns
+$id_1922 &lt;string&gt;
+$date &lt;string&gt;
+$hms &lt;string&gt;
+$street &lt;string&gt;
+$num_street &lt;string&gt;
+$code_district &lt;int32&gt;</code></pre>
+</div>
 </div>
 <p><code>dplyr::collect()</code> を使うとデータフレームとしてメモリに読み込まれます.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>info <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>info <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 168,574 × 23
+   id_1922    date  hms   street num_s…¹ code_…² distr…³ type_…⁴ weather type_…⁵
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;fct&gt;   &lt;chr&gt;  
+ 1 2018S0178… 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Motoci…
+ 2 2018S0178… 04/0… 9:10… CALL.… 1             1 Centro  Colisi… sunny   Turismo
+ 3 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Furgon…
+ 4 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 5 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 6 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 7 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 8 2019S0000… 01/0… 3:45… PASEO… 168          11 Caraba… Alcance &lt;NA&gt;    Turismo
+ 9 2019S0000… 01/0… 3:50… CALL.… 65           10 Latina  Choque… sunny   Furgon…
+10 2019S0000… 01/0… 3:50… CALL.… 65           10 Latina  Choque… sunny   Turismo
+# … with 168,564 more rows, 13 more variables: type_person &lt;fct&gt;, age_c &lt;fct&gt;,
+#   gender &lt;fct&gt;, code_injury8 &lt;chr&gt;, injury8 &lt;fct&gt;, coord_x &lt;chr&gt;,
+#   coord_y &lt;chr&gt;, positive_alcohol &lt;lgl&gt;, positive_drug &lt;lgl&gt;, year &lt;int&gt;,
+#   time &lt;dttm&gt;, is_died &lt;lgl&gt;, is_hospitalized &lt;lgl&gt;, and abbreviated variable
+#   names ¹​num_street, ²​code_district, ³​district, ⁴​type_accident, ⁵​type_vehicle</code></pre>
+</div>
 </div>
 <p>この方法が便利なのは<code>select()</code>, <code>filter()</code>, <code>group_by()</code>, <code>summarize()</code> などの関数が使える点です. これによって, 大きなデータセット全体をメモリに読み込むことなく, 必要なデータのみ読み込むというデータベースのようなことが簡易的に行なえます.</p>
 <section id="パーティショニング" class="level3">
@@ -531,9 +749,32 @@ div.csl-indent {
     └── part-0.parquet</code></pre>
 <p>このようなデータを<code>arrow::open_dataset()</code>関数は1つのparquetデータのように扱うことができます.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">here</span>(<span class="st">"data/raw/accident_bike/parquet"</span>))</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">here</span>(<span class="st">"data/raw/accident_bike/parquet"</span>))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FileSystemDataset with 4 Parquet files
+num_expediente: string
+fecha: string
+hora: string
+localizacion: string
+numero: string
+cod_distrito: int32
+distrito: string
+tipo_accidente: string
+estado_meteorológico: string
+tipo_vehiculo: string
+tipo_persona: string
+rango_edad: string
+sexo: string
+cod_lesividad: string
+lesividad: string
+coordenada_x_utm: string
+coordenada_y_utm: string
+positiva_alcohol: string
+positiva_droga: string
+year: int32</code></pre>
+</div>
 </div>
 <p>この場合, フォルダを分けていた年次が<code>year</code>として新しい変数に加わります. 実はCSVファイルや他のフォルダ名でも可能なのですが, 詳細は上の瓜生さんのスライドか <span class="citation" data-cites="mock_outrageously_2022">Mock (<a href="#ref-mock_outrageously_2022" role="doc-biblioref">2022</a>)</span> などを参考にされるとよいと思います.</p>
 </section>
